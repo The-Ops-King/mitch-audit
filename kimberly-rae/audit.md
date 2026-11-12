@@ -14,16 +14,16 @@ The ten problems that matter most, worst first:
 
 | # | Problem | Evidence | Severity |
 |---|---|---|---|
-| 1 | Paid vs organic reporting is completely broken. Airtable's `Is Paid` formula looks for "Paid Ad"; every Zap writes "Paid Ads". | 0 of 825 Lead Base records count as paid. Every Paid/Organic metric, ROAS, CPA and CPL in Sales Metrics Summary is wrong. | Critical |
-| 2 | Monthly finance numbers don't add up. Payments get linked to reporting periods inconsistently. | October 2026 shows $22,800, but October payments total $27,400 ("Last Month" shows the right figure). "2026" shows $77,783 while "YTD" shows $85,983. | Critical |
+| 1 | Lead-level paid vs organic is broken, and "paid" has two definitions. Lead Base `Is Paid` looks for "Paid Ad" in 4 source fields, but the Zaps write "Paid Ads". The call and cash side uses a separate `Lead Source` dropdown the closer picks by hand on the EOC. | 0 of 825 leads count as paid (Sales Metrics "All Time": Paid Leads 0, Organic Leads 825). So paid lead count, paid set rate, paid cost per lead and paid cash per lead are wrong. Paid closes and cash (5 deals, $10,700 all time) come from the closer's dropdown, not from automation, so the two halves of the paid funnel can't be compared. ROAS is $0 because Ad Spend has no rows. | Critical |
+| 2 | Calendar-period finance totals leave out renewals and back-dated payments. Whatever links payments to periods (an Airtable automation, not visible via API) links them to Last Month, YTD and All Time, but not to the calendar periods (October 2026, Q4 2026, 2026). | October has 13 payment records totaling $27,400. "October 2026" shows $22,800 because 3 aren't linked: both Fanbasis renewals (Oct 7 $2,400, Oct 17 $1,200) and one payment dated Oct 31 but entered Nov 3 ($1,000). "Last Month" shows the correct $27,400. September has the same gap (1 of 9 missing). Across the year, "2026" = $77,783 vs "YTD" = $85,983. | Critical |
 | 3 | Speed to lead is slow, and a quarter of leads never get touched. | Leads created since Sept 1: 27% have no outbound call or SMS in Close. Median first touch is 100 minutes. Only 82 of 421 were reached within 5 minutes. | Critical |
 | 4 | The Close pipeline is inflated with dead and duplicate deals. | $700,800 of open pipeline across 98 opps, mostly $7,200 placeholders. 15 leads that are DQ'd, canceled, no-showed or already signed still hold open sales opps worth $136,800. 7 leads have more than one open "Mentorship Interview" opp. | High |
 | 5 | Money values get corrupted on the way into Close. The EOC Zap builds cents by typing "00" after the dollar amount. | One "Installment Paid" opp is worth $11.33. Almost certainly a $1,133.33 payment that became `1133.3300`. Any amount with cents breaks this way. | High |
 | 6 | Re-opt-ins push leads back to "New Lead" and overwrite attribution. | 8 leads sit in "New Lead" while holding Lost, Interview or Pending Close opps. Every form Zap overwrites Opt Source / Applied Source, so first-touch attribution doesn't exist. | High |
 | 7 | Payments and commissions aren't tied to the deal. Fanbasis payments never touch Close, and 18 of 43 payment records aren't linked to a customer or rep. | Unlinked payments default to "Recurring" (26 Recurring vs 17 New, even though most payments are first sales), so New Cash is understated. 26 payments have no closer, yet closer commission still calculates on them. | High |
-| 8 | The re-engagement sequence is mostly failing. | 759 leads enrolled in one batch on Jul 15. 518 ended in `error` (sampled reason: sender account failures). It isn't used for anything ongoing. | High |
+| 8 | The re-engagement sequence was a one-time blast that mostly failed, and nothing has replaced it. | All 759 enrollments were made in under a minute on Jul 15, all sent from Kimberly's own mailbox (connect@). 518 ended with Close status `account-failures`, meaning Close couldn't send through that connected mailbox (disconnected auth or sending limit). 218 finished, 22 replied, 1 booked. Last activity Jul 24, and 0 sequence emails since Sept 1. Blasting 759 stale leads from the founder's main inbox is also a deliverability risk for her day-to-day email. | High |
 | 9 | Follow-ups live in people's heads. The EOC collects a follow-up date but never creates a task. | 33 leads in "Closer Follow Up", 19 open tasks in the whole org, 9 of them overdue. | High |
-| 10 | A plaintext password is stored in a Zap. New rep onboarding creates every Google Workspace account with the same hardcoded password. | Zap "New Rep Onboarding". | High (security) |
+| 10 | Every new Google Workspace account starts with the same hardcoded password stored in the Zap. Reps may change it after login, but the Zap doesn't force that. | Zap "New Rep Onboarding". Low-effort fix: turn on "change password at next login" in that step. | Low |
 
 On top of that, setter attribution is missing on 157 of 183 EOCs, three different revenue totals can't be reconciled (Close won $48,778, EOC closes $56,983, Airtable payments $88,383), and Google Sheets is quietly acting as a third ledger.
 
@@ -131,7 +131,7 @@ Nothing pre-call is visible in Close or Zapier. There's no confirmation SMS, no 
 
 ### 3.6 Payments and collections
 
-- **Fanbasis payments never update Close.** A deal is marked won only if the closer files an EOC.
+- **Fanbasis payments never update Close.** A deal is marked won only if the closer files an EOC. Decision: Fanbasis payments will update Close (see section 5).
 - **Payment records are orphans.** The Fanbasis Zap creates Payment Records without links to Customer, Customer Product or rep. 18 of 43 are unlinked. Someone or something links the rest after the fact.
 - **No dedupe key.** No Fanbasis transaction ID is stored, so a replayed Zap would double-count.
 - **Latent revenue gap.** The EOC Zap deliberately skips creating a payment record when the method contains Fanbasis, Whop, Shopify or Stripe, on the assumption that a processor Zap will create it. Only Fanbasis has a processor Zap. Today every EOC payment is Fanbasis, so nothing has been lost yet. The day a deal closes on Whop, Shopify or Stripe, it disappears from finance.
@@ -142,7 +142,7 @@ Nothing pre-call is visible in Close or Zapier. There's no confirmation SMS, no 
 
 ### 3.7 Reporting
 
-- Paid/Organic splits are all wrong (finding #1).
+- Paid/Organic at lead level is broken, and the call/cash side runs on a separate manual dropdown (finding #1). Fix: one automated Traffic Type, derived from First Touch Source, written to Close and carried onto every EOC and payment.
 - Period totals are wrong (finding #2).
 - Ad Spend has 0 rows, so every ROAS, CPA and CPL formula divides by nothing.
 - Rep Scorecard joins on rep names that don't match across tables.
@@ -166,7 +166,7 @@ Rules every automation follows. These matter more than any single Zap.
 
 1. **One system owns each kind of data.** Close owns people, deals and sales activity. Fanbasis (or whichever processor) owns money. Airtable is the reporting and collections layer, written to by automations and never hand-edited for core facts. Slack carries alerts only; nothing is ever read back out of Slack. Retire the Google Sheets ledgers once anyone who reads them has a replacement view.
 2. **Join on IDs, never names.** Close `lead_id` goes on every Airtable record. Close `user_id` identifies reps (the User table is keyed on it, and names are display only). The processor transaction ID goes on every payment and is used to dedupe. Emails are lowercased and trimmed before any search.
-3. **The EOC lives in Close.** It becomes a Close Custom Activity on the lead, with the same questions, required fields and dropdowns. The closer is the logged-in user, and the lead is the lead they're on, so typed emails and names disappear. A Close webhook (`activity.custom_activity created`) triggers the downstream Zap.
+3. **The EOC lives in Close (recommended; Mitch is open to it).** It becomes a Close Custom Activity on the lead, with the same questions, required fields and dropdowns. The closer is the logged-in user, and the lead is the lead they're on, so typed emails and names disappear. A Close webhook (`activity.custom_activity created`) triggers the downstream Zap.
 4. **One opp per sales cycle.** A booking finds the lead's open sales opp and updates it, creating one only if none exists. The opp value is the contract value, set at Offer/Closed, not a $7,200 placeholder. Won means signed. Installments don't live in Close as opps. They live in Airtable, linked to the deal.
 5. **Statuses only move forward.** A status map defines which transitions are allowed. Re-opt-ins add a note and update Last Touch, but never reset status unless the lead is in a recyclable state (NGMI, Lost, aged DQ).
 6. **Attribution is write-once plus last-touch.** First Touch Source is set only when empty. Last Touch, Application Source and Booking Source are set by their own events. All source fields become Close dropdowns with a fixed value list, so "Paid Ad" vs "Paid Ads" can't happen. Traffic Type (Paid/Organic) is derived from First Touch.
@@ -241,11 +241,13 @@ Phases are ordered by risk. Don't start a phase until the previous one is verifi
 
 1. Remove the hardcoded password from New Rep Onboarding. Generate a random temp password and set "change password at next login".
 2. Fix the `amt_3` mapping in the EOC code step.
-3. Replace `{{Cash Collected}}00` in every Close value field with a Formatter step that multiplies by 100 and rounds to an integer. Then fix the $11.33 opp by hand.
+2a. Booking Zaps: stop creating a new opp when the lead already has an open one (find the open opp and update it). This is the fix for the duplicate deals.
+3. Cents bug, fix explicitly: replace `{{Cash Collected}}00` in every Close value field with a Formatter step that multiplies by 100 and rounds to an integer. Then fix the $11.33 opp by hand.
 4. Change the Airtable `Is Paid` formula to match "Paid Ads". Better: match on a dropdown (see Phase 1).
 5. Remove "New Lead" from the "Lead Exists" update in all 6 form Zaps. Stop overwriting Opt Source on existing leads.
 6. Remove Whop, Shopify and Stripe from the EOC "skip payment record" filter until those processors have their own Zaps.
 7. Move Kit steps after the Close write in the 6 affected Zaps.
+7a. EOC Zap: when a follow-up date is set, create a Close task for the closer due on that date. Write the Fathom link to the Close `Fathom URL` field.
 8. Add a Zapier Manager "New Zap Error" Zap posting to an #ops-alerts channel.
 9. Close out the 15 phantom open opps on terminal leads and merge the 7 duplicate-opp leads. Merge or de-dupe the 15 duplicate-email lead groups.
 10. Delete the Untitled draft Zap. Deactivate unused or duplicate Close users after confirming with Mitch.
@@ -291,7 +293,7 @@ Test checklist for every flow: new lead, existing lead, existing lead in a close
 
 ## 7. Not verified yet
 
-- **Calendly:** event types, reminder settings, and the reschedule payload. The API returned 504. This affects findings 3.1.5 and 3.3.
+- **Calendly:** being repaired on the client side. Once it's stable, verify event types, reminder settings and the reschedule payload. This affects findings 3.1.5 and 3.3.
 - **Zap History export (last 90 days):** needed for real error and halt rates per Zap.
 - **Airtable automations:** the API doesn't expose them. Screenshots or a list are needed to confirm how period links and payment-to-customer links get made.
 - **Kit sequences 2893474 (bookings) and 2893520 (Kajabi):** what they actually send.
