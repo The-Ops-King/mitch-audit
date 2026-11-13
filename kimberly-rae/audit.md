@@ -392,6 +392,8 @@ Severity is about business impact: Critical means reported numbers or revenue ar
 
 Phases are ordered by risk. Each phase gets verified before the next one starts.
 
+Each phase ships with its SOPs from Part D. A workflow isn't done until its SOP is written and matches how the system actually behaves.
+
 ### Phase 0: stop the bleeding (edits to existing Zaps)
 
 1. Cents fix: replace `{{Cash Collected}}00` and every other `...00` value mapping with a Formatter step (multiply by 100, round). Correct the $11.33 opp. (ISS-16)
@@ -422,8 +424,6 @@ Build and test in this order: WF-01/02/03, WF-04/05/06, WF-10/11/12, WF-13/14/15
 Test every flow against: a new lead, an existing lead, a lead in a closed status, a duplicate email, a missing phone, an amount with cents, a call after 8pm Eastern, a reschedule, a cancel, and a mid-run failure (confirm the alert fires).
 
 ### Phase 3: reporting
-
-Each phase ships with its SOPs from Part D. A workflow isn't done until its SOP is written and matches how the system actually behaves.
 
 WF-31 to WF-34, run side by side with the old tables for a full month, then retire the old period tables. Retire Google Sheets once Mitch confirms nobody depends on them.
 
