@@ -3,12 +3,42 @@
 Client: Mitch. Builder: Leah.
 Data pulled 2026-11-12, read only: Zapier export (23 Zaps), Close (config, 1,481 leads, 222 opportunities, status history, Sept 1 onward calls, SMS, email and sequence data), and every Airtable table and record in "Kimberly Rae Coaching - Master Base".
 
-This document has three parts:
+## How to use this document
 
-- Part A is the full workflow catalog: every automation a high-ticket sales team needs from lead to closed deal and beyond, with what Kimberly Rae Coaching (KRC) has today and what has to be built, updated or retired.
-- Part B is the issues register: every problem found, the evidence, whether it's verified, and the fix.
-- Part C is the build order.
-- Part D is the SOP catalog: the written procedures for using and maintaining these systems. Every workflow in Part A lists the SOPs that go with it.
+- Mitch: read the summary below, then Part B (issues register) for the detail behind any item.
+- Leah: build from Part C (build order), using Part A for each workflow's spec and Part D for the SOP that ships with it.
+
+The four parts:
+
+- Part A, workflow catalog: every automation a high-ticket sales team needs from lead to client handoff, with what Kimberly Rae Coaching (KRC) has today and what has to be built, updated or retired.
+- Part B, issues register: every problem found, the evidence, whether it's verified, and the fix.
+- Part C, build order.
+- Part D, SOP catalog: the written procedures for using and maintaining these systems. Every workflow in Part A lists the SOPs that go with it.
+
+Calendly was down during the review and is being repaired. Items that depend on it are marked unverified and listed under open items at the end.
+
+## Summary for Mitch
+
+The day-to-day machinery runs: leads reach Close, the team gets pinged in Slack, closers file EOCs. Underneath, the data is unreliable and a lot of the reporting built on it is wrong.
+
+Headline findings (all verified against live data):
+
+| Area | What's wrong | Impact |
+|---|---|---|
+| Reporting | Paid vs organic never fires at lead level (0 of 825 leads count as paid). Renewals and back-dated payments are missing from monthly finance totals. | October finance shows $22,800 against $27,400 actually collected. Paid lead metrics, cost per lead and ROAS can't be trusted. (ISS-01, ISS-04) |
+| Deals | Deposits count as closed deals. Every booking and reschedule creates a new $7,200 deal. Dead leads keep open deals. | Close shows $700,800 of open pipeline, $136,800 of it on leads that are DQ'd, canceled or already signed. (ISS-05, ISS-10, ISS-11, ISS-18) |
+| Speed to lead | Nothing assigns, texts or escalates a new lead. Freebie opt-ins land in the same channel as applications. | Since Sept 1, 27% of leads have no call or text in Close. Median first touch is 100 minutes. (ISS-07, ISS-08) |
+| Money | Fanbasis payments never update Close. Payments aren't linked to customers or reps. A Zap corrupts any amount with cents. | $16,100 of first payments are classed as recurring. $5,517 of commission sits on payments with no rep. A $1,133.33 payment shows as $11.33 in Close. (ISS-16, ISS-21, ISS-22, ISS-23) |
+| Follow-up | Follow-up dates aren't turned into tasks. No-shows and cancels get a Slack post and nothing else. The only re-engagement sequence was a one-off blast in July that mostly failed. | 33 leads in follow-up status, 19 open tasks in the whole account. (ISS-28, ISS-29, ISS-31) |
+
+What gets built: 36 workflows in total. 19 are new, 14 are updates to existing Zaps, and the rest are kept or out of scope. 27 SOPs get written alongside them. 47 issues are logged: 4 critical, 21 high, 15 medium, 7 low.
+
+Decisions already made:
+
+1. Fanbasis payments update Close.
+2. A deposit is not a closed deal.
+3. Every follow-up date creates a Close task.
+4. Moving the EOC form into Close is recommended, and Mitch is open to it.
 
 ### Legend
 
