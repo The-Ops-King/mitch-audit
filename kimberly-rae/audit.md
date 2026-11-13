@@ -12,7 +12,7 @@ The system runs day to day. Leads reach Close, Slack gets pinged, closers fill i
 - Money doesn't flow back. Fanbasis payments never update Close. A $1,133.33 payment shows in Close as $11.33.
 - No follow-through. There are no reminder texts from Close, no no-show or cancel follow-up, follow-up dates don't create tasks, Fathom recordings never reach Close, and signed agreements update nothing.
 
-The fix keeps the current setup and changes only what's needed. The overview below shows what a high-ticket sales team needs at each stage and where Kimberly Rae Coaching stands. After that, each fix is one build card: what it is, what it achieves, the steps, and what to watch out for.
+The fix keeps the current setup and changes only what's needed. The overview below shows what a high-ticket sales team needs at each stage and where Kimberly Rae Coaching stands. After that, each fix is one build card: the system, what starts it (trigger), what it achieves, the steps, and what to watch out for.
 
 ---
 
@@ -166,6 +166,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Close, Settings.
 
+**Trigger:** None. One-time setup in Close settings.
+
 **Outcome:** Close can hold a deal from the moment a lead arrives, deposits stop counting as wins, and every automation knows which deal to update.
 
 **Steps:**
@@ -182,6 +184,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Airtable, "Kimberly Rae Coaching - Master Base".
 
+**Trigger:** None. One-time formula edits.
+
 **Outcome:** Paid vs organic works, deposits and installment payments stop counting as new deals, and Sidonie shows up on the scorecard.
 
 **Steps:**
@@ -197,6 +201,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 ## 3. Lead form Zaps
 
 **System:** Zapier. Six Zaps: IG Application, Paid Ads Application, Kajabi Application, Kajabi Relationship Quiz, Kajabi Commitment Training, Kajabi Anxious to Confident Blueprint.
+
+**Trigger:** Unchanged. Typeform "New Entry" (IG form and Paid Ads form) and Kajabi "New Form Submission" (application and 3 freebie forms).
 
 **Outcome:** An existing lead or client who fills in another form keeps their status and original source. Every new lead gets a deal at Not Booked. Freebie opt-ins stop burying real applications. UTMs are tracked.
 
@@ -219,6 +225,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 ## 4. Booking Zaps
 
 **System:** Zapier. "Setter Booking -> Close -> Slack -> Airtable" and "DCB Booking -> Close -> Slack -> Airtable".
+
+**Trigger:** Unchanged. Calendly "Invitee Created". Setter Booking Zap filters on event names containing "(SB)" or "Live"; DCB Zap on "DCBA", "DCBIG" or "DCBE".
 
 **Outcome:** One booking = one deal. Reschedules update the same deal. The right closer is assigned. Direct bookings are labeled with their real source.
 
@@ -246,6 +254,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Zapier, "EOC Form -> Close -> Slack -> Airtable" (88 steps, triggered by the Airtable EOC form).
 
+**Trigger:** Unchanged. Airtable "New Record" in EOC Report Responses (a closer submits the EOC form).
+
 **Outcome:** Amounts with cents save correctly, every follow-up date becomes a Close task, the Fathom link lands on the lead, installment payments stop creating fake deals, and the right deal gets updated.
 
 **Steps:**
@@ -269,6 +279,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Close, Smart Views.
 
+**Trigger:** None. Smart views update on their own.
+
 **Outcome:** Setters have accurate call lists: day-old leads, 3 to 7 day leads, no-shows, cancels and reschedules.
 
 **Steps:**
@@ -290,6 +302,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Close and Airtable, by hand.
 
+**Trigger:** None. One-time manual cleanup.
+
 **Outcome:** Pipeline and finance numbers start from a clean base.
 
 **Steps:**
@@ -308,6 +322,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Zapier.
 
+**Trigger:** Unchanged. Airtable "New Record" in New OB Form Responses (onboarding Zap).
+
 **Outcome:** No leftover drafts, and new rep accounts aren't left on a shared password.
 
 **Steps:**
@@ -324,6 +340,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 ## 9. Pre-call reminders
 
 **System:** Close Workflow (texts and emails from the closer's Close number and inbox). Started by the booking Zaps.
+
+**Trigger:** A new booking. The booking Zaps (card 4) enroll the lead at the end of their run, or a Close smart view of status "New Opportunity" enrolls them automatically.
 
 **Outcome:** Every booked lead gets a text and email right away, 24 hours before and 1 hour before the call, so more people show up.
 
@@ -345,6 +363,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Close Workflow. Starts when a closer sets the lead status to "No show" (as they do today).
 
+**Trigger:** Lead status changes to "No show" in Close (set by the closer).
+
 **Outcome:** Every no-show gets a rebook message within 5 minutes and follow-ups for a week, without anyone having to remember.
 
 **Steps:**
@@ -362,6 +382,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 ## 11. Cancellation handling
 
 **System:** New Zap, Calendly "Invitee Canceled". Close Workflow for the win-back.
+
+**Trigger:** New Zap. Calendly "Invitee Canceled", filtered to real cancellations (rescheduled = false).
 
 **Outcome:** Cancellations show up in Close automatically. Leads who cancel get won back. Bookings that the closer cancels (screened out) are marked DQ, not left as open deals.
 
@@ -382,6 +404,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Close Workflow. Starts when a closer sets the status to "New Opportunity - Reschedule".
 
+**Trigger:** Lead status changes to "New Opportunity - Reschedule" in Close (set by the closer).
+
 **Outcome:** A lead who asks to move the call but hasn't picked a time gets the reschedule link right away and reminders until they book.
 
 **Steps:**
@@ -395,6 +419,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 ## 13. Fathom to Close and Slack
 
 **System:** Fathom's Close integration if available, otherwise a Zap triggered by Fathom "New Recording".
+
+**Trigger:** Fathom "New Recording" (or Fathom's built-in Close integration).
 
 **Outcome:** Every sales call recording and its summary sit on the lead in Close and get posted to Slack, without the closer pasting links.
 
@@ -410,6 +436,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 ## 14. Payment received
 
 **System:** Zapier. Rework "Fanbasis Payment -> Airtable -> Slack" and "Fanbasis - Renewal -> Airtable -> Slack".
+
+**Trigger:** Unchanged. Fanbasis "New Sale" and Fanbasis "Subscription Renewal".
 
 **Outcome:** Every payment updates Close, links to the client and rep (so commissions are right), marks installments paid, and can't be counted twice.
 
@@ -431,6 +459,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Zap triggered by a Fanbasis failed payment (check it exists in Zapier). If it doesn't, a daily Zap that checks Airtable for installments past due.
 
+**Trigger:** Fanbasis failed payment, if Zapier offers it. Otherwise Schedule by Zapier, daily at 9am Eastern.
+
 **Outcome:** Nobody misses a failed or late payment.
 
 **Steps:**
@@ -444,6 +474,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Zap triggered by a Fanbasis refund (if available), otherwise an Airtable form.
 
+**Trigger:** Fanbasis refund, if Zapier offers it. Otherwise a new submission of an Airtable refund form.
+
 **Outcome:** Refunds are recorded the same way every time and commissions get clawed back automatically.
 
 **Steps:**
@@ -455,6 +487,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 ## 17. Agreement signed
 
 **System:** Zapier, "New Contract > Slack" (exists, currently off).
+
+**Trigger:** Unchanged. DocuSign "Recipient Completed" (the client signs).
 
 **Outcome:** A signed agreement shows up in Slack and on the deal in Close.
 
@@ -468,6 +502,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Existing Zaps: "Onboarding Email", "New Client Intake Form > Slack", "Kickoff Session > Slack".
 
+**Trigger:** Unchanged: Google Forms "New Response" (intake) and Calendly "Invitee Created" filtered to Kickoff Session. New: Schedule by Zapier, daily, for the kickoff reminder.
+
 **Outcome:** Every new client gets the welcome, and Close shows whether intake and kickoff are done. Nobody falls through after paying.
 
 **Steps:**
@@ -480,6 +516,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 ## 19. Weekly and monthly numbers
 
 **System:** Zapier Schedule plus Airtable, posting to Slack.
+
+**Trigger:** Schedule by Zapier: every Monday at 8am Eastern (weekly) and the 1st of each month (monthly).
 
 **Outcome:** Mitch gets the key numbers every Monday and on the 1st of each month without opening anything.
 
@@ -496,6 +534,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 
 **System:** Zapier Schedule, posting to an ops Slack channel.
 
+**Trigger:** Schedule by Zapier, every Monday morning.
+
 **Outcome:** Problems get caught weekly instead of piling up.
 
 **Steps:** every Monday, post counts and links for: duplicate leads by email, leads with more than one open deal, open deals on DQ or Lost leads, payments with no customer link.
@@ -503,6 +543,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 ## 21. Rep onboarding and offboarding
 
 **System:** Two written checklists (SOPs). The onboarding Zap stays as it is, with card 8's fixes.
+
+**Trigger:** None. Checklists are run by hand when a rep joins or leaves.
 
 **Outcome:** New reps are set up the same way every time, and departing reps lose access the same day.
 
@@ -513,6 +555,8 @@ After the cards: the SOPs to write, open questions, the full list of changes I s
 ## 22. Setter ✅ claim (optional)
 
 **System:** Zapier, "(New Lead) Setter React". A setter adds ✅ to a booking post in Slack, and the Zap records them as the setter in Close.
+
+**Trigger:** Unchanged. Slack "New Reaction Added", ✅ in the bookings channel.
 
 **Outcome:** The same ✅ habit keeps working even if someone edits the Slack message wording.
 
