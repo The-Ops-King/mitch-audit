@@ -12,11 +12,115 @@ The system runs day to day. Leads reach Close, Slack gets pinged, closers fill i
 - Money doesn't flow back. Fanbasis payments never update Close. A $1,133.33 payment shows in Close as $11.33.
 - No follow-through. There are no reminder texts from Close, no no-show or cancel follow-up, follow-up dates don't create tasks, Fathom recordings never reach Close, and signed agreements update nothing.
 
-The fix keeps the current setup and changes only what's needed. Everything below is one build card: what it is, what it achieves, the steps, and what to watch out for.
+The fix keeps the current setup and changes only what's needed. The overview below shows what a high-ticket sales team needs at each stage and where Kimberly Rae Coaching stands. After that, each fix is one build card: what it is, what it achieves, the steps, and what to watch out for.
 
 ---
 
-## Table of contents
+## How Close is set up today
+
+Close has one pipeline, "Sales", and deals only start when a call is booked. The setter and closer stages live in lead statuses instead (New Lead, New Opportunity, Closer Follow Up, No show, Canceled and so on). Setter Owner and Closer Owner are custom fields. The plan keeps this setup and only adds a "Not Booked" stage and a hidden "Active Deal ID" field (card 1).
+
+## What's needed, stage by stage
+
+Verdicts: Keep (works as is), Fix (change something that exists), Build (doesn't exist yet). The card number points to the build steps further down.
+
+### 1. New lead comes in
+
+| What's needed | Today | Verdict | Card |
+|---|---|---|---|
+| Lead created in Close | 6 form Zaps (IG, Paid Ads, Kajabi application, 3 Kajabi freebies) | Fix: they reset status and overwrite the source on existing leads | 3 |
+| Deal created at "Not Booked" | No. Deals only start at booking | Build | 1, 3 |
+| Webinar exception | No webinar source exists | Not needed | |
+| Sources tracked | Opt, Applied and Book Source fields | Fix: overwritten on every form; Traffic Type never filled | 3, 4 |
+| Typeform answers and UTMs tracked | Answers saved as a note. No UTMs | Fix: add UTM tracking | 3 |
+
+### 2. Speed to lead
+
+| What's needed | Today | Verdict | Card |
+|---|---|---|---|
+| Slack alert "ready to be called" | NEW APPLICATION channel, "Dial ASAP" | Keep. Fix: freebies get their own channel so they don't bury applications | 3 |
+| Smart list: new applications | "New Apps" | Keep | |
+| Smart list: day-old leads | "Gold Rush" and "Gold Rush (Paid Ads)" | Fix: leads drop off the lists; Paid Ads list shows 94 of 223 paid leads | 6 |
+| Smart list: 3 to 7 day leads | "3 Day No Book" covers 0 to 3 days | Fix | 6 |
+
+### 3. Call booked
+
+| What's needed | Today | Verdict | Card |
+|---|---|---|---|
+| Deal moves from Not Booked to Booked | A new $7,200 deal on every booking and reschedule | Fix | 4 |
+| Triage vs closing call | No triage call type. Every booking is the same 45-minute call with Makena (setter-booked or direct) or a live transfer | Keep | |
+| Assigned to the right closer | Matched from the Calendly host | Keep. Fix: make the match exact | 4 |
+| Booking posted to Slack | Yes | Keep | |
+| Booking source tagged | All direct bookings labeled "Paid Ads", including Instagram and email links | Fix | 4 |
+| Setter claims the booking (✅ in Slack) | Works | Keep. Optional hardening | 22 |
+
+### 4. Pre-call
+
+| What's needed | Today | Verdict | Card |
+|---|---|---|---|
+| Instant text and email | Nothing in Close. Calendly sends its own | Build in Close, switch Calendly's off | 9 |
+| Reminders 24 hours and 1 hour before | Nothing in Close. Calendly texts only the 40% who give a number | Build in Close, switch Calendly's off | 9 |
+
+### 5. Post-call
+
+| What's needed | Today | Verdict | Card |
+|---|---|---|---|
+| Call outcome recorded (EOC) | Airtable form plus an 88-step Zap | Fix: money, follow-up, Fathom and deal steps | 5 |
+| Showed / no-show tracked | Only in lead status and the EOC | Fix (part of the EOC fix) | 5 |
+| Fathom recording on the lead | Closers paste the link into the EOC; it never reaches Close | Build | 13 |
+| Fathom summary in Slack | No. Slack gets the typed EOC summary | Build | 13 |
+| EOC summary in Slack | Yes | Keep | |
+| Follow-up task from the follow-up date | No | Fix | 5 |
+
+### 6. No-show, cancel, reschedule
+
+| What's needed | Today | Verdict | Card |
+|---|---|---|---|
+| Closer marks No Show | Lead status "No show" | Keep | |
+| No-show, cancel and reschedule alerts in Slack | Yes | Keep | |
+| No-show drip | None | Build | 10 |
+| Cancels reach Close automatically | No. 55 of 97 direct bookings were canceled by the host and Close never knew | Build | 11 |
+| Cancel win-back drip | None | Build | 11 |
+| Reschedule link drip | None. Reschedules also create duplicate deals | Build | 12 (drip), 4 (duplicates) |
+| Smart lists: no-shows, cancels, reschedules | "No Shows" only, and leads drop off it | Fix and build | 6 |
+
+### 7. Payment
+
+| What's needed | Today | Verdict | Card |
+|---|---|---|---|
+| Payment received alert | Fanbasis to Slack | Keep. Fix: also update Close and link to the client and rep | 14 |
+| Deposits not counted as closed deals | They are, in Close and Airtable. Installment payments too | Fix | 1, 2 |
+| Payment plans tracked once | Duplicated in Close deals and Airtable | Fix | 5 |
+| Failed payment alert | None | Build | 15 |
+| Refund automation | None | Build | 16 |
+
+### 8. Agreement and onboarding
+
+| What's needed | Today | Verdict | Card |
+|---|---|---|---|
+| Agreement signed updates Slack and Close | Zap exists but is off, and only posts to Slack | Fix | 17 |
+| Welcome email | Yes | Keep | |
+| Intake and kickoff tracked | Posted to Slack only | Fix: also write to Close, remind if no kickoff | 18 |
+
+### 9. Reporting
+
+| What's needed | Today | Verdict | Card |
+|---|---|---|---|
+| Correct sales and finance numbers | Wrong: paid flag, missing renewals, deposits counted as deals | Fix | 2, 5, 14 |
+| Weekly and monthly update in Slack | None | Build | 19 |
+| Weekly data check | None | Build, optional | 20 |
+
+### 10. Team
+
+| What's needed | Today | Verdict | Card |
+|---|---|---|---|
+| Rep onboarding Zap | Works, shared starting password | Fix | 8 |
+| Rep onboarding and offboarding SOPs | None | Build | 21 |
+| Setter EOD and reminder | Works | Keep | |
+
+---
+
+## Build cards: table of contents
 
 Do them in this order. Part A is quick fixes to things that already exist. Part B is new automations.
 
@@ -52,7 +156,7 @@ Do them in this order. Part A is quick fixes to things that already exist. Part 
 | 21 | Rep onboarding and offboarding | Two checklists |
 | 22 | Setter ✅ claim (optional) | Make the Slack reaction Zap harder to break |
 
-After the cards: the SOPs to write, open questions, and an appendix with the evidence behind every fix.
+After the cards: the SOPs to write, open questions, the full list of changes I suggest, and an appendix with the evidence behind every fix.
 
 ---
 
@@ -449,6 +553,45 @@ Short, one page each. Write each after its card is built so it matches what the 
 | Calendly reminder timing (only visible inside Calendly) | Leah | 9 |
 
 Before handing this over: rotate the Close, Airtable and Calendly API keys used for this review.
+
+---
+
+# Changes I suggest
+
+## Required (the build cards)
+
+1. Close: add a Not Booked stage, an Active Deal ID field and UTM fields. Make Deposit Paid an open stage.
+2. Airtable: fix the paid flag, stop counting deposits and installment payments as closed deals, fix Sidonie's name.
+3. Lead form Zaps: stop overwriting existing leads, create a Not Booked deal for every new lead, move freebies to their own channel, track UTMs.
+4. Booking Zaps: update the existing deal instead of creating a new one, handle reschedules, exact closer match, label direct bookings by their real source.
+5. EOC Zap: fix the cents bug and the 3rd installment field, create follow-up tasks, save the Fathom link, stop creating installment deals.
+6. Smart lists: fix day-old, Paid Ads, 3 to 7 day and no-show lists; add cancel and reschedule lists.
+7. Clean up dead deals, duplicate deals and leads, and unlinked payments.
+8. Delete the draft Zap and force a password change for new reps.
+9. Pre-call texts and emails from Close (right away, 24 hours, 1 hour), then switch off Calendly's.
+10. No-show drip in Close.
+11. Calendly cancellations into Close, with a win-back drip for lead cancels.
+12. Reschedule link drip in Close.
+13. Fathom recordings and summaries into Close and Slack.
+14. Fanbasis payments update Close and link to the client and rep.
+15. Failed payment alert.
+16. Refund automation.
+17. Signed agreements update Close and Slack.
+18. Intake and kickoff tracked in Close, with a kickoff reminder.
+19. Weekly and monthly numbers posted to Slack.
+20. Rep onboarding and offboarding checklists.
+
+## Suggested, not required
+
+- Replace the 88-step EOC Zap with the code step (card 5). Same result, far easier to change later.
+- Harden the setter ✅ claim so it can't break when the Slack message wording changes (card 22).
+- Weekly data check in Slack (card 20).
+- Add the Close lead ID to every Airtable table so reports match on IDs instead of emails and names.
+- Require a cancellation reason in Calendly when a closer cancels a booking.
+- One Zapier "Zap error" alert to Slack, so a failed run doesn't go unnoticed.
+- A separate Close user for automations, so changes made by Zaps don't show as Kimberly's.
+- Enter ad spend weekly so cost per lead and return on ad spend can be reported.
+- Retire the two Google Sheets the Zaps still write to, if nobody uses them.
 
 ---
 
