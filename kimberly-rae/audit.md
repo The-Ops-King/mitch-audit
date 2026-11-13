@@ -8,6 +8,7 @@ This document has three parts:
 - Part A is the full workflow catalog: every automation a high-ticket sales team needs from lead to closed deal and beyond, with what Kimberly Rae Coaching (KRC) has today and what has to be built, updated or retired.
 - Part B is the issues register: every problem found, the evidence, whether it's verified, and the fix.
 - Part C is the build order.
+- Part D is the SOP catalog: the written procedures for using and maintaining these systems. Every workflow in Part A lists the SOPs that go with it.
 
 ### Legend
 
@@ -46,44 +47,44 @@ Action:
 
 ## A1. Summary table
 
-| ID | Stage | Workflow | KRC today | Action |
-|---|---|---|---|---|
-| WF-01 | Capture | Lead intake and dedupe | 6 Zaps, inconsistent, regress statuses | Update (consolidate) |
-| WF-02 | Capture | Attribution capture | Hardcoded source labels, overwritten | Update |
-| WF-03 | Capture | Lead routing and owner assignment | None | Create |
-| WF-04 | Speed to lead | Instant response (SMS and email) | None | Create |
-| WF-05 | Speed to lead | Setter call cadence | Slack ping only | Create |
-| WF-06 | Speed to lead | Unworked lead escalation | None | Create |
-| WF-07 | Nurture | Applied but not booked follow-up | Smart view only | Create |
-| WF-08 | Nurture | Freebie opt-in nurture | Kit sequence, but freebies treated as applications | Update |
-| WF-09 | Nurture | Stale lead re-engagement | One failed blast in July | Create |
-| WF-10 | Booking | Booking sync to Close | 2 Zaps, create duplicate deals | Update (consolidate) |
-| WF-11 | Booking | Reschedule handling | Broken (treated as new booking) | Create |
-| WF-12 | Booking | Cancellation and rebook | Slack only, manual status | Create |
-| WF-13 | Pre-call | Confirmation and reminders | Not visible (Kit/Calendly unverified) | Create or verify |
-| WF-14 | Pre-call | Setter confirmation and triage | None | Create |
-| WF-15 | Pre-call | Closer pre-call brief | None | Create |
-| WF-16 | Call | No-show recovery | Slack only | Create |
-| WF-17 | Call | Call outcome capture (EOC) | Airtable form, 88-step Zap | Update (move into Close) |
-| WF-18 | Post-call | Closer follow-up cadence | Status only, no tasks | Create |
-| WF-19 | Post-call | Lost and DQ handling | Status only | Update |
-| WF-20 | Close | Contract send and signed | DocuSign Zap off (outside audit scope) | Keep off; listed for completeness |
-| WF-21 | Payment | Payment received | Fanbasis to Airtable and Slack only | Update |
-| WF-22 | Payment | Deposit handling | Deposit counted as a closed deal | Update |
-| WF-23 | Payment | Payment plan schedule | Duplicated in Close opps and Airtable | Update |
-| WF-24 | Payment | Collections (due, overdue, failed) | Views only, nothing sent | Create |
-| WF-25 | Payment | Refunds and chargebacks | Manual | Create |
-| WF-26 | Payment | Off-platform payment entry | Via EOC free entry | Create |
-| WF-27 | Client | Client onboarding | Email, intake to Slack, kickoff to Slack | Update |
-| WF-28 | Team | Rep onboarding and offboarding | Onboarding only | Update |
-| WF-29 | Team | Setter EOD and reminder | Works | Keep (minor update) |
-| WF-30 | Team | Commissions | Airtable formulas on unlinked data | Update |
-| WF-31 | Reporting | Sales dashboard (daily, weekly, monthly) | Period-link tables, numbers wrong | Update (rebuild) |
-| WF-32 | Reporting | Speed-to-lead and activity report | Measures nothing | Create |
-| WF-33 | Reporting | Finance dashboard | Period totals missing renewals | Update (rebuild) |
-| WF-34 | Reporting | Ad spend ingestion | Table empty | Create |
-| WF-35 | Admin | Weekly data hygiene check | None | Create |
-| WF-36 | Admin | Automation error monitoring | None | Create |
+| ID | Stage | Workflow | KRC today | Action | SOPs |
+|---|---|---|---|---|---|
+| WF-01 | Capture | Lead intake and dedupe | 6 Zaps, inconsistent, regress statuses | Update (consolidate) | 01, 02, 23 |
+| WF-02 | Capture | Attribution capture | Hardcoded source labels, overwritten | Update | 01, 23 |
+| WF-03 | Capture | Lead routing and owner assignment | None | Create | 03 |
+| WF-04 | Speed to lead | Instant response (SMS and email) | None | Create | 03 |
+| WF-05 | Speed to lead | Setter call cadence | Slack ping only | Create | 03, 04 |
+| WF-06 | Speed to lead | Unworked lead escalation | None | Create | 03 |
+| WF-07 | Nurture | Applied but not booked follow-up | Smart view only | Create | 03 |
+| WF-08 | Nurture | Freebie opt-in nurture | Kit sequence, but freebies treated as applications | Update | 23 |
+| WF-09 | Nurture | Stale lead re-engagement | One failed blast in July | Create | 22 |
+| WF-10 | Booking | Booking sync to Close | 2 Zaps, create duplicate deals | Update (consolidate) | 05 |
+| WF-11 | Booking | Reschedule handling | Broken (treated as new booking) | Create | 05 |
+| WF-12 | Booking | Cancellation and rebook | Slack only, manual status | Create | 10 |
+| WF-13 | Pre-call | Confirmation and reminders | Not visible (Kit/Calendly unverified) | Create or verify | 06 |
+| WF-14 | Pre-call | Setter confirmation and triage | None | Create | 06 |
+| WF-15 | Pre-call | Closer pre-call brief | None | Create | 06 |
+| WF-16 | Call | No-show recovery | Slack only | Create | 10 |
+| WF-17 | Call | Call outcome capture (EOC) | Airtable form, 88-step Zap | Update (move into Close) | 07, 08 |
+| WF-18 | Post-call | Closer follow-up cadence | Status only, no tasks | Create | 09 |
+| WF-19 | Post-call | Lost and DQ handling | Status only | Update | 02, 07 |
+| WF-20 | Close | Contract send and signed | DocuSign Zap off (outside audit scope) | Keep off; listed for completeness | n/a |
+| WF-21 | Payment | Payment received | Fanbasis to Airtable and Slack only | Update | 13 |
+| WF-22 | Payment | Deposit handling | Deposit counted as a closed deal | Update | 11 |
+| WF-23 | Payment | Payment plan schedule | Duplicated in Close opps and Airtable | Update | 11 |
+| WF-24 | Payment | Collections (due, overdue, failed) | Views only, nothing sent | Create | 14 |
+| WF-25 | Payment | Refunds and chargebacks | Manual | Create | 15 |
+| WF-26 | Payment | Off-platform payment entry | Via EOC free entry | Create | 12 |
+| WF-27 | Client | Client onboarding | Email, intake to Slack, kickoff to Slack | Update | 16 |
+| WF-28 | Team | Rep onboarding and offboarding | Onboarding only | Update | 17 |
+| WF-29 | Team | Setter EOD and reminder | Works | Keep (minor update) | 03 |
+| WF-30 | Team | Commissions | Airtable formulas on unlinked data | Update | 18 |
+| WF-31 | Reporting | Sales dashboard (daily, weekly, monthly) | Period-link tables, numbers wrong | Update (rebuild) | 25 |
+| WF-32 | Reporting | Speed-to-lead and activity report | Measures nothing | Create | 04, 25 |
+| WF-33 | Reporting | Finance dashboard | Period totals missing renewals | Update (rebuild) | 25 |
+| WF-34 | Reporting | Ad spend ingestion | Table empty | Create | 25 |
+| WF-35 | Admin | Weekly data hygiene check | None | Create | 19, 20 |
+| WF-36 | Admin | Automation error monitoring | None | Create | 21, 22, 27 |
 
 ## A2. Workflow specs
 
@@ -422,6 +423,8 @@ Test every flow against: a new lead, an existing lead, a lead in a closed status
 
 ### Phase 3: reporting
 
+Each phase ships with its SOPs from Part D. A workflow isn't done until its SOP is written and matches how the system actually behaves.
+
 WF-31 to WF-34, run side by side with the old tables for a full month, then retire the old period tables. Retire Google Sheets once Mitch confirms nobody depends on them.
 
 ### Phase 4: make it repeatable for future accounts
@@ -445,3 +448,229 @@ WF-31 to WF-34, run side by side with the old tables for a full month, then reti
 | What DCBA, DCBIG and DCBE mean | ISS-15 | Mitch |
 | Does anyone, such as an accountant, use the two Google Sheets? | ISS-27 | Mitch |
 | Close plan includes Workflows with SMS and call steps? | WF-05 | Leah |
+
+---
+
+# Part D: SOP catalog
+
+These SOPs cover how the systems get used and maintained. They don't cover business rules (pricing, qualification criteria, schedules) or who does the work. Where an SOP needs a business value, such as an escalation time, it points to the config table so Mitch's team sets the value in one place.
+
+Status: none of these exist as written procedures in the systems reviewed. Today the process lives in Zap logic, Slack message wording and people's heads. Every SOP below is marked Create. If any already exist outside these systems (Notion, Google Docs, Loom), mark them Update and send them over for review.
+
+## D1. Summary
+
+| ID | Area | SOP | Supports | Status |
+|---|---|---|---|---|
+| SOP-01 | Data | Lead record standards (required fields, source fields, ID rules) | WF-01, WF-02 | Create |
+| SOP-02 | Data | Status and pipeline stage definitions | WF-01, WF-19, WF-22 | Create |
+| SOP-03 | Lead handling | Working a new lead in Close (tasks, smart views, workflow, EOD) | WF-03 to WF-07, WF-29 | Create |
+| SOP-04 | Lead handling | Logging activity that happens outside Close | WF-05, WF-32 | Create |
+| SOP-05 | Booking | Booking, rebooking and live transfers | WF-10, WF-11 | Create |
+| SOP-06 | Pre-call | Confirmation task, triage fields and the closer brief | WF-13 to WF-15 | Create |
+| SOP-07 | Call | Submitting the EOC | WF-17, WF-19 | Create |
+| SOP-08 | Call | Correcting a wrong EOC | WF-17 | Create |
+| SOP-09 | Post-call | Working follow-up tasks | WF-18 | Create |
+| SOP-10 | Post-call | No-show and cancel handling in Close | WF-12, WF-16 | Create |
+| SOP-11 | Money | Recording deposits and payment plans | WF-22, WF-23 | Create |
+| SOP-12 | Money | Entering an off-platform payment | WF-26 | Create |
+| SOP-13 | Money | Resolving an unmatched payment | WF-21 | Create |
+| SOP-14 | Money | Working the collections queue | WF-24 | Create |
+| SOP-15 | Money | Processing a refund or chargeback | WF-25 | Create |
+| SOP-16 | Handoff | Won deal to client onboarding | WF-27 | Create |
+| SOP-17 | Access | Rep system access: provisioning and removal | WF-28 | Create |
+| SOP-18 | Money | Monthly commission run | WF-30 | Create |
+| SOP-19 | Systems | Weekly data hygiene review | WF-35 | Create |
+| SOP-20 | Systems | Merging duplicate leads and opportunities | WF-35 | Create |
+| SOP-21 | Systems | Automation error triage and replay | WF-36 | Create |
+| SOP-22 | Systems | Automation change control | WF-36, all | Create |
+| SOP-23 | Systems | Adding a lead source, form or event type | WF-01, WF-02, WF-08 | Create |
+| SOP-24 | Systems | Adding a product, price or payment processor | WF-21, WF-23 | Create |
+| SOP-25 | Reporting | Metric definitions | WF-31 to WF-34 | Create |
+| SOP-26 | Systems | Rolling the system out to a new account | Phase 4 | Create |
+| SOP-27 | Systems | Connections, API keys and credential rotation | WF-36 | Create |
+
+## D2. SOP outlines
+
+Each outline lists what the finished SOP has to cover. Leah writes the full version once the matching workflow is built, so the SOP describes the system as it actually works.
+
+### SOP-01 Lead record standards
+
+- Required fields on every lead: name, normalized email, phone in E.164 format, First Touch Source, Traffic Type.
+- What each source field means and when it gets set. First Touch is write once; Last Touch, Application Source and Booking Source are set by their own events.
+- Close lead ID is the key in every other system. Emails are lowercased and trimmed.
+- Never create a lead by hand without searching first.
+- Fixes: ISS-14, ISS-34, ISS-37.
+
+### SOP-02 Status and pipeline stage definitions
+
+- One line per lead status and per opportunity stage: what it means, what moves a record in, what moves it out, and whether automation or a person sets it.
+- The forward-only rule and the recyclable set.
+- Deposit Paid is active, not won. Won means signed and paid in full or plan started.
+- Opp value is empty until an offer, then the contract value.
+- Fixes: ISS-05, ISS-13, ISS-18, ISS-19.
+
+### SOP-03 Working a new lead in Close
+
+- Where new leads show up (task list, smart views) and in what order to work them.
+- How the call and SMS workflow runs, and how to pause or exit it (replied, booked, DQ).
+- How to mark the outcome of an attempt in Close so reporting picks it up.
+- The setter EOD form: when it's submitted and what each number means.
+- Fixes: ISS-07, ISS-09.
+
+### SOP-04 Logging activity that happens outside Close
+
+- If contact happens through IG DM or a personal phone, how to log it in Close (note or custom activity) so speed to lead and activity reports count it.
+- Why it matters: anything unlogged shows up as an untouched lead.
+- Fixes: ISS-07 measurement gap.
+
+### SOP-05 Booking, rebooking and live transfers
+
+- Which Calendly event types to use for which path (setter booking, direct booking, live transfer). The mapping lives in the config table.
+- How to reschedule (always through Calendly's reschedule link, never by canceling and booking again) so the existing opp updates.
+- How to log a live transfer so it counts as a booking.
+- Fixes: ISS-10, ISS-11.
+
+### SOP-06 Confirmation task, triage fields and closer brief
+
+- What the confirmation task asks for and how to fill in the triage fields.
+- What happens automatically when a call isn't confirmed by the set time.
+- Where the closer brief arrives and what's in it.
+- Fixes: ISS-30.
+
+### SOP-07 Submitting the EOC
+
+- One EOC per call, submitted from the lead in Close, before the next call or within the set window.
+- Required fields per outcome, and what each outcome triggers (link to WF-17 branches).
+- A deposit is logged as Deposit, never as Closed.
+- The follow-up date is required for Offer Made and 2-call close, because it creates the task.
+- The Fathom link goes in its field.
+- Fixes: ISS-05, ISS-06, ISS-29, ISS-36, ISS-40.
+
+### SOP-08 Correcting a wrong EOC
+
+- Edit the existing EOC. Never submit a second one.
+- Which corrections the automation picks up on edit, and which need ops to fix downstream (payment links, installment schedule).
+- Fixes: ISS-06.
+
+### SOP-09 Working follow-up tasks
+
+- Where follow-up tasks appear, and what to log after each follow-up.
+- How to reschedule a follow-up (move the task date and log a note).
+- What happens automatically when a follow-up goes overdue or the deal goes cold.
+- Fixes: ISS-29.
+
+### SOP-10 No-show and cancel handling in Close
+
+- What the automation already did (rebook messages, task) before anyone touches the lead.
+- How to log the rebook attempt and the result.
+- When to stop and mark the lead lost (the attempt limit is set in the config table).
+- Fixes: ISS-31.
+
+### SOP-11 Recording deposits and payment plans
+
+- How a deposit is logged and how the balance task works.
+- How a payment plan schedule is entered on the EOC and where it shows up in Airtable.
+- What to do when plan terms change (edit the schedule, never create a second customer product).
+- Fixes: ISS-05, ISS-20.
+
+### SOP-12 Entering an off-platform payment
+
+- When to use the form (wire, Zelle, crypto and so on).
+- Pick the customer product from the list, enter the amount with cents, attach proof.
+- Fixes: ISS-25.
+
+### SOP-13 Resolving an unmatched payment
+
+- Where unmatched payments land (alert plus an Airtable view).
+- How to find the right lead (email variants, name, phone), link the payment, and rerun the downstream steps.
+- When to create a new lead instead.
+- Fixes: ISS-22.
+
+### SOP-14 Working the collections queue
+
+- Where due and overdue installments appear, and what the automation has already sent.
+- How to log each contact attempt, and how to record a promise to pay or a new date.
+- How to mark an installment paid manually if the payment came in off platform (link it through SOP-12).
+- Fixes: ISS-20.
+
+### SOP-15 Processing a refund or chargeback
+
+- How to record it so the refund record, clawback and Close status all update.
+- How to handle partial refunds.
+- Fixes: refund records are manual today.
+
+### SOP-16 Won deal to client onboarding
+
+- What the automation sends on Won, and what to check (intake received, kickoff booked, course access granted).
+- What to do when a step stalls.
+
+### SOP-17 Rep system access: provisioning and removal
+
+- Accounts and records to set up: Google Workspace, Close membership, Close user ID in the Airtable User table, Slack, setter rotation entry in config.
+- Removal checklist: deactivate the Close membership, suspend Google Workspace, remove from rotation, reassign open leads and tasks.
+- Fixes: ISS-35, ISS-46.
+
+### SOP-18 Monthly commission run
+
+- Run from the Airtable finance views after month end.
+- Clear the "Unattributed" view first (payments without a closer or setter).
+- Apply refund clawbacks, then export or lock the month.
+- Fixes: ISS-23.
+
+### SOP-19 Weekly data hygiene review
+
+- Work through the WF-35 report: duplicate leads, multiple open opps, open opps on dead leads, unlinked payments, EOCs without a lead ID, leads without a phone.
+- Each line gets fixed or marked as an exception. Log what was fixed.
+- Fixes: ISS-18, ISS-22, ISS-37.
+
+### SOP-20 Merging duplicate leads and opportunities
+
+- How to choose the surviving lead (oldest, or the one with payments), merge in Close, and update the Close lead ID in Airtable.
+- How to close duplicate opps without losing history.
+- Fixes: ISS-10, ISS-37.
+
+### SOP-21 Automation error triage and replay
+
+- What the #ops-alerts message contains, and how to read the Zap run history.
+- Decide: fix the data and replay, or fix the Zap and replay.
+- Check for partial writes (Close updated but Airtable not, or the reverse) before replaying so nothing gets doubled.
+- Fixes: ISS-42.
+
+### SOP-22 Automation change control
+
+- Every change goes through the config table first when possible (IDs, channels, mappings).
+- Naming convention, folders, and a changelog entry (date, Zap, change, reason).
+- The test checklist from Part C runs before turning a changed Zap back on.
+- Never change a status, field or dropdown value in Close or Airtable without checking which Zaps and formulas reference it.
+- Fixes: ISS-01 (that bug is exactly an unchecked value change), ISS-44.
+
+### SOP-23 Adding a lead source, form or event type
+
+- Add the form ID or event type to the config table with its source label and intent (application or freebie).
+- Add the label to the Close source dropdowns.
+- Test with one submission and confirm it lands in Close, Airtable and the right Slack channel.
+- Fixes: ISS-15, ISS-45.
+
+### SOP-24 Adding a product, price or payment processor
+
+- Add the product to the product list in config.
+- For a new processor, duplicate the WF-21 Zap with that processor's trigger, store its transaction ID, and map its net amount field.
+- Fixes: ISS-25, ISS-26.
+
+### SOP-25 Metric definitions
+
+- One line per reported number: the definition, the source table and field, and what's excluded. Covers leads, set, show, offer, closed deal (excludes deposits), cash collected, new vs recurring cash, speed to lead, ROAS.
+- Any dashboard number has to match this definition.
+- Fixes: ISS-01, ISS-02, ISS-04, ISS-05.
+
+### SOP-26 Rolling the system out to a new account
+
+- Run the Close provisioning script, duplicate the Airtable template, fill in the config table, connect apps in Zapier, import the Zap set, run the test checklist, then turn the Zaps on.
+- Written after the Kimberly Rae build is stable, using it as the reference.
+
+### SOP-27 Connections, API keys and credential rotation
+
+- Inventory of every Zapier connection and API key, with the account it runs as.
+- Use a dedicated automation user in Close where possible.
+- Rotate keys whenever someone with access leaves, and after any key gets shared (including the keys used for this audit).
+- Fixes: ISS-43.
