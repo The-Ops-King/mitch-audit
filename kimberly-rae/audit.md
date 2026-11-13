@@ -1181,7 +1181,7 @@ One page each. Write each after its card is built, so it matches what the system
 | Are host cancels on direct bookings on purpose (screening)? | Mitch | 11 |
 | Approve or rewrite the message copy. Which booking link goes in [booking link]? | Mitch | 9 to 12, 15, 18, 23 |
 | Texting consent wording on Typeform and Calendly | Mitch | Part 4 |
-| Does anyone use the two Google Sheets the EOC and payment Zaps write to? If not, delete those steps | Mitch | 5, 14 |
+| Does anyone use the two Google Sheets the EOC and payment Zaps write to? The cash sheet (1mejS31F...) also gets rows from Barak's Zaps, so it may be Mitch's cross-client ledger. Keep it if so | Mitch | 5, 14 |
 | Lead status after a full refund | Mitch | 16 |
 | Who owns the system after launch? | Mitch | Part 6 |
 | Do you want a triage step before the closer's call (for example a setter qualifying call, or a qualifying form before the booking page)? Today closers screen by canceling direct bookings | Mitch | 11 |
