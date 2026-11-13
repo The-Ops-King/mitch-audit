@@ -17,13 +17,30 @@ Every item has one of four verdicts:
 
 ### Assumptions
 
-Calendly, Kit and DocuSign couldn't be accessed. The plan assumes:
+Kit and DocuSign couldn't be accessed. The plan assumes:
 
-- Calendly runs basic event types and sends its standard confirmation and reminder emails. Once the Close pre-call sequence (P1) is live, those Calendly reminders get switched off.
 - Kit is used for email blasts only, not pre-call.
 - DocuSign is used to send agreements by hand.
 
-If any of these turn out to be wrong, only the matching item in Part 4 changes.
+If either turns out to be wrong, only the matching item in Part 4 changes.
+
+Calendly was checked on 2026-11-13 (event types, team members, webhooks, and every booking since Sept 1). Its reminder timing and Workflows aren't visible through the API on this plan (Enterprise only), so those need a look inside Calendly.
+
+### What Calendly shows
+
+| Event type | What it is | Bookings since Sept 1 | Canceled |
+|---|---|---|---|
+| KRC Consultation Call - (SB) | Booked by a setter for the lead | 28 | 5 (3 were reschedules) |
+| KRC Consultation Call - (DCBA), (DCBIG), (DCBE) | Booked directly by the lead from three different links | 97 | 58 (55 canceled by the host, 3 reschedules) |
+| Live Interview | Live transfer to Makena | 6 | 0 |
+| Kickoff Session | Client kickoff with Kimberly | 10 | 4 |
+
+- DCB means direct call booking: the same 45-minute consultation call, booked by the lead without a setter. The letters after it look like the link's source (A = ads, IG = Instagram, E = email). Mitch should confirm.
+- All consultation calls are round robin with Makena as the only host. There's no separate triage call type. Every booked call is a closing call.
+- 55 of 97 direct bookings were canceled by the host, with no reason recorded. That looks like closers screening out unqualified direct bookings. None of those cancels reach Close (no cancel webhook exists): 10 of those leads still sit at "New Lead - DCB" and 20 still hold an open $7,200 deal. This is the main source of the inflated pipeline.
+- Calendly is collecting a text-reminder number on 39 of 97 direct bookings, so Calendly text reminders are switched on for those links. Setter bookings almost never have one (1 of 28).
+- Calls happen a median of 29 hours after booking. A quarter happen within 16 hours.
+- Calendly sends Zapier three "new booking" webhooks (setter booking, direct booking, kickoff) and nothing for cancellations.
 
 ## Summary for Mitch
 
@@ -40,7 +57,7 @@ The plan:
 - 10 new builds, plus 1 optional
 - 17 SOPs to write
 - Everything else stays as it is
-- 54 issues logged: 4 critical, 24 high, 19 medium, 7 low
+- 55 issues logged: 4 critical, 25 high, 19 medium, 7 low
 
 Decisions already made:
 
@@ -103,7 +120,7 @@ Approach: keep this structure. The plan changes only what's strictly necessary. 
 | Item | Today | Verdict | Ref |
 |---|---|---|---|
 | Deal moves Not Booked to Booked | Creates a new $7,200 deal on every booking and reschedule | Fix big | B1 |
-| Triage vs closing call | Event names with "(SB)", "Live", "DCBA", "DCBIG", "DCBE" are picked up. Which ones are triage is unknown until Calendly is visible | Fix big (part of B1) | B1 |
+| Triage vs closing call | No triage call type exists. Every booking is the same 45-minute consultation call with Makena (setter-booked or direct) or a live transfer | Keep | |
 | Assigned to the right person | Closer matched from the Calendly host into Closer Owner | Keep. Fix small: make the match exact | FS-14 |
 | Booking posted to Slack | Yes, the bookings channel | Keep | |
 | Booking source tagged | Book Source field. The direct-booking Zap labels every booking "Paid Ads" | Fix small | FS-15 |
@@ -113,8 +130,8 @@ Approach: keep this structure. The plan changes only what's strictly necessary. 
 
 | Item | Today | Verdict | Ref |
 |---|---|---|---|
-| Instant text and email on booking | Nothing in Close. Assumed: Calendly confirmation email only | Build new | P1 |
-| Reminder texts and emails before the call | Nothing in Close. Assumed: Calendly reminder emails only | Build new | P1 |
+| Instant text and email on booking | Nothing in Close. Calendly sends its confirmation | Build new in Close, then switch Calendly's off | P1 |
+| Reminder texts and emails before the call | Nothing in Close. Calendly sends reminders, with texts only to the 40% of direct bookers who give a number | Build new in Close, then switch Calendly's off | P1 |
 | Kit enrollment on booking | Booking Zaps add every booked lead to a Kit sequence and tag | Fix small: run after Close. Confirm it's a blast list, not a pre-call sequence | FS-09 |
 
 ## 4. What happened on the call
@@ -217,7 +234,7 @@ Each is a single change to an existing Zap, field or setting. Do them first.
 | FS-12 | Airtable, Rep Scorecard, Rep Name dropdown | Rename "Sidonie Claurans" to "Sidonie Chechin" (the name used everywhere else). |
 | FS-13 | New Rep Onboarding Zap, Google Workspace step | Turn on "Change password at next login". |
 | FS-14 | Setter Booking and DCB Booking Zaps, "Find Record" in User ID Lookup | Set "Exact match" to Yes. |
-| FS-15 | DCB Booking Zap, Close and Airtable steps | Hold until Mitch confirms the codes. Best read: DCB = direct call booking (booked straight onto a closer calendar, no setter), and the suffix is the source (A = Ads, IG = Instagram, E = Email). If that's right, replace the hardcoded "Paid Ads" with a lookup on the event name. |
+| FS-15 | DCB Booking Zap, Close and Airtable steps | Replace the hardcoded "Paid Ads" with a lookup on the Calendly event name: DCBA = Paid Ads, DCBIG = Instagram, DCBE = Email. Calendly confirms these are three separate direct-booking links; Mitch confirms the letters before the change. |
 | FS-16 | Fanbasis Renewal Zap, Airtable step | Map the Date field (one renewal currently has no date). |
 | FS-17 | Zapier | Delete "Untitled Zap" (empty draft). |
 | FS-18 | Close and Airtable data | Close the 15 dead deals. Merge duplicate deals on 7 leads. Merge the 15 duplicate-email lead groups. Link the 18 orphan payments to customer and product. Fix the $11.33 deal. |
@@ -301,7 +318,7 @@ It works today. This only makes it harder to break. Do it after everything else.
 - Enrollment: either Close's own trigger (enroll leads when they enter a smart view of status New Opportunity), or a step at the end of B1 that enrolls the contact. Use whichever the Close plan supports. If Close can't run it, keep these messages in Calendly instead (immediate, 24 hours, 1 hour) and skip the switch-off step below.
 - Steps (times relative to booking and call):
   1. Immediately: text and email confirming the time, the meeting link, and what to prepare.
-  2. 24 hours before: text and email reminder.
+  2. 24 hours before: text and email reminder. Skipped if the call was booked less than 24 hours out (a quarter of calls are booked within 16 hours).
   3. 1 hour before: text and email with the meeting link.
 - Exits: the lead status changes to No show, Canceled, a won or lost status, or the call time passes.
 - Reschedules: R3 restarts the workflow with the new time.
@@ -361,12 +378,19 @@ The current Zap has 88 steps because the same Close and Airtable steps are copie
 
 ## R2. Cancellations (Build new)
 
-- New Zap: Calendly "Invitee Canceled", filtered to `rescheduled` = false (real cancellations only).
-  1. Close: find the lead, move the deal to Canceled, lead status Canceled.
-  2. Existing Canceled to Slack alert then fires from the status change (keep it).
-- Close Workflow, same shape as R1, with cancel wording and the booking link.
+Calendly shows two kinds of cancels, and they need different handling. Host cancels (55 of 58 on direct bookings) look like closers screening out unqualified leads. Lead cancels are people who need to be won back.
+
+- New Zap: Calendly "Invitee Canceled", filtered to `rescheduled` = false (real cancellations only). Add a cancellation reason as a required field on host cancels in Calendly.
+- Steps:
+  1. Close: find the lead by email.
+  2. Paths:
+     - Canceled by the lead: lead status Canceled. The existing Canceled to Slack alert fires. The cancel drip starts.
+     - Canceled by the host: lead status DQ, deal moved to Lost with the Calendly cancel reason. No drip.
+  3. Note on the lead with who canceled and why.
+- Cancel drip (Close Workflow, same shape as R1): text within 5 minutes with the booking link, email, then text on day 1 and day 3.
 - Exits: rebooked, replied, or Lost.
-- Test: cancel a test booking in Calendly. The deal must move and the drip must start without anyone touching Close.
+- Cleanup with this build: the 10 direct bookers still at "New Lead - DCB" and the 20 open deals from host-canceled bookings (included in FS-18).
+- Test: cancel a test booking as the lead, then as the host. The lead cancel starts the drip; the host cancel sets DQ and starts nothing.
 
 ## R3. Reschedules (Build new)
 
@@ -475,10 +499,10 @@ Status: Confirmed means checked against the data or Zap config. Inferred means t
 | ISS-09 | Medium | Lead handoff depends on a Slack ✅ reaction and a regex reading the bot's message text. | Zap "(New Lead) Setter React" | Confirmed | B2 |
 | ISS-10 | High | Every booking creates a new $7,200 deal, even when one is open. | 7 leads have 2 to 3 open Interview opps created hours or days apart, including a signed client and an NGMI lead. | Confirmed | B1 |
 | ISS-11 | High | Reschedules come through as new bookings. The Zap filters on `rescheduled = false`, but Calendly sets that flag on the canceled original, and the new booking arrives with `rescheduled = false` and `old_invitee` set. | Zap filter config plus Calendly's reschedule docs | Confirmed | R3 |
-| ISS-12 | High | Calendly cancellations aren't used. Cancels only register if a rep changes the Close status. | No Zap on invitee canceled | Confirmed | R2 |
+| ISS-12 | High | Calendly cancellations never reach Close. Cancels only register if a rep changes the Close status by hand. | Calendly has three "new booking" webhooks to Zapier and none for cancellations. 55 of 97 direct bookings since Sept 1 were canceled by the host; 10 of those leads still show "New Lead - DCB" and 20 still hold an open $7,200 deal. | Confirmed | R2 |
 | ISS-13 | High | Re-opt-ins knock leads back to "New Lead". | 8 leads currently in New Lead that hold Lost, Interview or Pending Close opps. Close history shows moves such as Canceled to New Lead, No show to New Lead, Closer Follow Up to New Lead, and New Opportunity to New Lead. | Confirmed | FS-08 |
 | ISS-14 | High | Source fields are overwritten on every touch, so first-touch attribution doesn't exist. | Update steps in 8 Zaps write Opt Source and Applied Source unconditionally. 30 leads now show Opt Source "Setter Booking". | Confirmed | FS-08, N2 |
-| ISS-15 | Medium | The DCB Zap labels DCBA, DCBIG and DCBE bookings all as "Paid Ads". | Zap config | Confirmed (config). Meaning of the codes unverified. | FS-15 |
+| ISS-15 | Medium | The DCB Zap labels every direct booking "Paid Ads", including the Instagram (DCBIG) and email (DCBE) links. | Calendly: 81 DCBA, 12 DCBIG and 4 DCBE bookings since Sept 1, all written to Close as Paid Ads | Confirmed. Meaning of A, IG and E inferred from the names; Mitch to confirm. | FS-15 |
 | ISS-16 | High | Payment amounts with cents are corrupted in Close. The Zap builds cents by appending "00" to the dollar text. | EOC cash $1,133.33 became a $11.33 opp. Every amount with decimals is affected. | Confirmed | FS-04, C1 |
 | ISS-17 | High | EOC updates whichever opp Close returns first. | Zap config ("first" result). A signed client still holds 2 open Interview opps. | Confirmed | FS-22, B1 |
 | ISS-18 | High | Pipeline is inflated with dead deals. | $700,800 open across 98 opps. 15 leads in DQ, NGMI, Canceled, No show or signed statuses hold open sales opps worth $136,800. | Confirmed | FS-18, FS-20, B1 |
@@ -493,7 +517,7 @@ Status: Confirmed means checked against the data or Zap config. Inferred means t
 | ISS-27 | Medium | Google Sheets act as an incomplete third ledger (Fanbasis new sales are missing). | Zap config | Confirmed | Retire once nobody reads them (confirm with Mitch) |
 | ISS-28 | High | No ongoing re-engagement. The only sequence was a one-time blast from Kimberly's main inbox that mostly failed. | 759 leads enrolled in under a minute on Jul 15: 518 `account-failures` (Close couldn't send through the mailbox), 218 finished, 22 replied, 1 booked. 0 sequence emails since Sept 1. | Confirmed | Retire the Close sequence. Re-engagement runs as Kit blasts (outside scope). |
 | ISS-29 | High | Follow-up dates are collected but no task is created. | 33 leads in Closer Follow Up, 19 open tasks org-wide, 9 overdue | Confirmed | FS-03, C1 |
-| ISS-30 | High | No visible pre-call process (confirmations, reminders, triage, brief). | Nothing in Close or Zapier | Confirmed for Close and Zapier. Calendly reminders and Kit sequence 2893474 unverified. | P1 to P1 |
+| ISS-30 | High | No pre-call process in Close. Calendly sends its own confirmations and reminders, but texts only reach people who type in a number (39 of 97 direct bookings, 1 of 28 setter bookings). | Close and Zapier have nothing. Calendly event data. | Confirmed. Calendly reminder timing not visible through the API. | P1 |
 | ISS-31 | High | No-shows and cancels get a Slack post only. Nothing goes to the lead and no task is created. | Zap config | Confirmed | R2, R1 |
 | ISS-32 | Low | EOC Slack summary shows the 3rd installment date in place of the amount. | Code step maps `amt_3` to "Date of 3rd Instalment" | Confirmed | FS-01, C1 |
 | ISS-33 | Medium | Call dates are converted UTC to UTC and stored date-only, so evening calls can land on the next day. | Comparing first calls: Close's date is exactly 1 day later than the closer's EOC date in 9 cases, 1 day earlier in 3. | Confirmed (pattern consistent with the UTC rollover) | B1 |
@@ -518,6 +542,7 @@ Status: Confirmed means checked against the data or Zap config. Inferred means t
 | ISS-52 | Medium | No smart lists for 3 to 7 day leads, cancellations or reschedules. "3 Day No Book" covers 0 to 3 days. | Smart view definitions | Confirmed | FS-19 (L1) |
 | ISS-53 | Medium | No show/no-show field on the lead or deal, so show rate can only come from Airtable. | Close field list | Confirmed | C1, N2 |
 | ISS-54 | Medium | Fathom recordings never reach Close, and Slack gets the typed EOC summary, not the recording summary. | Close Fathom URL field empty on all 1,481 leads | Confirmed | C2 |
+| ISS-55 | High | Host cancellations on direct bookings carry no reason and leave no trace in Close, so screened-out leads look like open pipeline and canceled leads get no follow-up. | 55 of 97 direct bookings canceled by the host since Sept 1, 0 with a reason | Confirmed | R2 |
 
 ### Corrections from earlier drafts
 
@@ -585,9 +610,10 @@ Test every flow against:
 
 | Item | Affects | Needed from |
 |---|---|---|
-| Calendly access: event types (which are triage), reminder settings | B1, P1, R2, R3 | Client |
+| Calendly reminder timing and Workflows (only visible inside Calendly) | P1 | Leah, inside Calendly |
+| Are host cancels on direct bookings deliberate screening? | R2 | Mitch |
 | Airtable automation that links payments to periods | D1 | Leah, inside Airtable |
-| What DCBA, DCBIG and DCBE stand for | FS-15 | Mitch |
+| Confirm DCBA = ads, DCBIG = Instagram, DCBE = email | FS-15 | Mitch |
 | Does Fanbasis offer failed payment and refund triggers in Zapier | M2, M3 | Leah |
 | Does the Close plan support Workflows with SMS and Zapier enrollment | P1, R1, R2, R3 | Leah |
 | Does the Fathom plan include the Close integration | C2 | Leah |
