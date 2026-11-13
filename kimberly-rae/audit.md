@@ -5,7 +5,7 @@ Data pulled 2026-11-12, read only: Zapier export (23 Zaps), Close (config, 1,481
 
 ## How to use this document
 
-- Mitch: read the summary below, then Part B (issues register) for the detail behind any item.
+- Mitch: read the summary and the "What exists, what changes, what's missing" section below, then Part B (issues register) for the detail behind any item.
 - Leah: build from Part C (build order), using Part A for each workflow's spec and Part D for the SOP that ships with it.
 
 The four parts:
@@ -31,7 +31,7 @@ Headline findings (all verified against live data):
 | Money | Fanbasis payments never update Close. Payments aren't linked to customers or reps. A Zap corrupts any amount with cents. | $16,100 of first payments are classed as recurring. $5,517 of commission sits on payments with no rep. A $1,133.33 payment shows as $11.33 in Close. (ISS-16, ISS-21, ISS-22, ISS-23) |
 | Follow-up | Follow-up dates aren't turned into tasks. No-shows and cancels get a Slack post and nothing else. The only re-engagement sequence was a one-off blast in July that mostly failed. | 33 leads in follow-up status, 19 open tasks in the whole account. (ISS-28, ISS-29, ISS-31) |
 
-What gets built: 36 workflows in total. 19 are new, 14 are updates to existing Zaps, and the rest are kept or out of scope. 27 SOPs get written alongside them. 47 issues are logged: 4 critical, 21 high, 15 medium, 7 low.
+What gets built: 36 workflows in total. 19 are new, 14 are updates to existing Zaps, and the rest are kept or out of scope. 27 SOPs get written alongside them. 48 issues are logged: 4 critical, 21 high, 16 medium, 7 low.
 
 Decisions already made:
 
@@ -39,6 +39,95 @@ Decisions already made:
 2. A deposit is not a closed deal.
 3. Every follow-up date creates a Close task.
 4. Moving the EOC form into Close is recommended, and Mitch is open to it.
+
+## What exists, what changes, what's missing
+
+### At a glance, stage by stage
+
+| Stage | Exists today | Change | Missing |
+|---|---|---|---|
+| Lead capture | 6 form Zaps: IG Typeform, Paid Ads Typeform, Kajabi application, 3 Kajabi freebies. Each writes to Close, Slack and Airtable Lead Base. | Merge into 2 Zaps (Typeform, Kajabi). Stop resetting status and overwriting source on existing leads. Run Kit after Close. Move freebies out of the applications channel. | UTM capture. Write-once first-touch source. Lead owner assignment. |
+| Speed to lead | Slack "NEW APPLICATION" post. The ✅ reaction handoff Zap. "New Apps" smart view. | Replace the ✅ handoff with Close owner and task. Base smart views on last call or contact, not "lead updated". | Instant SMS. Setter call cadence. Unworked-lead escalation. Speed-to-lead report. |
+| Nurture | Kit sequences on booking and Kajabi forms (content unverified). Close "Re-Engagement Email Sequence", dead since July. "3 Day No Book" and "Re-Engagement" smart views. | Separate Kit nurture per freebie. | Applied-but-not-booked follow-up. Ongoing stale-lead re-engagement from a secondary sending domain. |
+| Booking | Setter Booking Zap. DCB Booking Zap. Kickoff Session Zap. | Update the lead's open deal instead of creating a new one. No $7,200 placeholder. Store the full call time with timezone. Merge the two booking Zaps. | Reschedule handling. Calendly cancel handling. |
+| Pre-call | Kit booking sequence and Calendly reminders (both unverified). | Verify both, then pick one reminder owner. | SMS reminders. Setter confirmation task and triage fields. Closer pre-call brief. |
+| Call outcome | Airtable EOC form plus the 88-step EOC Zap. Hidden Zapier Table mapping outcomes to Close statuses. No Show, Canceled and Reschedule Slack Zaps. | Move the EOC into Close. Fix the cents bug and the 3rd-installment field. Deposits stop counting as closed. Write the Fathom link to Close. One EOC per call. | No-show recovery sequence. |
+| Follow-up | "Closer Follow Up" status. Tasks created by hand. | None. | Follow-up task from every EOC follow-up date. Overdue follow-up alerts. Lost and DQ routing to nurture. |
+| Payments | Fanbasis new sale Zap. Fanbasis renewal Zap. EOC payment branches. Payment, Instalment and Refund tables. 2 Google Sheets. | Fanbasis writes to Close. Payments link to customer and rep. Store the transaction ID. One net-amount calculation. Payment plans live only in Airtable. Retire the Sheets. | Off-platform payment form. Unmatched payment handling. |
+| Collections and refunds | "Overdue" and "Due This Week" views in Airtable. | None. | Due and overdue reminders. Failed payment alerts. Refund automation with clawback. |
+| Client handoff | Onboarding Email Zap. Intake Form to Slack. Kickoff Session to Slack. | Trigger onboarding from the won deal. Write intake and kickoff to Close. | Reminder when kickoff isn't booked. |
+| Team | Rep Onboarding Zap. Setter EOD to Slack. EOD Reminder. | Force a password change at first login. Link EOD rep to the User table. | Rep offboarding. |
+| Reporting | Sales Metrics, Finance Metrics, Daily Sales Report and Rep Scorecard tables. Ad Spend table (empty). | Rebuild as date-filtered dashboards. Fix the paid flag. Exclude deposits from closed deals. | Ad spend feed. |
+| Admin | None. | None. | Zap error alerts. Weekly data hygiene check. Config table. Change log. |
+
+### Inventory of everything that exists today
+
+Verdicts: Keep (works, leave it), Fix (change the existing piece), Replace (build new, then switch this off), Merge (combine with similar pieces), Retire or Delete (switch off or remove), Verify (couldn't check yet).
+
+Zapier
+
+| Exists today | Verdict | What changes | Becomes |
+|---|---|---|---|
+| Setter Booking -> Close -> Slack -> Airtable | Fix, then merge | Update the open deal instead of creating one. Remove the placeholder value. Full call time with timezone. Kit after Close. | WF-10 |
+| DCB Booking -> Close -> Slack -> Airtable | Fix, then merge | Same as Setter Booking. Map DCBA, DCBIG and DCBE to their real sources. | WF-10 |
+| IG Application -> Close -> Slack -> Airtable | Fix, then merge | No status reset or source overwrite on existing leads. | WF-01 |
+| Paid Ads Application -> Close -> Slack -> Airtable | Fix, then merge | Same as IG Application. | WF-01 |
+| Kajabi Application -> Close -> Slack -> Airtable | Fix, then merge | Same, plus Kit after Close. | WF-01 |
+| Kajabi Relationship Quiz, Commitment Training, Anxious to Confident (3 Zaps) | Merge | One freebie Zap with a form lookup. Post to a low-priority channel, not applications. | WF-01, WF-08 |
+| (New Lead) Setter React | Replace | Close owner assignment and task, no Slack reaction or regex. | WF-03 |
+| No Show -> Slack | Replace | Triggered by the EOC outcome, starts the rebook sequence. | WF-16 |
+| Canceled Call -> Slack | Replace | Triggered by Calendly cancel, starts the rebook sequence. | WF-12 |
+| Reschedule -> Slack | Replace | Calendly reschedule updates the existing deal. | WF-11 |
+| EOC Form -> Close -> Slack -> Airtable (88 steps) | Fix now, replace later | Now: cents fix, 3rd-installment field, follow-up task, Fathom link, deposits not closed. Later: Close EOC with one smaller Zap. | WF-17 |
+| Fanbasis Payment -> Airtable -> Slack | Fix | Write to Close, link customer and rep, store transaction ID, mark installments paid. Slack last. | WF-21 |
+| Fanbasis - Renewal -> Airtable -> Slack | Fix | Same steps as new sale. Use Fanbasis net amount, not 3.9%. Set the payment date. | WF-21 |
+| Onboarding Email | Merge | Move into client onboarding, triggered by the won deal. | WF-27 |
+| New Client Intake Form > Slack | Fix | Also write to Close. | WF-27 |
+| Kickoff Session > Slack | Fix | Also write to Close. Reminder if not booked. | WF-27 |
+| New Rep Onboarding | Fix | Force password change at first login. Write the Close user ID to Airtable. | WF-28 |
+| Setter EOD -> Slack | Keep | None. | WF-29 |
+| EOD Reminder | Keep | None. | WF-29 |
+| New Contract > Slack (off) | Leave off | Outside this audit's scope. | WF-20 |
+| Untitled Zap | Delete | Empty draft. | None |
+
+Close
+
+| Exists today | Verdict | What changes | Becomes |
+|---|---|---|---|
+| 13 lead statuses | Keep | Write down what each one means. Apply the forward-only rule. | SOP-02 |
+| Sales pipeline (7 stages) | Fix | Deposit Paid becomes active, not won. Remove the Installment Pending and Installment Paid stages after migration. | WF-22, WF-23 |
+| 8 lead custom fields | Fix | Source fields become dropdowns. Add First Touch and Last Touch. Start filling Fathom URL and Traffic Type. | WF-02 |
+| 6 smart views (Gold Rush, Gold Rush Paid Ads, New Apps, 3 Day No Book, No Shows, Re-Engagement) | Fix | They filter on "lead updated", which every automation update resets, so leads drop out of view. Switch to last call or last contact. Gold Rush Paid Ads matches the text "paid" and should use the source dropdown. | WF-02, WF-05 |
+| Re-Engagement Email Sequence and its 4 templates | Replace | Ongoing re-engagement from a secondary domain. | WF-09 |
+| 3 webhooks to Zapier (lead updated) | Keep for now | They feed the status Zaps being replaced. Add a webhook for the Close EOC. | WF-17 |
+| 4 active users, 4 phone numbers, SMS working | Keep | None. | None |
+| Zapier Table mapping EOC outcomes to statuses | Fix | Move into the config table. | Phase 1 |
+
+Airtable
+
+| Exists today | Verdict | What changes | Becomes |
+|---|---|---|---|
+| EOC Report Responses | Fix | Add Close lead ID. Closed Deals excludes deposits. Replace the manual Lead Source with Traffic Type. If the EOC moves into Close, this table stays as the record the Zap writes to. | WF-17 |
+| Setters EOD Responses | Keep | Link the rep to the User table instead of a name dropdown. | WF-29 |
+| Lead Base | Fix | Add Close lead ID, backfill all Close leads, fix the paid flag. | WF-01, WF-02 |
+| Sales Metrics Summary, Daily Sales Report, Rep Scorecard, Finance Metrics Summary | Replace | Date-filtered dashboards on raw records. | WF-31, WF-33 |
+| Payment Records | Fix | Add transaction ID and Close lead ID. Always link customer, product and rep. | WF-21 |
+| Instalment Records | Fix | Becomes the only place payment plans live. Marked paid automatically. | WF-23 |
+| Refund Records | Keep | Fill it automatically. | WF-25 |
+| Ad Spend | Fix | Populate it. | WF-34 |
+| Customer Table, Customer Products | Fix | Key on Close lead ID. | WF-21 |
+| User ID Lookup | Fix | Key on Close user ID. | WF-28 |
+| New OB Form Responses | Keep | None. | WF-28 |
+
+Other systems
+
+| Exists today | Verdict | What changes | Becomes |
+|---|---|---|---|
+| Google Sheet: EOC log | Retire | After confirming nobody reads it. | None |
+| Google Sheet: cash ledger | Retire | After confirming nobody reads it. It's missing Fanbasis new sales. | None |
+| Kit sequences 2893474 (bookings) and 2893520 (Kajabi) | Verify | Check what they send before building reminders and nurture. | WF-08, WF-13 |
+| Calendly event types and reminders | Verify | Being repaired. | WF-10 to WF-13 |
+| Slack channels | Keep | Add #ops-alerts and a low-priority freebie channel. | WF-08, WF-36 |
 
 ### Legend
 
@@ -408,6 +497,7 @@ Severity is about business impact: Critical means reported numbers or revenue ar
 | ISS-45 | Low | 4 near-identical Kajabi Zaps. | Zap config | Confirmed | WF-01 |
 | ISS-46 | Low | New Google Workspace accounts start with one shared hardcoded password, with no forced change. | Zap config | Confirmed | WF-28 |
 | ISS-47 | Low | Leftover Zaps: an empty draft, and the DocuSign Zap switched off. | Zap list | Confirmed | Delete the draft |
+| ISS-48 | Medium | Smart views filter on "lead updated", and every automation update resets that time, so leads drop out of working views. | Smart view definitions (Gold Rush, 3 Day No Book, No Shows, Re-Engagement) | Confirmed (config). Effect on specific leads not measured. | WF-05 |
 
 ### Corrections from the first draft
 
