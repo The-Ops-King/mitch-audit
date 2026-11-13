@@ -23,13 +23,13 @@ const LEAD = {
   SIGNED_BALANCE: 'stat_UEBEBfjgHoWd8zyhgQOG4CpfLJTPZxwHpH3dx7JY2w4',
   SIGNED_CLOSED:  'stat_s71HtAeLV1kWdJUKnhNVmXsPYrek4behA0iUeIr9he3',
 };
-// Opportunity stages. Until the new No Show / Canceled / Reschedule stages
-// exist (see X1), those outcomes keep the deal at BOOKED.
+// Opportunity stages. No Show, Canceled and Reschedule keep the deal at the
+// booked stage; the lead status carries those outcomes and triggers the drips.
 const OPP = {
   BOOKED:     'stat_BzhIsICvsVNy3TBkF1u4GCaZuv2N1XI0lcA1W8HRvXB', // New Deal - Mentorship Interview
-  NO_SHOW:    'stat_BzhIsICvsVNy3TBkF1u4GCaZuv2N1XI0lcA1W8HRvXB', // replace with No Show stage ID
-  CANCELED:   'stat_BzhIsICvsVNy3TBkF1u4GCaZuv2N1XI0lcA1W8HRvXB', // replace with Canceled stage ID
-  RESCHEDULE: 'stat_BzhIsICvsVNy3TBkF1u4GCaZuv2N1XI0lcA1W8HRvXB', // replace with Reschedule stage ID
+  NO_SHOW:    'stat_BzhIsICvsVNy3TBkF1u4GCaZuv2N1XI0lcA1W8HRvXB', // stays at booked stage
+  CANCELED:   'stat_BzhIsICvsVNy3TBkF1u4GCaZuv2N1XI0lcA1W8HRvXB', // stays at booked stage
+  RESCHEDULE: 'stat_BzhIsICvsVNy3TBkF1u4GCaZuv2N1XI0lcA1W8HRvXB', // stays at booked stage
   FOLLOW_UP:  'stat_54luUoy1nhtOSlVXVX6kYEz8SlicJMbUYLbK2LlbK11', // New Deal - Pending Close
   DEPOSIT:    'stat_EXBo9DtaKkTG6wc0HPTG2nwuFtWYTpSi27z7lCqXZoI', // Deposit Paid (must be set to Active in Close)
   WON:        'stat_sLE0JY2OeweB23uzR6wFdeEkB23nwC6Lewi4CTaLWXJ', // New Deal - Closed
