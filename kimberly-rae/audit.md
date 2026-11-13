@@ -2,6 +2,7 @@
 
 Version 1.0, November 13, 2026.
 For Mitch (overview) and Leah (build guide).
+Scope: Kimberly Rae Coaching only. Nelly and Barak each get their own document in the same format. A shared template for all three accounts comes after all three audits.
 Based on a read-only review of Zapier (23 Zaps), Close (1,481 leads, 222 deals), Airtable (15 tables) and Calendly (every booking since Sept 1).
 
 ## How to use this document
@@ -38,7 +39,7 @@ The system works day to day. Leads reach Close, Slack gets alerts, closers fill 
 - The numbers are wrong. In Airtable, 0 of 825 leads count as paid because of a one-word typo. October's finance total shows $22,800, but $27,400 was collected (renewals are missing). Deposits and installment payments count as new closed deals.
 - The pipeline is too big. Every booking and every reschedule creates a new $7,200 deal. Calendly cancellations never reach Close. Close shows $700,800 of open deals, and $136,800 of that is on leads that are dead or already clients.
 - Payments don't reach Close. Fanbasis payments never update Close. A $1,133.33 payment shows in Close as $11.33.
-- Follow-up is missing. Close sends no reminder texts. No-shows and cancellations get no follow-up messages. Follow-up dates don't create tasks. Fathom recordings never reach Close. Signed agreements update nothing.
+- Follow-up is missing. New applicants get no instant text. Close sends no reminder texts. No-shows and cancellations get no follow-up messages. Follow-up dates don't create tasks. Fathom recordings never reach Close. Signed agreements update nothing.
 
 The plan keeps the current setup and changes only what's needed.
 
@@ -68,6 +69,8 @@ Keep = works now. Fix = change something that exists. Build = make something new
 | Smart list: new applications | "New Apps" | Keep | |
 | Smart list: day-old leads | "Gold Rush" and "Gold Rush (Paid Ads)" | Fix: leads drop off the lists. The Paid Ads list shows 94 of 223 paid leads | 6 |
 | Smart list: 3 to 7 day leads | "3 Day No Book" shows 0 to 3 days | Fix | 6 |
+| Instant text and email to new applicants (before they book) | None. 27% of leads since September had no call or text in Close; median first contact 100 minutes | Build | 23 |
+| Speed-to-lead measured | No working measure (Airtable "Minutes to Claim" shows 0) | Build | 24 |
 
 ### 3. Call booked
 
@@ -86,6 +89,7 @@ Keep = works now. Fix = change something that exists. Build = make something new
 |---|---|---|---|
 | Text and email right after booking | Nothing in Close. Calendly sends its own | Build in Close, then turn off Calendly's | 9 |
 | Reminders 24 hours and 1 hour before | Nothing in Close. Calendly texts only the 40% who give a number | Build in Close, then turn off Calendly's | 9 |
+| Qualification (triage) before the closer's call | No triage call. Closers screen by canceling direct bookings (55 of 97 since September) | Decision for Mitch (see open questions) | 11 |
 
 ### 5. Post-call
 
@@ -135,6 +139,8 @@ Keep = works now. Fix = change something that exists. Build = make something new
 | Correct sales and finance numbers | Wrong: paid flag, missing renewals, deposits counted as deals | Fix | 2, 5, 14 |
 | Weekly and monthly numbers in Slack | None | Build | 19 |
 | Weekly data check | None | Build (optional) | 20 |
+| Ad spend entered (for cost per lead and return on ad spend) | Ad Spend table is empty | Build | 24 |
+| Rep scorecards complete | Sidonie has no scorecard rows | Fix | 2, 24 |
 
 ### 10. Team
 
@@ -217,6 +223,8 @@ Part B: new and bigger automations.
 | 20 | Weekly data check (optional) | Slack list of records to fix |
 | 21 | Rep onboarding and offboarding | Two checklists |
 | 22 | Setter ✅ claim (optional) | Make the Slack reaction Zap harder to break |
+| 23 | Instant response to new applicants | Text and email with the booking link right after someone applies |
+| 24 | Speed-to-lead and sales tracking | First-contact time, ad spend entry, complete rep scorecards |
 
 Every card has the same parts:
 
@@ -819,11 +827,73 @@ Every card has the same parts:
 
 **Keep in mind:** It works today. Do this last.
 
+## 23. Instant response to new applicants
+
+**System:** Close Workflow (texts and emails from the setter's Close number and email).
+
+**Trigger:** A new application: the IG, Paid Ads or Kajabi Application Zap creates a new lead (card 3, path "Lead Does Not Exist"). Freebie opt-ins are not included.
+
+**Outcome:** Every applicant gets a text and email with the booking link within a minute, even before a setter calls. Fewer applicants go cold.
+
+**Do this first:** Card 3.
+
+**Steps:**
+
+1. Close: Workflows > New > "New Applicant".
+2. Add messages A1 to A3 from Part 4: A1 right away (text and email), A2 after 1 day (text), A3 after 2 days (email).
+3. Stop when the lead books (status changes to "New Opportunity"), replies, or is marked DQ.
+4. In the IG, Paid Ads and Kajabi Application Zaps, path "Lead Does Not Exist": add a last step that enrolls the lead in this workflow (or use a smart view of status "New Lead" created in the last 1 hour, if Close can enroll from smart views).
+
+**Done when:** Submit a TEST application. A1 arrives within 1 minute. Book a call: A2 and A3 never arrive.
+
+**Keep in mind:**
+
+- Setters still call new applicants. This makes sure the lead hears from the business right away.
+- Ask Mitch which booking link goes in A1 to A3 (probably the direct booking link).
+- Follow the texting rules (Part 4).
+
+## 24. Speed-to-lead and sales tracking
+
+**System:** Zapier, Airtable and Close.
+
+**Trigger:** Part 1: a new call or text logged in Close. Part 2: none (weekly manual entry). Part 3: none (one-time check).
+
+**Outcome:** Mitch can see how fast leads are contacted, what leads cost, and how each rep performs.
+
+**Do this first:** Cards 2, 3 and 7.
+
+**Steps:**
+
+Part 1, speed to lead:
+
+1. Airtable "Lead Base": add a field "First Contacted" (date and time) and a formula field "Minutes to First Contact": `DATETIME_DIFF({First Contacted},{Date Created},'minutes')`.
+2. New Zap `KRC | First call or text > Airtable`. Trigger: Close "New Call" or "New SMS" (outbound). Use whichever activity trigger the Close app offers in Zapier.
+3. Airtable "Find Record" in "Lead Base" by the lead's email. Filter: continue only if "First Contacted" is empty.
+4. Airtable "Update Record": "First Contacted" = the activity time.
+5. Add to the weekly Slack report (card 19): average minutes to first contact, and the percent of new leads contacted within 5 minutes.
+
+Part 2, ad spend:
+
+1. Every Monday, enter last week's ad spend in Airtable "Ad Spend": date, platform, amount. Ask Mitch who does this and where the numbers come from.
+2. Optional later: a Zapier Facebook Ads step that fills this automatically.
+
+Part 3, rep scorecards:
+
+1. Airtable "Rep Scorecard": check that each active rep (Makena, Sidonie, Emily, and Kimberly if she closes) has a row for every reporting period.
+2. Add missing rows. Copy an existing rep's rows and change the name.
+
+**Done when:** A TEST lead that gets a call shows "Minutes to First Contact" in Airtable. The Ad Spend table has last week's row. Every active rep has scorecard rows.
+
+**Keep in mind:**
+
+- Calls from personal phones and Instagram DMs are not logged in Close, so they don't count as contact. Setters should call from Close.
+- Without ad spend, cost per lead and return on ad spend stay at $0.
+
 ---
 
 # Part 4: messages and texting rules
 
-## Texting rules (cards 9 to 12, 15, 18)
+## Texting rules (cards 9 to 12, 15, 18, 23)
 
 1. Consent. Typeform and Calendly forms need a checkbox: "I agree to receive text messages about my call. Reply STOP to opt out." Ask Mitch for the final wording.
 2. Opt-out. The first text in each workflow ends with "Reply STOP to opt out." Test that replying STOP stops all texts from Close.
@@ -855,6 +925,10 @@ Generic placeholder copy. Ask Mitch to approve or rewrite all of it before going
 | S3 | 12 | Day 3 | Text and email | Hi [first name], reminder to pick a new time: [booking link] |
 | F1 | 15 | Payment failed (optional) | Text and email | Hi [first name], your payment didn't go through. Please update your card here: [payment link] |
 | K1 | 18 | 48 hours after signing, no kickoff | Text and email | Hi [first name], welcome! Book your kickoff session here: [kickoff link] |
+| A1 | 23 | Right after applying | Text | Hi [first name], thanks for applying. Book your call here: [booking link]. Reply STOP to opt out. |
+| A1 | 23 | Right after applying | Email | Subject: Thanks for applying. Body: Hi [first name], thanks for applying. Book your call here: [booking link] |
+| A2 | 23 | Day 1, not booked | Text | Hi [first name], did you get a chance to book your call? [booking link] |
+| A3 | 23 | Day 2, not booked | Email | Subject: Book your call. Body: Hi [first name], you can still book your call here: [booking link] |
 
 ---
 
@@ -1056,6 +1130,8 @@ Use these exact names and IDs. They are not passwords. Never put API keys or pas
 | 20 Weekly data check (optional) | | | |
 | 21 Rep onboarding and offboarding | | | |
 | 22 Setter ✅ claim (optional) | | | |
+| 23 Instant response to new applicants | | | |
+| 24 Speed-to-lead and sales tracking | | | |
 
 ## First week after launch
 
@@ -1103,11 +1179,13 @@ One page each. Write each after its card is built, so it matches what the system
 |---|---|---|
 | Do DCBA, DCBIG and DCBE mean ads, Instagram and email? | Mitch | 4 |
 | Are host cancels on direct bookings on purpose (screening)? | Mitch | 11 |
-| Approve or rewrite the message copy. Which booking link goes in [booking link]? | Mitch | 9 to 12, 15, 18 |
+| Approve or rewrite the message copy. Which booking link goes in [booking link]? | Mitch | 9 to 12, 15, 18, 23 |
 | Texting consent wording on Typeform and Calendly | Mitch | Part 4 |
 | Does anyone use the two Google Sheets the EOC and payment Zaps write to? If not, delete those steps | Mitch | 5, 14 |
 | Lead status after a full refund | Mitch | 16 |
 | Who owns the system after launch? | Mitch | Part 6 |
+| Do you want a triage step before the closer's call (for example a setter qualifying call, or a qualifying form before the booking page)? Today closers screen by canceling direct bookings | Mitch | 11 |
+| Who enters ad spend each week, and from where? | Mitch | 24 |
 | Can Close Workflows send "X hours before" a date field, and enroll leads from a smart view or Zapier? | Leah | 9 to 12 |
 | Does Fanbasis have failed payment and refund triggers in Zapier? | Leah | 15, 16 |
 | Does Fathom connect to Close directly? | Leah | 13 |
@@ -1138,6 +1216,8 @@ Before handing this over: rotate the Close, Airtable and Calendly API keys used 
 18. Intake and kickoff tracked in Close, with a kickoff reminder.
 19. Weekly and monthly numbers posted to Slack.
 20. Rep onboarding and offboarding checklists.
+21. Instant text and email to new applicants with the booking link.
+22. Speed-to-lead tracking, weekly ad spend entry, and complete rep scorecards.
 
 ### Suggested, not required
 
@@ -1148,7 +1228,6 @@ Before handing this over: rotate the Close, Airtable and Calendly API keys used 
 - Require a cancel reason in Calendly when a closer cancels.
 - One Zapier "Zap error" alert to Slack, so failed runs are seen.
 - A separate Close user for automations, so changes made by Zaps don't show as Kimberly's.
-- Enter ad spend weekly, so cost per lead and return on ad spend can be reported.
 - Retire the two Google Sheets if nobody uses them.
 
 ## Copying this system to a new client (optional)
