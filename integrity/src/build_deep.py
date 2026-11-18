@@ -81,7 +81,8 @@ def applicants(lead_rows, apps, cats, calls, threads_ids, triage_by_lead):
         combos.append({"name": name, **_fun(rs), "call_ids": sorted({c for r in rs for c in r["call_ids"]})})
     for r in rows:
         r.pop("lid", None)
-    return {"base": base, "fields": fields, "combos": combos, "rows": rows,
+    crisis = sum(1 for lid in lead_rows if (cats.get(lid) or {}).get("crisis_signal"))
+    return {"base": base, "fields": fields, "combos": combos, "rows": rows, "crisis_signals": crisis,
             "forms": dict(C.Counter(f for lid in lead_rows for f in (apps.get(lid) or {}).get("forms", [])))}
 
 
