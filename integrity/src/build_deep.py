@@ -30,7 +30,8 @@ def _fun(rs):
             "showed": sum(r["showed"] for r in rs), "closed": sum(r["closed"] for r in rs), "dq": sum(r["dq"] for r in rs),
             "team_cancelled": sum(r["team_cancelled"] for r in rs), "cash": round(sum(r["cash"] for r in rs)),
             "booked_pct": pct(sum(r["booked"] for r in rs), n), "show_pct": pct(sum(r["showed"] for r in rs), sum(r["booked"] for r in rs)),
-            "close_pct_of_shows": pct(sum(r["closed"] for r in rs), sum(r["showed"] for r in rs))}
+            "close_pct_of_shows": pct(sum(r["closed"] for r in rs), sum(r["showed"] for r in rs)),
+            "median_mins": (lambda t: round(t[len(t) // 2]) if t else None)(sorted(r["mins"] for r in rs if r["mins"] is not None))}
 
 
 def applicants(lead_rows, apps, cats, calls, threads_ids, triage_by_lead):

@@ -13,7 +13,7 @@
 const funCols = (first, kind = "value") => [
   { l: first, f: r => `<b>${esc(human(r[kind]))}</b>`, s: r => r[kind] }, { l: "Leads", k: "leads", n: 1 },
   { l: "Booked", n: 1, f: r => `${fmt(r.booked)} ${heat(r.booked_pct ?? 0, 20, 55)}`, s: r => r.booked_pct },
-  { l: "Team cancelled", k: "team_cancelled", n: 1 }, { l: "Showed", n: 1, f: r => `${fmt(r.showed)} <span class="muted small">${r.show_pct ?? "–"}${r.show_pct != null ? "%" : ""}</span>`, s: r => r.showed },
+  { l: "First touch", n: 1, f: r => mins(r.median_mins), s: r => r.median_mins }, { l: "Team cancelled", k: "team_cancelled", n: 1 }, { l: "Showed", n: 1, f: r => `${fmt(r.showed)} <span class="muted small">${r.show_pct ?? "–"}${r.show_pct != null ? "%" : ""}</span>`, s: r => r.showed },
   { l: "DQ'd", k: "dq", n: 1 }, { l: "Closed", n: 1, f: r => r.closed ? `<b style="color:var(--good)">${r.closed}</b>` : "0", s: r => r.closed },
   { l: "Cash", n: 1, f: r => money(r.cash), s: r => r.cash },
   { l: "Sales calls", n: 1, f: r => (r.call_ids || []).length ? drill(fmt(r.call_ids.length), r.call_ids, `Sales calls: ${human(r[kind])}`) : "–", s: r => (r.call_ids || []).length }];

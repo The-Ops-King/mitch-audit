@@ -7,6 +7,7 @@ Usage: python3 src/build.py krc
 import json, glob, os, re, sys, collections as C
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_deep as BD
+import hashlib
 from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -760,6 +761,13 @@ def main():
             for cid in a.get("call_ids", []):
                 if cid in clib:
                     clib[cid]["avatar"] = a.get("name")
+    if app:
+        AK = ("age_band", "since_relationship", "hours", "matchmaking", "work_cat")
+        hid = {hashlib.sha1(lid.encode()).hexdigest()[:8]: lid for lid in lead_rows}
+        for r in app["rows"]:
+            lid = hid.get(r["id"])
+            if lid in tlib:
+                tlib[lid]["application"] = {k: r.get(k) for k in AK}
     files = {f"{OFFER}.json": out, f"{OFFER}_calls.json": clib, f"{OFFER}_threads.json": tlib, f"{OFFER}_triage.json": slib}
     for name, obj in files.items():
         blob = json.dumps(obj, default=str)
