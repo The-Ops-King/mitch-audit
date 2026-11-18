@@ -8,12 +8,13 @@ Usage: python3 -I src/ops_krc.py <export_dir>
 Times are bucketed in US Eastern (America/New_York).
 """
 import json, os, re, sys, statistics as st, collections as C
+OFFER = __import__("os").environ.get("OFFER", "krc")
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 X = sys.argv[1]
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "data/krc/raw/ops.json")
+OUT = os.path.join(ROOT, f"data/{OFFER}/raw/ops.json")
 SINCE = "2026-09-01"
 ET = ZoneInfo("America/New_York")
 NOW = datetime.now(timezone.utc)
@@ -56,7 +57,7 @@ def AT(frag):
 eoc, pay, eod, metrics, refunds, lead_base = AT("EOC Report"), AT("Payment Records"), AT("EOD"), AT("Sales Metrics Summary"), AT("Refund Records"), AT("Lead Base")
 REP = {"Sidonie Chechin": "Sidonie C", "Jeremy Makena": "Makena Waterhouse", "Mariah Malvezzi": "Mariah Casagrande-Malvezzi",
        "Ellie Porter": "Elly Porter"}
-rep = lambda n: REP.get(n, n) if n else "Unknown"
+rep = lambda n: REP.get(n.strip(), n.strip()) if n and n.strip() else "Unknown"
 
 em = lambda l: {e["email"].lower().strip() for c in l.get("contacts", []) for e in c.get("emails", [])}
 lead_by_id = {l["id"]: l for l in leads}
@@ -96,12 +97,12 @@ CLOSED = lambda e: e.get("Call Outcome") == "Closed" and e.get("Payment Type") n
 
 
 def src(l):
-    s = (l.get("custom") or {}).get("Opt Source") or "Unknown"
+    s = (l.get("custom") or {}).get("Opt Source") or (l.get("custom") or {}).get("Application Source") or (l.get("custom") or {}).get("First Click Source") or "Unknown"
     return "Kajabi freebie" if s.startswith("Kajabi - ") else s
 
 
 def applied(l):
-    return (l.get("custom") or {}).get("Applied Source") or "Unknown"
+    return (l.get("custom") or {}).get("Applied Source") or (l.get("custom") or {}).get("Booking Source") or "Unknown"
 
 
 # ---------------------------------------------------------------- per-lead facts
@@ -470,7 +471,7 @@ for e in eoc:
 for p in pay:
     names.update(w.strip(".,()'\"") for w in str(p.get("Name") or "").split())
 names = sorted(n for n in names if len(n) >= 3 and n[:1].isalpha())
-json.dump(names, open(os.path.join(ROOT, "data/krc/raw/names.json"), "w"))
+json.dump(names, open(os.path.join(ROOT, f"data/{OFFER}/raw/names.json"), "w"))
 print("name tokens", len(names))
 
 # ---------------------------------------------------------------- triage call candidates (metadata only)
@@ -478,7 +479,7 @@ cand = [c for c in calls if c.get("recording_url") and (c.get("duration") or 0) 
 meta = {c["id"]: {"lead_id": c.get("lead_id"), "user_name": rep(c.get("user_name")), "duration_min": round((c.get("duration") or 0) / 60, 1),
                   "date": P(c["date_created"]).astimezone(ET).date().isoformat(),
                   "transcribed": os.path.exists(f"{X}/krc_setter/text/{c['id']}.txt")} for c in cand}
-json.dump(meta, open(os.path.join(ROOT, "data/krc/raw/setter_call_meta.json"), "w"))
+json.dump(meta, open(os.path.join(ROOT, f"data/{OFFER}/raw/setter_call_meta.json"), "w"))
 print("triage candidates", len(meta), "transcribed", sum(m["transcribed"] for m in meta.values()))
 
 # ---------------------------------------------------------------- application answers (posted to Close as notes)
@@ -540,7 +541,7 @@ for x in sorted(notes, key=lambda x: x["date_created"]):
     a.setdefault("forms", set()).add(rec["form"])
 for a in apps.values():
     a["forms"] = sorted(a["forms"])
-json.dump(apps, open(os.path.join(ROOT, "data/krc/raw/applications.json"), "w"), indent=0)
+json.dump(apps, open(os.path.join(ROOT, f"data/{OFFER}/raw/applications.json"), "w"), indent=0)
 print("applications", len(apps), C.Counter(f for a in apps.values() for f in a["forms"]))
 
 # ---------------------------------------------------------------- per-lead rows for applicants (joined with outcomes)
@@ -555,5 +556,5 @@ for lid in apps:
     r.update({"dq": DQ(lid), "team_cancelled": any(i["status"] == "canceled" and i.get("canceled_by") == "host" and not i.get("rescheduled") for i in I),
               "emails": sorted(em(l))})
     lr[lid] = r
-json.dump(lr, open(os.path.join(ROOT, "data/krc/raw/lead_rows.json"), "w"))
+json.dump(lr, open(os.path.join(ROOT, f"data/{OFFER}/raw/lead_rows.json"), "w"))
 print("lead rows", len(lr))

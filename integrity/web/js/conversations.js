@@ -47,7 +47,7 @@ const CONV = {
     const T = d.ops.sms.templates;
     return section("Messages sent again and again, and which ones get replies", "Outbound texts sent 6 or more times, with names, times and links normalised. Reply rate is the share of sends that got any reply within 24 hours.",
       card("", table([{ l: "Message", f: r => `<span class="small">${esc(r.text)}</span>` }, { l: "Sends", k: "sends", n: 1 }, { l: "Leads", k: "leads", n: 1 }, { l: "Reply in 24h", n: 1, f: r => heat(r.reply_24h_pct, 10, 50), s: r => r.reply_24h_pct }, { l: "Sent by", f: r => esc(r.senders.join(", ")) }], T, { sort: 1 }),
-        "The best openers reference something specific the lead did (their application, a training they watched). The generic quiz opener gets the fewest replies."), "Conversations");
+        K("The best openers reference something specific the lead did (their application, a training they watched). The generic quiz opener gets the fewest replies.")), "Conversations");
   },
 
   setters(d) {

@@ -19,7 +19,7 @@ const funCols = (first, kind = "value") => [
   { l: "Sales calls", n: 1, f: r => (r.call_ids || []).length ? drill(fmt(r.call_ids.length), r.call_ids, `Sales calls: ${human(r[kind])}`) : "–", s: r => (r.call_ids || []).length }];
 
 LEADS.applicants = d => {
-  const A = d.applicants; if (!A) return card("", "No application data.");
+  const A = d.applicants; if (!A || A.base.leads < 10) return callout("No application answers in Close for this account", "Barak's leads don't carry their application answers into Close (no Typeform or booking-form notes on the leads). Fix for Leah: send the application answers to Close as custom fields so they can be filtered and joined to outcomes.", "warn");
   const b = A.base, F = k => A.fields.find(f => f.field === k);
   return section("Who applies, and who buys", `Application answers are posted to Close as a note on each lead, not as fields, so Close can't filter on them. We parsed every one: ${fmt(A.forms.ad_application || 0)} from the ad application (the men's form) and ${fmt(A.forms.booking_questions || 0)} from the Calendly booking questions, and joined them to bookings, shows, closes and cash.`,
     `<div class="journey">${[["Applicants", b.leads], ["Contacted", b.contacted], ["Booked", b.booked], ["Showed", b.showed], ["DQ'd on the call", b.dq], ["Closed", b.closed]].map(([k, v], i) => `<div class="jstep"><div class="v">${fmt(v)}</div><div class="l">${k}</div><div class="c">${pctS(v, b.leads)} of applicants</div><div class="bar" style="width:${Math.max(2, 100 * v / b.leads)}%"></div></div>`).join("")}</div>
@@ -31,7 +31,7 @@ LEADS.applicants = d => {
 };
 
 LEADS.explorer = d => {
-  const A = d.applicants; if (!A) return "";
+  const A = d.applicants; if (!A || A.base.leads < 10) return callout("Nothing to explore yet", "This account has no application answers in Close.", "warn");
   const keys = ["age_band", "since_relationship", "hours", "matchmaking", "invest", "heard", "work_cat", "money_signal", "source", "form"];
   const opts = k => [...new Set(A.rows.map(r => r[k]).filter(Boolean))].sort();
   setTimeout(() => {
@@ -106,7 +106,7 @@ SALES.reps = d => {
     ["promise_pct", "Calls with an outcome promise %", -1], ["off_sheet_pct", "Pitched calls with an off-sheet price %", -1], ["flags_per_call", "Flags per call", -1], ["high_flags", "High or critical flags", -1], ["disclosure_miss_pct", "Calls with a compliance flag %", -1]];
   const best = (k, dir) => { if (!dir) return null; const v = R.map(r => r[k]).filter(x => x != null); return dir > 0 ? Math.max(...v) : Math.min(...v); };
   const worst = (k, dir) => { if (!dir) return null; const v = R.map(r => r[k]).filter(x => x != null); return dir > 0 ? Math.min(...v) : Math.max(...v); };
-  return callout("Read the comparison with care", "Brianna, Elly and Mariah are June to August and have since left. Makena is September onward. Different months, different lead flow, 4 to 27 calls each. Green marks the best value in a row and red the worst.", "warn")
+  return callout("Read the comparison with care", (isKRC() ? "Brianna, Elly and Mariah are June to August and have since left. Makena is September onward. Different months, different lead flow, 4 to 27 calls each. " : "Small numbers per rep. ") + "Green marks the best value in a row and red the worst.", "warn")
   + section("Head to head", "Every closer on every measure.", `<div class="card tw"><table><thead><tr><th>Measure</th>${R.map(r => `<th class="n">${esc(r.rep)}<div class="small muted" style="text-transform:none;letter-spacing:0">${esc(r.period)}</div></th>`).join("")}</tr></thead><tbody>
     ${M.map(([k, l, dir, f]) => `<tr><td class="lbl">${l}</td>${R.map(r => { const v = r[k], b = best(k, dir), w = worst(k, dir), tie = b === w; const st = !tie && dir && R.length > 1 && v === b ? "background:var(--good-soft);color:var(--good);font-weight:700" : !tie && dir && R.length > 1 && v === w ? "background:var(--bad-soft);color:var(--bad);font-weight:700" : ""; return `<td class="n"><span class="heat" style="${st}">${v == null ? "–" : f ? f(v) : fmt(v)}</span></td>`; }).join("")}</tr>`).join("")}
     <tr><td class="lbl">Calls</td>${R.map(r => `<td class="n">${drill("open", r.call_ids, "Calls by " + r.rep)}</td>`).join("")}</tr></tbody></table></div>`, "Reps")
@@ -132,7 +132,7 @@ SALES.review = d => {
 SALES.trends = d => {
   const T = d.closer.trends, L = d.ops.leads.by_month, S = d.ops.sms.by_month, P = d.ops.payments.by_month;
   const line = (rows, k, l, f = x => x) => card(l, cols(rows.map(r => ({ label: niceMonth(r.month || r.key), short: niceMonth(r.month || r.key).slice(0, 3), value: r[k] ?? 0, tip: `${niceMonth(r.month || r.key)}: ${f(r[k])}` }))));
-  return section("Sales calls month by month", "June to August are the departed reps on Fathom. September onward is Makena.",
+  return section("Sales calls month by month", K("June to August are the departed reps on Fathom. September onward is Makena."),
     `<div class="card">${table([{ l: "Month", f: r => niceMonth(r.month), s: r => r.month }, { l: "Calls", k: "calls", n: 1 }, { l: "Won", k: "won", n: 1 }, { l: "Close %", n: 1, f: r => pctS(r.won, r.calls) }, { l: "Script score", k: "avg_score", n: 1 }, { l: "Promise %", n: 1, f: r => r.promise_pct == null ? "–" : r.promise_pct + "%" }, { l: "Off-sheet price %", n: 1, f: r => r.off_sheet_pct == null ? "–" : r.off_sheet_pct + "%" }, { l: "Flags per call", k: "flags_per_call", n: 1 }, { l: "Price objections", k: "price_objections", n: 1 }, { l: "Objections resolved", n: 1, f: r => r.obj_resolved_pct == null ? "–" : r.obj_resolved_pct + "%" }, { l: "Reps", f: r => esc(r.reps.join(", ")) }], T)}</div>
     <div class="grid g3 mt">${line(T, "avg_score", "Script score")}${line(T, "promise_pct", "Calls with an outcome promise (% of pitched)")}${line(T, "flags_per_call", "Flags per call")}</div>`, "Trends")
   + section("The rest of the funnel, month by month", "", `<div class="grid g3">${card("New leads", cols(L.map(r => ({ label: niceMonth(r.key), short: niceMonth(r.key).slice(0, 3), value: r.leads }))))}${card("Median time to first touch (min)", cols(L.map(r => ({ label: niceMonth(r.key), short: niceMonth(r.key).slice(0, 3), value: r.median_min || 0, color: "var(--warn-fill)", tip: `${niceMonth(r.key)}: ${mins(r.median_min)}` }))))}${card("Booked %", cols(L.map(r => ({ label: niceMonth(r.key), short: niceMonth(r.key).slice(0, 3), value: r.booked_pct || 0, color: "var(--s3)", tip: `${niceMonth(r.key)}: ${r.booked_pct}%` }))))}

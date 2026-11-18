@@ -1,5 +1,5 @@
 /* Overview: the story, the journey, what we found and what to do */
-SECTIONS.push({ id: "overview", name: "Overview", render: d => OVERVIEW(d) });
+SECTIONS.push({ id: "overview", name: "Overview", render: d => isKRC() ? OVERVIEW(d) : OVERVIEW_BVW(d) });
 
 function findingsKRC(d) {
   const L = d.ops.leads, o = L.overall, cal = d.ops.calendly, S = d.ops.sms, c = d.closer, D = c.deep, t = d.texting, E = d.ops.eod, R = d.ops.reconciliation;
@@ -123,4 +123,8 @@ function OVERVIEW(d) {
         <li>Is there any approved price besides $3,600, $7,200 and $14,000? The $1,000 first session and $2,400 starter come up on ${fmt((c.offer.prices_quoted.find(p => p.price_usd === 1000) || {}).calls || 0)} and ${fmt((c.offer.prices_quoted.find(p => p.price_usd === 2400) || {}).calls || 0)} calls.</li>
         <li>What's the one proof line reps are allowed to use in place of success-rate claims?</li>
       </ol></div>`, "Decisions")}`;
+}
+
+function OVERVIEW_BVW(d) {
+  return `<div class="card pending"><h3>Barak Van Wyk</h3><p>This offer's audit is being built.</p></div>`;
 }

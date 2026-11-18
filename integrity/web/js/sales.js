@@ -12,7 +12,7 @@ const SALES = {
   summary(d) {
     const c = d.closer, s = c.summary, D = c.deep, o = c.offer;
     const wonIds = c.calls.filter(x => x.won).map(x => x.call_id);
-    return section("Sales calls at a glance", `${fmt(s.calls)} recorded closer calls scored step by step against Kimberly Rae's Master Closing Doc. Outcomes come from the closer's own End-of-Call report, checked against what actually happened on the recording.`,
+    return section("Sales calls at a glance", `${fmt(s.calls)} recorded closer calls scored step by step against ${esc(d.playbook.name)}. Outcomes come from the closer's own End-of-Call report, checked against what actually happened on the recording.`,
       `<div class="grid g6">
         ${tile(fmt(s.calls), "Calls analysed", `${fmt(s.by_source.fathom || 0)} Fathom · ${fmt(s.by_source.zoom || 0)} Zoom · ${fmt(s.by_source.drive || 0)} Drive`, "info")}
         ${tile(drill(fmt(s.won), wonIds, "Won calls"), "Closed in full", `${s.close_pct}% of analysed calls`, "good")}
@@ -22,7 +22,7 @@ const SALES = {
         ${tile(fmt(s.high_or_critical_flags), "High or critical flags", `${fmt(s.flags)} flags in total`, "warn")}
       </div>
       <div class="grid g2 mt">
-        ${card("Script score by month", cols(D.by_month.map(m => ({ label: niceMonth(m.key), short: niceMonth(m.key).slice(0, 3), value: m.avg_score || 0, tip: `${niceMonth(m.key)}: ${m.calls} calls, avg score ${m.avg_score}, ${m.won} won, ${m.flags} flags` })), { max: 100 }), "June to August are the departed reps on Fathom. September onward is Makena on Zoom and Drive.")}
+        ${card("Script score by month", cols(D.by_month.map(m => ({ label: niceMonth(m.key), short: niceMonth(m.key).slice(0, 3), value: m.avg_score || 0, tip: `${niceMonth(m.key)}: ${m.calls} calls, avg score ${m.avg_score}, ${m.won} won, ${m.flags} flags` })), { max: 100 }), K("June to August are the departed reps on Fathom. September onward is Makena on Zoom and Drive."))}
         ${card("Score distribution", legend([["var(--s1)", "Won"], ["var(--s2)", "Not won"]]) + cols(D.score_dist.map(b => ({ label: b.key, value: b.won, b: b.not_won, tip: `Score ${b.key}: ${b.won} won, ${b.not_won} not won` }))), "Each column stacks won (blue) on top of not won (orange).")}
       </div>
       <div class="grid g2 mt">
@@ -88,7 +88,7 @@ const SALES = {
       `<div class="grid g4">${tile(fmt(o.distinct_prices), "Different prices quoted", "The sheet has " + o.sanctioned.length, "bad")}${tile(fmt(o.calls_with_off_sheet_price), "Calls with an off-sheet price", "of " + o.calls_pitched + " pitched", "bad")}${tile(fmt(o.price_before_temperature_check), "Price before the temperature check", "", "warn")}${tile(fmt(o.payment_plan_offered), "Payment plan offered", "of " + o.calls_pitched + " pitched")}</div>
       <div class="card mt">${legend([["var(--s1)", "On the price sheet"], ["var(--s2)", "Not on the sheet"]])}${bars(pq.map(p => ({ label: money(p.price_usd), value: p.calls, color: p.sanctioned ? "var(--s1)" : "var(--s2)", html: drill(p.calls + (p.calls === 1 ? " call" : " calls"), p.call_ids, "Calls quoting " + money(p.price_usd)), tip: `${money(p.price_usd)} said ${p.times} times on ${p.calls} calls` })))}</div>`, "Offer")
     + section("Outcome promises, in the reps' words", "The closing script forbids promising a relationship outcome. These are direct quotes.",
-      card("", o.outcome_promise_examples.map(q => quote(q)).join("")) + callout("Why this matters", "A success-rate claim on a recorded sales call is the first thing a chargeback dispute or a regulator asks about. None of the figures quoted (50%, 78%, 80%) appear in the script, and they don't agree with each other.", "bad"), "Offer")
+      card("", o.outcome_promise_examples.map(q => quote(q)).join("")) + callout("Why this matters", "A success-rate claim on a recorded sales call is the first thing a chargeback dispute or a regulator asks about." + K(" None of the figures quoted (50%, 78%, 80%) appear in the script, and they don't agree with each other."), "bad"), "Offer")
     + section("The four pillars", "How prospects reacted when the rep presented each pillar of the program.",
       card("", table([{ l: "Pillar", f: r => esc(human(r.k)) }, ...["enthusiastic", "accepted", "clarifying", "confused", "objected", "not_presented"].map(x => ({ l: human(x), n: 1, f: r => fmt(r.v[x] || 0) }))],
         Object.entries(c.pillars).map(([k, v]) => ({ k, v })))), "Offer")
@@ -119,7 +119,7 @@ const SALES = {
 
   reps(d) {
     const c = d.closer, D = c.deep;
-    return callout("Compare with care", "Brianna, Elly and Mariah were June to August and have since left. Makena is September onward. Different months, different lead flow, small numbers per rep.", "warn")
+    return callout("Compare with care", isKRC() ? "Brianna, Elly and Mariah were June to August and have since left. Makena is September onward. Different months, different lead flow, small numbers per rep." : "Small numbers per rep. Read differences as places to look.", "warn")
     + section("Closers", "", card("", table([{ l: "Rep", k: "rep" }, { l: "Calls", n: 1, f: r => drill(fmt(r.calls), r.call_ids, "Calls by " + r.rep), s: r => r.calls }, { l: "Won", k: "won", n: 1 },
       { l: "Script score", n: 1, f: r => heat(r.avg_score, 35, 70, ""), s: r => r.avg_score }, { l: "Flags", k: "flags", n: 1 }, { l: "High+", k: "high_flags", n: 1 },
       { l: "Promises", k: "outcome_promises", n: 1 }, { l: "Off-sheet price", k: "off_sheet_price_calls", n: 1 }], c.reps)), "Reps")

@@ -1,12 +1,14 @@
 /* Core helpers shared by every section. Plain JS, no build step. */
 const OFFERS = [
   { id: "krc", name: "Kimberly Rae", data: "data/krc" },
-  { id: "bvw", name: "Barak Van Wyk", data: null },
+  { id: "bvw", name: "Barak Van Wyk", data: null },   // switch to "data/bvw" when the build is ready
   { id: "offer3", name: "Offer 3", data: null },
 ];
 const SECTIONS = [];            // filled by section files: {id, name, subs:[[id,name]], render(d, sub)}
 const state = { offer: "krc", sec: "overview", sub: null, drill: null };
 const cache = {};
+const isKRC = () => state.offer === "krc";
+const K = s => isKRC() ? s : "";
 
 const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));

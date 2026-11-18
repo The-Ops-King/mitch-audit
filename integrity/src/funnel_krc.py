@@ -2,8 +2,9 @@
 """Full-population funnel for KRC from Close, Calendly, Airtable exports.
 Usage: python3 src/funnel_krc.py <export_dir>  -> data/krc/raw/funnel.json"""
 import json, sys, os, collections as C, datetime as D
+OFFER = __import__("os").environ.get("OFFER", "krc")
 X = sys.argv[1]
-OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data/krc/raw/funnel.json")
+OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f"data/{OFFER}/raw/funnel.json")
 SINCE = "2026-09-01"
 P = lambda s: D.datetime.fromisoformat(s.replace("Z", "+00:00")).replace(tzinfo=None)
 leads = json.load(open(f"{X}/close/leads.json"))
@@ -19,7 +20,7 @@ for a in calls + sms:
         first[a["lead_id"]] = min(first.get(a["lead_id"], a["date_created"]), a["date_created"])
 rec = [l for l in leads if l["date_created"] >= SINCE]
 def src(l):
-    s = (l.get("custom") or {}).get("Opt Source") or "Unknown"
+    s = (l.get("custom") or {}).get("Opt Source") or (l.get("custom") or {}).get("Application Source") or (l.get("custom") or {}).get("First Click Source") or "Unknown"
     return "Kajabi freebie" if s.startswith("Kajabi - ") else s
 inv_by = C.defaultdict(list)
 for i in inv: inv_by[i["email"]].append(i)

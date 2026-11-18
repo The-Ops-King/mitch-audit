@@ -2,9 +2,10 @@
 """Make triage-call extraction batches from finished transcripts that aren't scored yet.
 Usage: python3 -I src/triage_batches.py <scratch_dir> <batch_size>"""
 import json, os, sys, glob
+OFFER = __import__("os").environ.get("OFFER", "krc")
 X, N = sys.argv[1], int(sys.argv[2])
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-D = f"{ROOT}/data/krc"
+D = f"{ROOT}/data/{OFFER}"
 meta = json.load(open(f"{D}/raw/setter_call_meta.json"))
 done = {os.path.basename(f)[:-5] for f in glob.glob(f"{D}/setter_calls/*.json")}
 queued = set()
