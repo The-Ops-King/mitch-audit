@@ -1,0 +1,44 @@
+{
+  "name": "Kimberly Rae Coaching: setter phone call",
+  "sources": ["KRC - Master Setting Doc (outbound dial, application/quiz leads)", "Kimberly Rae Chapman Phone Setting Script (fresh opt-ins)", "KRC - Dialing Script (low-intent DM handoff)"],
+  "rules": [
+    "Dial within 5 to 10 minutes of opt-in; double dial; voicemail and text only after the second miss.",
+    "Do not quote program prices or payment plans. Range anchor allowed: low to mid four figures.",
+    "Financing route: credit 650+ or DQ (Master Setting Doc).",
+    "Default to a live transfer when possible.",
+    "Book only after the lead accepts the calendar invite on the phone."
+  ],
+  "phases": [
+    {"id":"S1","name":"Open & anchor","weight":10,"checks":[
+      {"id":"S1a","text":"Confirms who they're speaking to and introduces self as Kimberly's team"},
+      {"id":"S1b","text":"Anchors to what the lead did (application, quiz, training, DM)"}]},
+    {"id":"S2","name":"Frame & permission","weight":10,"checks":[
+      {"id":"S2a","text":"Explains the purpose (point them in the right direction)"},
+      {"id":"S2b","text":"Gets permission to ask a few questions"}]},
+    {"id":"S3","name":"Discovery","weight":25,"checks":[
+      {"id":"S3a","text":"Biggest thing not working in dating/relationships"},
+      {"id":"S3b","text":"Digs in: what does that look like, how long"},
+      {"id":"S3c","text":"Relationship status / background"},
+      {"id":"S3d","text":"What they've tried and how it went"},
+      {"id":"S3e","text":"Doubt: what's getting in the way"}]},
+    {"id":"S4","name":"Why now, cost & desire","weight":15,"checks":[
+      {"id":"S4a","text":"Why now"},
+      {"id":"S4b","text":"Cost of the problem, spillover into life"},
+      {"id":"S4c","text":"Desired picture if solved"}]},
+    {"id":"S5","name":"Sell the call","weight":10,"checks":[
+      {"id":"S5a","text":"Reflects their situation back in one line"},
+      {"id":"S5b","text":"Sells the consultation call (worst case clarity, best case changes it)"}]},
+    {"id":"S6","name":"Financial qualification","weight":15,"checks":[
+      {"id":"S6a","text":"Asks if they can invest if it's the right fit"},
+      {"id":"S6b","text":"Uses only the range anchor (low to mid four figures); no specific prices or plans"},
+      {"id":"S6c","text":"Handles hesitation with the resourcefulness reframe or financing/credit check"}]},
+    {"id":"S7","name":"Book & confirm","weight":10,"checks":[
+      {"id":"S7a","text":"Offers a live transfer or two specific times"},
+      {"id":"S7b","text":"Confirms timezone and email"},
+      {"id":"S7c","text":"Has them accept the calendar invite while on the phone"}]},
+    {"id":"S8","name":"Lock the show","weight":5,"checks":[
+      {"id":"S8a","text":"Gets their word to reschedule rather than no-show"},
+      {"id":"S8b","text":"Quiet place, present, not driving"},
+      {"id":"S8c","text":"Connects them to the closer (intro text) and/or sends the pre-call video"}]}
+  ]
+}
