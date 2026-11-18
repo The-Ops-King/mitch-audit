@@ -2,5 +2,6 @@
 data/**/raw/
 data/**/closer_calls/
 data/**/setter_calls/
+data/**/closer_coaching/
 data/**/threads/
 data/**/*.db

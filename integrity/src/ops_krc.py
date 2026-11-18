@@ -1,0 +1,483 @@
+#!/usr/bin/env python3
+"""Deterministic lead / ops / texting / dialer analytics for KRC.
+
+Reads the raw exports (Close, Calendly, Airtable) and writes aggregates only to
+data/krc/raw/ops.json. No LLM judgement here: every number is countable.
+
+Usage: python3 -I src/ops_krc.py <export_dir>
+Times are bucketed in US Eastern (America/New_York).
+"""
+import json, os, re, sys, statistics as st, collections as C
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
+
+X = sys.argv[1]
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.path.join(ROOT, "data/krc/raw/ops.json")
+SINCE = "2026-09-01"
+ET = ZoneInfo("America/New_York")
+NOW = datetime.now(timezone.utc)
+
+
+def P(s):
+    if not s:
+        return None
+    d = datetime.fromisoformat(str(s).replace("Z", "+00:00"))
+    return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+
+
+def med(xs):
+    xs = [x for x in xs if x is not None]
+    return round(st.median(xs), 1) if xs else None
+
+
+def pct(a, b):
+    return round(100 * a / b) if b else None
+
+
+def jl(p):
+    d = json.load(open(p))
+    return d["data"] if isinstance(d, dict) and "data" in d else d
+
+
+# ---------------------------------------------------------------- load
+leads = jl(f"{X}/close/leads.json")
+calls = jl(f"{X}/krc_setter/calls_all.json")          # every Close call, with user_name + recording flags
+sms = jl(f"{X}/krc_msgs/sms.json")                     # every Close SMS, with text + user_name
+inv = jl(f"{X}/calendly/invitees.json")
+tabs = json.load(open(f"{X}/airtable/tables.json"))["tables"]
+
+
+def AT(frag):
+    t = [t for t in tabs if frag in t["name"]][0]
+    return [r["fields"] for r in json.load(open(f"{X}/airtable/rec_{t['id']}.json"))]
+
+
+eoc, pay, eod, metrics, refunds, lead_base = AT("EOC Report"), AT("Payment Records"), AT("EOD"), AT("Sales Metrics Summary"), AT("Refund Records"), AT("Lead Base")
+REP = {"Sidonie Chechin": "Sidonie C", "Jeremy Makena": "Makena Waterhouse", "Mariah Malvezzi": "Mariah Casagrande-Malvezzi",
+       "Ellie Porter": "Elly Porter"}
+rep = lambda n: REP.get(n, n) if n else "Unknown"
+
+em = lambda l: {e["email"].lower().strip() for c in l.get("contacts", []) for e in c.get("emails", [])}
+lead_by_id = {l["id"]: l for l in leads}
+email_to_lead = {}
+for l in leads:
+    for e in em(l):
+        email_to_lead.setdefault(e, l["id"])
+
+acts_by_lead = C.defaultdict(list)
+for c in calls:
+    if c.get("lead_id"):
+        acts_by_lead[c["lead_id"]].append(("call", P(c["date_created"]), c))
+for m in sms:
+    if m.get("lead_id"):
+        acts_by_lead[m["lead_id"]].append(("sms", P(m["date_created"]), m))
+for v in acts_by_lead.values():
+    v.sort(key=lambda a: a[1])
+
+inv_by_lead = C.defaultdict(list)
+for i in inv:
+    lid = email_to_lead.get((i.get("email") or "").lower().strip())
+    if lid:
+        inv_by_lead[lid].append(i)
+eoc_by_lead = C.defaultdict(list)
+for e in eoc:
+    lid = email_to_lead.get(str(e.get("Lead Email", "")).lower().strip())
+    if lid:
+        eoc_by_lead[lid].append(e)
+paid_by_lead = C.Counter()
+for p in pay:
+    lid = email_to_lead.get(str(p.get("Email", "")).lower().strip())
+    if lid:
+        paid_by_lead[lid] += p.get("Amount") or 0
+
+HELD = lambda e: e.get("Call Outcome") not in ("No Show", "Cancelled", "Reschedule", None)
+CLOSED = lambda e: e.get("Call Outcome") == "Closed" and e.get("Payment Type") not in ("Deposit", "Instalment Paid")
+
+
+def src(l):
+    s = (l.get("custom") or {}).get("Opt Source") or "Unknown"
+    return "Kajabi freebie" if s.startswith("Kajabi - ") else s
+
+
+def applied(l):
+    return (l.get("custom") or {}).get("Applied Source") or "Unknown"
+
+
+# ---------------------------------------------------------------- per-lead facts
+SPEED = [("≤5 min", 5), ("5–15 min", 15), ("15–60 min", 60), ("1–4 hrs", 240), ("4–24 hrs", 1440), ("1–3 days", 4320), ("3+ days", 10 ** 9)]
+
+
+def speed_bucket(m):
+    if m is None:
+        return "Never"
+    for k, lim in SPEED:
+        if m <= lim:
+            return k
+
+
+rows = []
+for l in leads:
+    if l["date_created"] < SINCE:
+        continue
+    created = P(l["date_created"])
+    A = acts_by_lead.get(l["id"], [])
+    outs = [a for a in A if (a[2].get("direction") == "outbound") and a[1] >= created - timedelta(minutes=1)]
+    first = outs[0] if outs else None
+    mins = max(0, (first[1] - created).total_seconds() / 60) if first else None
+    wk = [a for a in outs if a[1] <= created + timedelta(days=7)]
+    conn = [a for a in A if a[0] == "call" and a[2].get("disposition") == "answered" and (a[2].get("duration") or 0) >= 60]
+    dials_before_conn = None
+    if conn:
+        dials_before_conn = sum(1 for a in A if a[0] == "call" and a[2].get("direction") == "outbound" and a[1] <= conn[0][1])
+    inb = [a for a in A if a[2].get("direction") == "inbound"]
+    I = inv_by_lead.get(l["id"], [])
+    E = eoc_by_lead.get(l["id"], [])
+    first_book = min((P(i["created"]) for i in I if i.get("created")), default=None)
+    loc = created.astimezone(ET)
+    rows.append({
+        "id": l["id"], "source": src(l), "applied": applied(l), "status": l.get("status_label") or "Unknown",
+        "month": loc.strftime("%Y-%m"), "week": (loc - timedelta(days=loc.weekday())).strftime("%Y-%m-%d"),
+        "hour": loc.hour, "dow": loc.strftime("%a"),
+        "mins": mins, "first_channel": first[0] if first else None,
+        "first_by": rep(first[2].get("user_name")) if first else None,
+        "touches_7d": len(wk), "touch_days_7d": len({a[1].astimezone(ET).date() for a in wk}),
+        "calls_7d": sum(1 for a in wk if a[0] == "call"), "sms_7d": sum(1 for a in wk if a[0] == "sms"),
+        "connected": bool(conn), "dials_before_connect": dials_before_conn,
+        "replied": bool(inb),
+        "booked": bool(I) or bool(E), "showed": any(HELD(e) for e in E), "closed": any(CLOSED(e) for e in E),
+        "cash": paid_by_lead[l["id"]],
+        "days_to_book": round((first_book - created).total_seconds() / 86400, 1) if first_book else None,
+        "age_days": (NOW - created).days,
+    })
+
+N = len(rows)
+
+
+def summ(rs):
+    n = len(rs)
+    t = [r["mins"] for r in rs if r["mins"] is not None]
+    return {"leads": n, "contacted": len(t), "contacted_pct": pct(len(t), n),
+            "in5": sum(1 for x in t if x <= 5), "in5_pct": pct(sum(1 for x in t if x <= 5), n),
+            "median_min": med(t), "replied": sum(r["replied"] for r in rs), "connected": sum(r["connected"] for r in rs),
+            "booked": sum(r["booked"] for r in rs), "booked_pct": pct(sum(r["booked"] for r in rs), n),
+            "showed": sum(r["showed"] for r in rs), "closed": sum(r["closed"] for r in rs), "cash": round(sum(r["cash"] for r in rs))}
+
+
+def group(key, order=None):
+    ks = order or sorted({r[key] for r in rows}, key=lambda k: (-sum(1 for r in rows if r[key] == k), str(k)))
+    return [{"key": k, **summ([r for r in rows if r[key] == k])} for k in ks if any(r[key] == k for r in rows)]
+
+
+leads_out = {
+    "since": SINCE, "overall": summ(rows),
+    "by_source": group("source"), "by_applied": group("applied"), "by_month": group("month", sorted({r["month"] for r in rows})),
+    "by_week": group("week", sorted({r["week"] for r in rows})),
+    "by_status": [{"key": k, "leads": v} for k, v in C.Counter(r["status"] for r in rows).most_common()],
+    "speed_buckets": [{"key": k, **summ([r for r in rows if speed_bucket(r["mins"]) == k])} for k in [s[0] for s in SPEED] + ["Never"]],
+    "by_hour": [{"key": h, **summ([r for r in rows if r["hour"] == h])} for h in range(24)],
+    "by_dow": [{"key": d, **summ([r for r in rows if r["dow"] == d])} for d in ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]],
+    "first_channel": dict(C.Counter(r["first_channel"] or "none" for r in rows)),
+    "first_by": dict(C.Counter(r["first_by"] or "none" for r in rows)),
+    "touches_7d": {
+        "median_touches": med([r["touches_7d"] for r in rows]), "median_days": med([r["touch_days_7d"] for r in rows]),
+        "dist": [{"key": k, "leads": sum(1 for r in rows if (r["touches_7d"] if k != "10+" else 10) == (k if k != "10+" else 10) or (k == "10+" and r["touches_7d"] >= 10)),
+                  } for k in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "10+"]],
+        "never_replied_by_touches": [{"key": k, "leads": sum(1 for r in rows if not r["replied"] and r["touches_7d"] == k)} for k in range(0, 8)],
+    },
+    "dials_before_connect": {"median": med([r["dials_before_connect"] for r in rows]), "connected_leads": sum(1 for r in rows if r["connected"])},
+    "days_to_book": {"median": med([r["days_to_book"] for r in rows if r["days_to_book"] is not None and r["days_to_book"] >= 0]),
+                     "same_day": sum(1 for r in rows if r["days_to_book"] is not None and 0 <= r["days_to_book"] < 1),
+                     "booked_with_date": sum(1 for r in rows if r["days_to_book"] is not None)},
+    "untouched_open": [{"key": s, "leads": sum(1 for r in rows if r["mins"] is None and r["source"] == s)} for s in sorted({r["source"] for r in rows})],
+}
+# fix touches dist (simple)
+d = C.Counter(min(r["touches_7d"], 10) for r in rows)
+leads_out["touches_7d"]["dist"] = [{"key": ("10+" if k == 10 else k), "leads": d.get(k, 0)} for k in range(0, 11)]
+
+# ---------------------------------------------------------------- Calendly
+cal = [i for i in inv if (i.get("start") or "") >= SINCE]
+
+
+def path(e):
+    m = re.search(r"\((\w+)\)", e or "")
+    code = m.group(1) if m else None
+    return {"SB": "Setter booked", "DCBA": "Direct, ads", "DCBIG": "Direct, Instagram", "DCBE": "Direct, email"}.get(code, e)
+
+
+def lead_time_bucket(i):
+    if not i.get("created") or not i.get("start"):
+        return "Unknown"
+    h = (P(i["start"]) - P(i["created"])).total_seconds() / 3600
+    return "Same day" if h < 24 else "1–2 days" if h < 72 else "3–6 days" if h < 168 else "7+ days"
+
+
+def inv_showed(i):
+    lid = email_to_lead.get((i.get("email") or "").lower().strip())
+    if not lid:
+        return None
+    s = P(i["start"]).date()
+    for e in eoc_by_lead.get(lid, []):
+        dc = e.get("Date of Call")
+        if dc and abs((datetime.fromisoformat(dc).date() - s).days) <= 2:
+            return HELD(e)
+    return None
+
+
+cal_rows = []
+for i in cal:
+    canc = i["status"] == "canceled" and not i.get("rescheduled")
+    cal_rows.append({"path": path(i["event"]), "lt": lead_time_bucket(i), "canc_host": canc and i.get("canceled_by") == "host",
+                     "canc_lead": canc and i.get("canceled_by") == "invitee", "resched": bool(i.get("rescheduled")),
+                     "active": i["status"] == "active", "showed": inv_showed(i) if i["status"] == "active" else None,
+                     "reason": (i.get("reason") or "").strip(), "hour": P(i["start"]).astimezone(ET).hour,
+                     "dow": P(i["start"]).astimezone(ET).strftime("%a"), "past": P(i["start"]) < NOW})
+
+
+def csum(rs):
+    act = [r for r in rs if r["active"] and r["past"]]
+    known = [r for r in act if r["showed"] is not None]
+    return {"bookings": len(rs), "host_cancel": sum(r["canc_host"] for r in rs), "lead_cancel": sum(r["canc_lead"] for r in rs),
+            "rescheduled": sum(r["resched"] for r in rs), "held_slots": len(act), "with_eoc": len(known),
+            "showed": sum(1 for r in known if r["showed"]), "show_pct": pct(sum(1 for r in known if r["showed"]), len(known))}
+
+
+calendly_out = {
+    "overall": csum(cal_rows),
+    "by_path": [{"key": k, **csum([r for r in cal_rows if r["path"] == k])} for k in sorted({r["path"] for r in cal_rows}, key=lambda k: -sum(1 for r in cal_rows if r["path"] == k))],
+    "by_lead_time": [{"key": k, **csum([r for r in cal_rows if r["lt"] == k])} for k in ["Same day", "1–2 days", "3–6 days", "7+ days"]],
+    "by_dow": [{"key": d, **csum([r for r in cal_rows if r["dow"] == d])} for d in ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]],
+    "cancel_reasons": [{"reason": r["reason"][:200], "by": "host" if r["canc_host"] else "lead"} for r in cal_rows if r["reason"] and (r["canc_host"] or r["canc_lead"])],
+    "cancel_reason_missing": sum(1 for r in cal_rows if (r["canc_host"] or r["canc_lead"]) and not r["reason"]),
+}
+
+# ---------------------------------------------------------------- EOC + payments
+E2 = [e for e in eoc if (e.get("Date of Call") or "") >= SINCE]
+
+
+def ecount(field, rs=E2):
+    c = C.Counter()
+    for e in rs:
+        v = e.get(field)
+        for x in (v if isinstance(v, list) else [v]):
+            if x not in (None, "", "N/A"):
+                c[str(x).strip()] += 1
+    return c.most_common()
+
+
+eoc_months = sorted({(e.get("Date of Call") or "")[:7] for e in eoc if e.get("Date of Call")})
+eoc_out = {
+    "total": len(eoc), "since_total": len(E2),
+    "by_month": [{"key": m, **dict(C.Counter(e.get("Call Outcome") or "Blank" for e in eoc if (e.get("Date of Call") or "").startswith(m)))} for m in eoc_months],
+    "by_closer": [{"key": rep(k), "reports": v, "closed": sum(1 for e in E2 if e.get("Closer Name") == k and CLOSED(e)),
+                   "held": sum(1 for e in E2 if e.get("Closer Name") == k and HELD(e)),
+                   "cash": round(sum(e.get("Cash Collected") or 0 for e in E2 if e.get("Closer Name") == k))}
+                  for k, v in C.Counter(e.get("Closer Name") for e in E2).most_common()],
+    "call_type": ecount("Call Type"), "outcome": ecount("Call Outcome"), "payment_type": ecount("Payment Type"),
+    "payment_method": ecount("Payment Method"), "product": ecount("Product Purchased"), "no_close": ecount("No Close Reason(s) / Objection(s) Faced"),
+    "cancellation_type": ecount("Cancellation Type"), "no_show_type": ecount("No Show Type"), "reschedule_type": ecount("Reschedule Type"),
+    "followup_set": ecount("Was a Follow Up Set?"), "lead_source": ecount("Lead Source"),
+    "setter_named": sum(1 for e in E2 if e.get("Setter Name")),
+    "recording_link": sum(1 for e in E2 if re.search(r"fathom|zoom|drive|calendly", str(e.get("Fathom Share Link") or ""))),
+    "dq_reasons": [str(e.get("DQ Reason")).strip()[:240] for e in E2 if e.get("DQ Reason")],
+    "lost_reasons": [str(e.get("Lost Reason")).strip()[:240] for e in E2 if e.get("Lost Reason")],
+    "dq_count": sum(1 for e in E2 if e.get("Call Outcome") == "Disqualified"),
+    "dq_without_reason": sum(1 for e in E2 if e.get("Call Outcome") == "Disqualified" and not e.get("DQ Reason")),
+    "cash_collected": round(sum(e.get("Cash Collected") or 0 for e in E2)), "contract_value": round(sum(e.get("Contract Value") or 0 for e in E2)),
+}
+
+pay_months = sorted({(p.get("Date") or "")[:7] for p in pay if p.get("Date")})
+payments_out = {
+    "count": len(pay), "total": round(sum(p.get("Amount") or 0 for p in pay)), "net": round(sum(p.get("Net Amount") or 0 for p in pay)),
+    "fees": round(sum(p.get("Processing Fees") or 0 for p in pay)),
+    "by_month": [{"key": m, "cash": round(sum(p.get("Amount") or 0 for p in pay if (p.get("Date") or "").startswith(m))),
+                  "payments": sum(1 for p in pay if (p.get("Date") or "").startswith(m)),
+                  "new": round(sum(p.get("New Cash") or 0 for p in pay if (p.get("Date") or "").startswith(m))),
+                  "recurring": round(sum(p.get("Recurring Cash") or 0 for p in pay if (p.get("Date") or "").startswith(m)))} for m in pay_months],
+    "method": [[k, v] for k, v in C.Counter(p.get("Payment Method") or "Unknown" for p in pay).most_common()],
+    "type": [[k, v] for k, v in C.Counter(p.get("Payment Type") or "Unknown" for p in pay).most_common()],
+    "amounts": sorted(round(p.get("Amount") or 0) for p in pay),
+    "refunds": {"count": len(refunds), "total": round(sum(r.get("Amount") or 0 for r in refunds))},
+}
+
+# ---------------------------------------------------------------- Airtable dashboard vs recount
+mlookup = {m.get("Reporting Period"): m for m in metrics}
+recon = []
+for m in ["2026-09", "2026-10", "2026-11"]:
+    label = datetime.fromisoformat(m + "-01").strftime("%B %Y")
+    a = mlookup.get(label) or {}
+    em_ = [e for e in eoc if (e.get("Date of Call") or "").startswith(m)]
+    sched = [e for e in em_ if e.get("Call Outcome") not in ("Cancelled", "Reschedule")]
+    shows = [e for e in em_ if HELD(e)]
+    closes_any = [e for e in em_ if e.get("Call Outcome") == "Closed"]
+    closes_full = [e for e in em_ if CLOSED(e)]
+    recon.append({"month": m, "airtable": {"show_rate": a.get("Show Rate"), "close_rate": a.get("Close Rate"), "closed": a.get("Total Closed Deals"),
+                                            "cash": a.get("Total Cash Collected"), "leads": a.get("Total New Leads"), "shows": a.get("Total Shows")},
+                  "recount": {"show_rate": round(len(shows) / len(sched), 3) if sched else None, "show_rate_all_reports": round(len(shows) / len(em_), 3) if em_ else None, "reports": len(em_),
+                              "close_rate_incl_deposits": round(len(closes_any) / len(shows), 3) if shows else None,
+                              "close_rate_full_pay": round(len(closes_full) / len(shows), 3) if shows else None,
+                              "closed_incl_deposits": len(closes_any), "closed_full_pay": len(closes_full), "shows": len(shows),
+                              "close_leads": sum(1 for r in rows if r["month"] == m)}})
+
+# ---------------------------------------------------------------- Dialer (Close calls)
+call_rows = []
+for c in calls:
+    t = P(c["date_created"]).astimezone(ET)
+    call_rows.append({"user": rep(c.get("user_name")), "dir": c.get("direction"), "disp": c.get("disposition"), "dur": c.get("duration") or 0,
+                      "rec": bool(c.get("recording_url")), "date": t.date().isoformat(), "month": t.strftime("%Y-%m"),
+                      "week": (t - timedelta(days=t.weekday())).strftime("%Y-%m-%d"), "hour": t.hour, "lead": c.get("lead_id")})
+CONN = lambda r: r["disp"] == "answered" and r["dur"] >= 60
+
+
+def dsum(rs):
+    ob = [r for r in rs if r["dir"] == "outbound"]
+    return {"dials": len(ob), "answered": sum(1 for r in ob if r["disp"] == "answered"), "connects_60s": sum(1 for r in ob if CONN(r)),
+            "connect_pct": pct(sum(1 for r in ob if CONN(r)), len(ob)), "convos_5min": sum(1 for r in rs if r["dur"] >= 300),
+            "talk_min": round(sum(r["dur"] for r in rs) / 60), "recorded": sum(1 for r in rs if r["rec"]), "inbound": sum(1 for r in rs if r["dir"] == "inbound"),
+            "leads_dialed": len({r["lead"] for r in ob}), "days_active": len({r["date"] for r in ob})}
+
+
+dialer_out = {
+    "overall": dsum(call_rows),
+    "by_user": [{"key": u, **dsum([r for r in call_rows if r["user"] == u])} for u, _ in C.Counter(r["user"] for r in call_rows).most_common()],
+    "by_month": [{"key": m, **dsum([r for r in call_rows if r["month"] == m])} for m in sorted({r["month"] for r in call_rows})],
+    "by_hour": [{"key": h, **dsum([r for r in call_rows if r["hour"] == h])} for h in range(24)],
+    "duration_buckets": [{"key": k, "calls": sum(1 for r in call_rows if lo <= r["dur"] < hi)} for k, lo, hi in
+                         [("No answer / 0s", 0, 1), ("1–59s", 1, 60), ("1–2 min", 60, 120), ("2–5 min", 120, 300), ("5–10 min", 300, 600), ("10–20 min", 600, 1200), ("20+ min", 1200, 10 ** 9)]],
+    "dispositions": C.Counter(r["disp"] for r in call_rows).most_common(),
+    "recordings_expire_days": 90,
+}
+
+# EOD self-report vs Close log
+eod_rows = []
+for e in eod:
+    u = rep(e.get("Setter Name")); dte = e.get("Reporting Date")
+    if not dte:
+        continue
+    cr = [r for r in call_rows if r["user"] == u and r["date"] == dte and r["dir"] == "outbound"]
+    eod_rows.append({"user": u, "date": dte, "eod_dials": e.get("Outbound Dials") or 0, "close_dials": len(cr),
+                     "eod_pickups": e.get("Pickups") or 0, "close_answered": sum(1 for r in cr if r["disp"] == "answered"),
+                     "eod_convos": e.get("Conversations") or 0, "close_convos": sum(1 for r in cr if r["dur"] >= 120),
+                     "eod_talk": e.get("Talk Time (Minutes)") or 0, "close_talk": round(sum(r["dur"] for r in cr) / 60),
+                     "eod_booked": (e.get("Calendar Calls Booked") or 0) + (e.get("Live Calls Booked") or 0),
+                     "quality": e.get("Avg Lead Quality 1-5"), "note": (e.get("Notes / Feedback From Today") or "").strip()[:300]})
+eod_out = {"reports": len(eod_rows), "by_user": []}
+for u in sorted({r["user"] for r in eod_rows}):
+    rs = [r for r in eod_rows if r["user"] == u]
+    ud = {r["date"] for r in call_rows if r["user"] == u and r["dir"] == "outbound"}
+    eod_out["by_user"].append({"key": u, "reports": len(rs), **{k: sum(r[k] for r in rs) for k in ["eod_dials", "close_dials", "eod_pickups", "close_answered", "eod_convos", "close_convos", "eod_talk", "close_talk", "eod_booked"]},
+                               "days_dialing_in_close": len(ud), "days_dialing_no_report": len(ud - {r["date"] for r in rs}),
+                               "avg_quality": med([r["quality"] for r in rs if r["quality"]]),
+                               "first": min(r["date"] for r in rs), "last": max(r["date"] for r in rs)})
+eod_out["notes"] = [{"user": r["user"], "date": r["date"], "note": r["note"]} for r in sorted(eod_rows, key=lambda r: r["date"], reverse=True) if r["note"]][:40]
+eod_out["daily"] = sorted(eod_rows, key=lambda r: r["date"])
+for r in eod_out["daily"]:
+    r.pop("note", None)
+
+# ---------------------------------------------------------------- SMS deterministic
+msgs = sorted([{**m, "t": P(m["date_created"])} for m in sms if m.get("lead_id")], key=lambda m: m["t"])
+by_lead = C.defaultdict(list)
+for m in msgs:
+    by_lead[m["lead_id"]].append(m)
+resp = []          # business response time to each inbound burst
+unanswered = 0
+unanswered_leads = set()
+for lid, ms in by_lead.items():
+    for i, m in enumerate(ms):
+        if m["direction"] != "inbound" or (i + 1 < len(ms) and ms[i + 1]["direction"] == "inbound"):
+            continue                      # only the last message of an inbound burst
+        nxt = next((x for x in ms[i + 1:] if x["direction"] == "outbound"), None)
+        loc = m["t"].astimezone(ET)
+        if nxt:
+            resp.append({"min": (nxt["t"] - m["t"]).total_seconds() / 60, "rep": rep(nxt.get("user_name")), "hour": loc.hour,
+                         "after_hours": loc.hour < 8 or loc.hour >= 20 or loc.weekday() >= 5})
+        elif (NOW - m["t"]).days >= 1:
+            unanswered += 1; unanswered_leads.add(lid)
+RB = [("≤5 min", 5), ("5–30 min", 30), ("30–60 min", 60), ("1–4 hrs", 240), ("4–24 hrs", 1440), ("1+ day", 10 ** 9)]
+rb = lambda x: next(k for k, lim in RB if x <= lim)
+STOPRX = re.compile(r"^\s*(stop|unsubscribe|cancel|end|quit)\s*\.?\s*$|\b(unsubscribe|remove me|leave me alone|don'?t text|do not text|stop texting|stop messaging|stop contacting|lose my number)\b", re.I)
+optout_leads, texted_after = set(), set()
+for lid, ms in by_lead.items():
+    s = next((m for m in ms if m["direction"] == "inbound" and STOPRX.search(m.get("text") or "")), None)
+    if s:
+        optout_leads.add(lid)
+        if any(m["direction"] == "outbound" and m["t"] > s["t"] + timedelta(minutes=2) for m in ms):
+            texted_after.add(lid)
+ob = [m for m in msgs if m["direction"] == "outbound"]
+quiet = [m for m in ob if (lambda h: h < 8 or h >= 21)(m["t"].astimezone(ET).hour)]
+
+
+def norm_tpl(t):
+    t = (t or "").strip()
+    t = re.sub(r"https?://\S+", "{link}", t)
+    t = re.sub(r"^(hi|hey|hello|hiya|good (morning|afternoon|evening))[ ,!]+[A-Z][a-z'’-]+", lambda m: m.group(1) + " {name}", t, flags=re.I)
+    t = re.sub(r"\b\d{1,2}(:\d{2})?\s?(am|pm|AM|PM)\b", "{time}", t)
+    t = re.sub(r"\d", "#", t)
+    return re.sub(r"\s+", " ", t)[:160]
+
+
+tp = C.defaultdict(list)
+for lid, ms in by_lead.items():
+    for i, m in enumerate(ms):
+        if m["direction"] != "outbound":
+            continue
+        reply = any(x["direction"] == "inbound" and x["t"] - m["t"] <= timedelta(hours=24) for x in ms[i + 1:i + 6])
+        tp[norm_tpl(m.get("text"))].append((lid, reply, rep(m.get("user_name"))))
+templates = []
+for k, v in tp.items():
+    if len(v) >= 6 and len(k) > 25:
+        templates.append({"text": k, "sends": len(v), "leads": len({x[0] for x in v}), "reply_24h_pct": pct(sum(x[1] for x in v), len(v)),
+                          "senders": [s for s, _ in C.Counter(x[2] for x in v).most_common(3)]})
+templates.sort(key=lambda t: -t["sends"])
+
+sms_out = {
+    "messages": len(msgs), "outbound": len(ob), "inbound": len(msgs) - len(ob), "leads": len(by_lead),
+    "by_user": [{"key": u, "sent": sum(1 for m in ob if rep(m.get("user_name")) == u),
+                 "leads": len({m["lead_id"] for m in ob if rep(m.get("user_name")) == u}),
+                 "median_response_min": med([r["min"] for r in resp if r["rep"] == u]),
+                 "responses": sum(1 for r in resp if r["rep"] == u)} for u, _ in C.Counter(rep(m.get("user_name")) for m in ob).most_common()],
+    "by_month": [{"key": mo, "out": sum(1 for m in ob if m["t"].astimezone(ET).strftime("%Y-%m") == mo),
+                  "in": sum(1 for m in msgs if m["direction"] == "inbound" and m["t"].astimezone(ET).strftime("%Y-%m") == mo)}
+                 for mo in sorted({m["t"].astimezone(ET).strftime("%Y-%m") for m in msgs})],
+    "response": {"n": len(resp), "median_min": med([r["min"] for r in resp]),
+                 "median_business_hours": med([r["min"] for r in resp if not r["after_hours"]]),
+                 "median_after_hours": med([r["min"] for r in resp if r["after_hours"]]),
+                 "buckets": [{"key": k, "n": sum(1 for r in resp if rb(r["min"]) == k)} for k, _ in RB],
+                 "by_hour": [{"key": h, "n": sum(1 for r in resp if r["hour"] == h), "median_min": med([r["min"] for r in resp if r["hour"] == h])} for h in range(24)]},
+    "unanswered_inbound": unanswered, "unanswered_leads": len(unanswered_leads),
+    "opt_out_leads": len(optout_leads), "texted_after_opt_out": len(texted_after),
+    "quiet_hours_sends": len(quiet), "quiet_hours_leads": len({m["lead_id"] for m in quiet}),
+    "out_by_hour": [{"key": h, "out": sum(1 for m in ob if m["t"].astimezone(ET).hour == h),
+                     "in": sum(1 for m in msgs if m["direction"] == "inbound" and m["t"].astimezone(ET).hour == h)} for h in range(24)],
+    "templates": templates[:25],
+}
+
+json.dump({"generated": NOW.isoformat(timespec="seconds"), "timezone": "America/New_York", "leads": leads_out, "calendly": calendly_out,
+           "eoc": eoc_out, "payments": payments_out, "reconciliation": recon, "dialer": dialer_out, "eod": eod_out, "sms": sms_out},
+          open(OUT, "w"), indent=1, default=str)
+print("wrote", OUT, os.path.getsize(OUT) // 1024, "KB")
+print(json.dumps(leads_out["overall"]), json.dumps(calendly_out["overall"]))
+print("sms", {k: v for k, v in sms_out.items() if k in ("messages", "unanswered_inbound", "opt_out_leads", "texted_after_opt_out", "quiet_hours_sends")}, sms_out["response"]["median_min"])
+print("dialer", dialer_out["overall"]); print("eod", [(u["key"], u["eod_dials"], u["close_dials"], u["eod_talk"], u["close_talk"]) for u in eod_out["by_user"]])
+print("recon", json.dumps(recon)[:800])
+
+# ---------------------------------------------------------------- name tokens for pseudonymisation (never published)
+names = set()
+for l in leads:
+    for n in [l.get("display_name") or ""] + [c.get("name") or "" for c in l.get("contacts", [])]:
+        names.update(w.strip(".,()'\"") for w in n.split())
+for e in eoc:
+    names.update(w.strip(".,()'\"") for w in str(e.get("Lead Full Name") or "").split())
+for p in pay:
+    names.update(w.strip(".,()'\"") for w in str(p.get("Name") or "").split())
+names = sorted(n for n in names if len(n) >= 3 and n[:1].isalpha())
+json.dump(names, open(os.path.join(ROOT, "data/krc/raw/names.json"), "w"))
+print("name tokens", len(names))
+
+# ---------------------------------------------------------------- triage call candidates (metadata only)
+cand = [c for c in calls if c.get("recording_url") and (c.get("duration") or 0) >= 120]
+meta = {c["id"]: {"lead_id": c.get("lead_id"), "user_name": rep(c.get("user_name")), "duration_min": round((c.get("duration") or 0) / 60, 1),
+                  "date": P(c["date_created"]).astimezone(ET).date().isoformat(),
+                  "transcribed": os.path.exists(f"{X}/krc_setter/text/{c['id']}.txt")} for c in cand}
+json.dump(meta, open(os.path.join(ROOT, "data/krc/raw/setter_call_meta.json"), "w"))
+print("triage candidates", len(meta), "transcribed", sum(m["transcribed"] for m in meta.values()))

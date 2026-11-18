@@ -25,7 +25,22 @@ Transcripts are machine transcriptions of phone audio (Whisper): no speaker labe
   "result": "booked_calendar|live_transferred|callback_scheduled|not_qualified|not_interested|no_decision|unclear",
   "invite_accepted_on_call": null,
   "adherence": { "phases": { "S1": { "score": "hit|partial|miss|not_applicable", "checks": { "S1a": "hit" }, "evidence": "..." } }, "coach_note": "..." },
-  "flags": [ { "category": "<closer flag vocab>", "severity": "...", "summary": "...", "evidence": ["exact quote"] } ],
+  "summary": "one or two sentences: who the lead is, what happened, how it ended",
+  "gates": {                                    // the three things a triage call must establish before booking
+    "problem":  { "verdict": "solid|partial|weak|missed", "evidence": "exact quote", "timestamp": "[MM:SS]" },
+    "why_now":  { "verdict": "solid|partial|weak|missed", "evidence": "exact quote", "timestamp": "[MM:SS]" },
+    "means":    { "verdict": "solid|partial|weak|missed", "evidence": "exact quote", "timestamp": "[MM:SS]" }
+  },
+  "tie_downs": {                                // show protection; true only if clearly done on the call
+    "time_locked": false, "invite_accepted_live": false, "verbal_show_commitment": false,
+    "video_or_setting_expectation": false, "decision_maker_handled": false, "reminder_or_prep_set": false
+  },
+  "set_quality": "high|medium|low|not_set",     // how likely this booking is to show and be qualified
+  "coaching": [                                 // 1-4 items, most important first
+    { "area": "<phase id, e.g. S6>", "priority": "high|medium|low", "issue": "what went wrong, specific", "better": "the exact words she could have said instead", "timestamp": "[MM:SS]" }
+  ],
+  "exemplary": [ { "area": "<phase id>", "quote": "exact words where she did it well", "why": "short", "timestamp": "[MM:SS]" } ],
+  "flags": [ { "category": "<closer flag vocab>", "severity": "...", "summary": "...", "evidence": ["exact quote"], "timestamp": "[MM:SS]" } ],
   "quality": { "transcript_quality": "good|fair|poor", "notes": "" }
 }
 ```
