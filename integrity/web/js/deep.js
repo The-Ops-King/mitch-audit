@@ -79,6 +79,7 @@ SALES.avatars = d => {
 /* ---------- objection deep-dive ---------- */
 SALES.objdeep = d => {
   const P = d.closer.objection_pages;
+  if (!P || !P.length) return callout("No objections yet", "Objection pages fill in once this offer's sales calls are scored.", "warn");
   const pick = state.objType && P.find(p => p.type === state.objType) ? state.objType : P[0].type;
   setTimeout(() => { const s = $("#objpick"); if (s) s.addEventListener("input", () => { state.objType = s.value; render(); }); });
   const p = P.find(x => x.type === pick);

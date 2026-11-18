@@ -129,6 +129,54 @@ function OVERVIEW(d) {
       </ol></div>`, "Decisions")}`;
 }
 
+function findingsBVW(d) {
+  const L = d.ops.leads, o = L.overall, S = d.ops.sms, t = d.texting, c = d.closer, X = d.ops.extra || {}, R = d.ops.reconciliation;
+  const tcat = k => ((t.flag_categories.find(x => x[0] === k) || [])[1]) || 0, tids = k => t.flags.filter(f => f.category === k).map(f => f.lead_id);
+  const cat = k => (c && c.flag_categories.find(x => x.category === k)) || { n: 0, calls: 0, call_ids: [] };
+  const hasCalls = c && c.summary.calls > 0;
+  const avg = k => Math.round(100 * R.reduce((a, r) => a + (r.airtable[k] || 0), 0) / Math.max(1, R.length));
+  const full = Math.round(100 * R.reduce((a, r) => a + (r.recount.close_rate_full_pay || 0), 0) / Math.max(1, R.length));
+  const stuck = (X.stuck || []).filter(s => !s.paid_later), cov = X.coverage || {};
+  const unknownSrc = (L.by_source.find(x => x.key === "Unknown") || {}).leads || 0;
+  const F = [
+    { g: "risk", h: "The closing script was never finished", own: ["Mitch"],
+      p: `Barak's Master Closing Doc stops halfway. Discovery is written, but the pitch, the three pillars of his method, how the program is delivered, onboarding and the price are still placeholders such as "[INSERT BARAK'S ACTUAL PROCESS]" and "the investment is $X". Every closer improvises the half of the call where the money is made.`,
+      fix: "Mitch and Barak finish the second half this week. The Script fixes tab has a draft built from his won calls, with the exact lines that worked.", why: "No script means every pitch, price and promise is invented on the spot." },
+    ...(hasCalls ? [{ g: "risk", h: "What reps say on the calls that they shouldn't", own: ["Sid", "Leah"],
+      p: `${drill(fmt(cat("outcome_promise").calls) + " calls", cat("outcome_promise").call_ids, "Calls with an outcome promise")} include a promise or strong implication that the relationship will be saved, ${drill(fmt(cat("pricing_deviation").calls) + " calls", cat("pricing_deviation").call_ids, "Calls with an off-sheet price")} include a price or plan that isn't on the sheet, and ${drill(fmt(cat("compliance").calls) + " calls", cat("compliance").call_ids, "Calls with a compliance flag")} have a compliance flag, mostly no recording disclosure.`,
+      fix: "One approved proof line, the price sheet written into the script, and the disclosure line at the start of every call. The AI call review flags all three.", why: "These are the claims that turn into refund disputes." }] : []),
+    { g: "risk", h: "Credentials and refunds are handled by text, off script", own: ["Mitch", "Sid"],
+      p: `In the texts, ${drill(fmt(tcat("mis_selling")) + " mis-selling flags", tids("mis_selling"), "Mis-selling in texts", "threads")}: a lead asked more than once whether Barak is licensed and got an unverified "hundreds of couples" answer, and a refund was promised by text with no payment on record. ${drill(fmt(tcat("wellbeing_risk")) + " conversations", tids("wellbeing_risk"), "Wellbeing in texts", "threads")} have a lead in distress without care, and one lead who asked to be left alone was texted the next day.`,
+      fix: "One approved answer about Barak's background and what coaching is and isn't. Refunds only by the written policy, never promised by a setter. STOP means stop.", why: "Licensing questions answered badly are a regulatory risk for anyone selling relationship help." },
+    { g: "money", h: `${pctS(o.leads - o.contacted, o.leads)} of new leads have no call or text in Close`, own: ["Leah", "Mitch"],
+      p: `Of ${fmt(o.leads)} leads since September 1, ${fmt(o.leads - o.contacted)} show no outbound call or text in Close. Some may be worked in Instagram or WhatsApp, but nothing records it, and ${fmt(unknownSrc)} leads have no source at all. ${fmt(cov.leads_in_uncovered)} of ${fmt(cov.leads_total)} arrived in hours when nobody is active in Close.`,
+      fix: "Instant text from Close on every new lead, every DM conversation logged to the lead (ManyChat to Close), and source captured on every lead.", why: "You can't fix what you can't see, and right now most of the funnel is invisible." },
+    { g: "money", h: "Pitched prospects who never paid", own: ["Sid", "Leah"],
+      p: `${fmt(stuck.length)} people heard an offer and never paid anything. ${fmt(stuck.filter(s => s.last_touch_days == null || s.last_touch_days > 14).length)} have had no outbound touch in 14 days or more.`,
+      fix: "A Close smart view of every Offer Made with no payment, a dated follow-up on every one, and a weekly block to work the list.", why: "They already sat through a full call." },
+    { g: "money", h: "Leads and clients text and nobody answers", own: ["Leah"],
+      p: `${fmt(S.unanswered_inbound)} leads' last messages were never answered, including a client who had paid $5,400 asking what time the session was and where the link was. ${drill(fmt(tcat("missed_lead")) + " missed-lead flags", tids("missed_lead"), "Missed leads", "threads")} in the texts.`,
+      fix: "A 30-minute unanswered-reply alert in Slack, and client questions routed to the onboarding owner, not the setter's inbox.", why: "An ignored paying client is a refund request waiting to happen." },
+    { g: "data", h: "The dashboard says most calls close. Most don't.", own: ["Leah"],
+      p: `Airtable shows an average close rate of ${avg("close_rate")}% over the last three months. Counting only deals paid in full, it's about ${full}%. Deposits and instalment payments are counted as new closes: ${fmt((d.ops.eoc.payment_type.find(x => x[0] === "Instalment Paid") || [, 0])[1])} instalment reports and ${fmt((d.ops.eoc.payment_type.find(x => x[0] === "Deposit") || [, 0])[1])} deposits sit in the same "Closed" bucket.`,
+      fix: "Fix the Airtable formulas so a deposit or instalment is never a new close.", why: "Every decision about this offer is being made on a close rate about three times too high." },
+    { g: "data", h: "Barak's bookings and sources aren't tracked", own: ["Leah"],
+      p: `There's no Calendly export for this account, bookings never create a deal in Close, ${fmt(unknownSrc)} of ${fmt(o.leads)} leads have no source, and the same person can exist as two lead records with the payment on one and the conversation on the other.`,
+      fix: "Calendly webhook to Close for Barak's events, a source field filled on every lead, and a weekly duplicate merge.", why: "Without it, show rates, sources and speed to lead can't be measured." },
+  ];
+  return F;
+}
+
 function OVERVIEW_BVW(d) {
-  return `<div class="card pending"><h3>Barak Van Wyk</h3><p>This offer's audit is being built.</p></div>`;
+  const o = d.ops.leads.overall, c = d.closer, F = findingsBVW(d);
+  let n = 0;
+  const findHTML = g => F.filter(f => f.g === g).map(f => `<div class="find"><div class="k">${String(++n).padStart(2, "0")}</div><div><h3>${esc(f.h)}</h3><div class="meta">${f.own.map(x => `<span class="owner">${esc(x)}</span>`).join("")}</div><p class="p">${f.p}</p><div class="fx"><b>Fix</b><span>${esc(f.fix)}</span><b>Why</b><span class="muted">${esc(f.why)}</span></div></div></div>`).join("");
+  return `<div class="hero"><p><b>Barak's offer sells when the call happens, but the second half of the call has no script and most of the funnel before it is invisible.</b> Half the new leads have no call or text in Close, bookings aren't tracked, and the dashboard counts instalments as new closes.</p>
+    <p>The same closer and setters work Kim's offer, so most fixes are shared: finish the script, write the price sheet into it, and measure every call.</p></div>
+    <div class="strip"><span><b>${fmt(o.leads)}</b> leads since Sep 1</span><span><b>${fmt(d.ops.sms.messages)}</b> texts read</span><span><b>${fmt(d.texting.summary.threads)}</b> conversations</span><span><b>${fmt(c ? c.summary.calls : 0)}</b> sales calls scored</span><span class="pend">Calendly: <b>no access</b></span><span class="pend">DMs: <b>waiting on ManyChat</b></span></div>
+    ${section("The journey, lead to cash", "New leads since September 1. Booked comes from End-of-Call reports only (no Calendly export for this account). Closed means paid in full.",
+      `<div class="journey">${[["New leads", o.leads], ["Contacted in Close", o.contacted], ["Replied by text", o.replied], ["Booked a call", o.booked], ["Showed", o.showed], ["Closed", o.closed]].map(([k, v], i, a) => `<div class="jstep"><div class="v">${fmt(v)}</div><div class="l">${k}</div><div class="c">${i ? pctS(v, a[i - 1][1]) + " of prev" : ""}</div><div class="bar" style="width:${Math.max(2, 100 * v / o.leads)}%"></div></div>`).join("")}</div>
+      <div class="grid g6 mt">${tile(mins(o.median_min), "Median time to first touch")}${tile(pctS(o.leads - o.contacted, o.leads), "No call or text in Close", "", "bad")}${tile(mins(d.ops.sms.response.median_min), "Median reply to a lead's text")}${tile(pctS(o.showed, o.booked), "Booked who showed")}${tile(pctS(o.closed, o.showed), "Showed who paid in full", "", "good")}${tile(money(o.cash), "Cash from these leads", "", "good")}</div>`, "Overview")}
+    ${section("What we found and what to do", "Each finding has the problem, the fix and who owns it. Underlined numbers open the calls or conversations behind them.",
+      [["risk", "Fix this week: script and compliance", "bad"], ["money", "Where the money leaks", "warn"], ["data", "Numbers you can't trust yet", ""]].map(([g, title]) => `<h3 style="margin:22px 0 8px">${title}</h3><div class="card">${findHTML(g)}</div>`).join(""), "Findings")}`;
 }

@@ -185,8 +185,8 @@ def build_closer(calls, playbook):
                           "call_ids": sorted(v["call_ids"])} for k, v in obj.items()], key=lambda r: -r["n"])
 
     # offer consistency
-    sanctioned = {(t["price_usd"], t["months"]) for t in playbook["sanctioned_offer"]}
-    sanctioned_prices = {t["price_usd"] for t in playbook["sanctioned_offer"]}
+    sanctioned = {(t.get("price_usd"), t.get("months")) for t in playbook["sanctioned_offer"]}
+    sanctioned_prices = {t.get("price_usd") for t in playbook["sanctioned_offer"] if t.get("price_usd")}
     quoted = C.Counter()
     quoted_calls = C.defaultdict(set)
     off_sheet_calls = set()
@@ -733,7 +733,7 @@ def main():
         if m.get("lead_id") and any(sc.get("call_id") == k and sc.get("type") == "setter_call" for sc in scalls):
             triage_by_lead[m["lead_id"]].append(k)
     app = BD.applicants(lead_rows, apps, cats, sales, {t["lead_id"] for t in threads}, triage_by_lead) if lead_rows else None
-    sanctioned = {t["price_usd"] for t in playbook["sanctioned_offer"]}
+    sanctioned = {t.get("price_usd") for t in playbook["sanctioned_offer"] if t.get("price_usd")}
     closer["objection_pages"] = BD.objection_pages(sales, coaching, threads, scrub, None)
     closer["reps_deep"] = BD.reps_deep(sales, coaching, playbook, sanctioned, scrub)
     closer["review"] = BD.calls_to_review(sales, coaching, scrub)
