@@ -314,7 +314,8 @@ def raw_outcome(r):
     eoc = r.get("eoc") or []
     booked = bool(r.get("calendly")) or bool(eoc)
     showed = any(e.get("outcome") not in ("No Show", "Cancelled", "Reschedule", None) for e in eoc)
-    closed = any(e.get("outcome") == "Closed" and e.get("payment_type") not in ("Deposit", "Instalment Paid") for e in eoc) or (r.get("paid") or 0) > 0
+    # a deposit is not a closed deal, so payments alone never count as a close
+    closed = any(e.get("outcome") == "Closed" and e.get("payment_type") not in ("Deposit", "Instalment Paid") for e in eoc)
     return {"booked": booked, "showed": showed, "closed": closed}
 
 
