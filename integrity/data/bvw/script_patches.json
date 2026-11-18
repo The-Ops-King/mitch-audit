@@ -1,0 +1,1123 @@
+{
+  "scripts": [
+    {
+      "script": "BVW Master Closing Doc",
+      "doc_id": "1mE0z9AO5loHkNu9BKTbFVxOxJUVPSEso8ssN2uvQ7-E",
+      "last_edited": "2026-09-11",
+      "summary": "Makena follows the written discovery half of the doc closely, but the doc goes blank from the pitch on, so every pitch, price, plan and close is improvised: 9 different prices on 14 calls, price before the temperature check on 13, and outcome promises on 10. The intro's recording and confidentiality lines are said on 0 of 14 calls, and there is no safety step although 7 calls include suicide, self-harm or violence disclosures. The three changes that matter most: add the crisis stop-and-check and say the recording disclosure every time; fill the pitch, delivery, investment and close with what the 3 won calls say, with a fixed list of approved payment options; hold the price until the temperature check is done.",
+      "patches": [
+        {
+          "id": "MC-01",
+          "section": "INTRO: RAPPORT & FRAME",
+          "priority": "high",
+          "type": "reps_skip_it",
+          "script_says": "This call is recorded in the case that you end up working with Barak, in which case I'll forward my notes over to him. But if not, everything we discuss today stays between you and I.",
+          "reality": "The recording disclosure (C1c) and the confidentiality line (C1b) were said on 0 of 14 calls, won or not. Every call opens with her name and role and goes straight to the goal question. All 14 are recorded and transcribed. On recuD9fhc8NSBGK9z the wife was listening on another phone and nobody said so at the open. These are the calls where prospects disclosed violence, suicide attempts and sex addiction.",
+          "what_works": "Nothing to copy: no call does it. The won calls open with name, role and the 45-minute check (C1f, 75% of calls), which can stay.",
+          "change": "Make the disclosure the second thing said on every call, ask for a spoken yes, and ask who else is listening. If they say no to recording, stop the recording and carry on. Keep the rest of the doc's intro.",
+          "new_lines": [
+            "Before we get into it, two quick things. This call is recorded so I can pass accurate notes to Barak if you end up working with him. If you don't, it stays with our team. Is that okay with you?",
+            "And is anyone else with you or listening in on your end, just so I know who I'm talking to?",
+            "Everything you share today is confidential. Some of it may be personal, so the more honest you can be, the better I can tell whether Barak can actually help. Sound fair?"
+          ],
+          "evidence": [
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "My name's Makena, by the way, I help Barack with his onboarding application process, good to meet you."
+            },
+            {
+              "call_id": "rec6IqrIcBNPKz9e9",
+              "quote": "My name is Makena. I help Rock with his client application process. Good to meet you."
+            },
+            {
+              "call_id": "reckX0EYFDCGQ5w0o",
+              "quote": "But I'll just be taking some notes here during our conversation."
+            },
+            {
+              "call_id": "rec1tlTKpupDVqmfF",
+              "quote": "I am a private person."
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "MC-02",
+          "section": "INTRO: RAPPORT & FRAME (new branch: safety and crisis)",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": null,
+          "reality": "The doc has no step for a safety disclosure. The audit found 10 crisis or wellbeing disclosures (2 critical, 5 high) on 7 of 14 closer calls, 1 setter call and 2 text threads: a wife's suicide attempt and choking with jail time (rec6IqrIcBNPKz9e9), a husband who put his hands on his partner (reckX0EYFDCGQ5w0o), a grieving mother just out of inpatient care who was 'very suicidal' (recmKsZB35MoB68hY), a partner who 'doesn't want to carry on' and a first wife who died by suicide (rec1tlTKpupDVqmfF), and 'I have to choose the last option I have' (recwyYh5D2HTXy3oB). In every case the rep acknowledged it in a line and kept selling. No call asked about current safety or gave a referral. On rec6IqrIcBNPKz9e9 the reply was that Barak can definitely help; on recmKsZB35MoB68hY the next question was what would stop her booking.",
+          "what_works": "Nothing in the data handles this well. Won calls give no model; this is a safety rule, not a sales tactic.",
+          "change": "Add a 'Stop and check' branch any rep runs the moment someone mentions suicide, self-harm, wanting to not be here, or physical violence or fear in the relationship. Ask directly about now. If there is current risk or current violence, stop selling: no price, no payment, no booking on this call. Give the crisis line, tell Barak and the manager in Slack the same day, and follow up only after they confirm they are safe and supported. If it is past and they are safe and supported now, say coaching works alongside their professional care, not instead of it, and carry on.",
+          "new_lines": [
+            "I want to pause there, because that matters more than anything else we talk about today. Can I ask you directly: are you having any thoughts of hurting yourself or not wanting to be here right now?",
+            "[If violence was mentioned] Is anyone in the relationship afraid of being physically hurt right now? Is everyone safe at home tonight?",
+            "[If yes, or unsure] Thank you for telling me. I'm not going to talk about the program today. Right now the most important thing is that you get support. In the US you can call or text 988 any time, day or night. If you're in danger right now, call 911. [Violence] The National Domestic Violence Hotline is 1-800-799-7233, or text START to 88788. [Outside the US] I'll text you the number for where you are.",
+            "Is there someone you can be with or call tonight? I'm going to check in with you tomorrow. Is that okay?",
+            "[If it is in the past and they are safe now] I'm really glad you're safe now. Are you working with a doctor or therapist on that side of things? Barak is a coach, not a therapist, so if you work with him it's alongside that support, not instead of it."
+          ],
+          "evidence": [
+            {
+              "call_id": "rec6IqrIcBNPKz9e9",
+              "quote": "She… and then Melinda, attempted suicide."
+            },
+            {
+              "call_id": "rec6IqrIcBNPKz9e9",
+              "quote": "I'm confident Barack can definitely help you. Your situation is definitely not inconsistent with the people that we work with."
+            },
+            {
+              "call_id": "reckX0EYFDCGQ5w0o",
+              "quote": "One time, I put my hands on her."
+            },
+            {
+              "call_id": "recmKsZB35MoB68hY",
+              "quote": "I was getting very suicidal."
+            },
+            {
+              "call_id": "recmKsZB35MoB68hY",
+              "quote": "Well, I'm having a lot of feelings like I had when I was there coming up about my son."
+            },
+            {
+              "call_id": "recmKsZB35MoB68hY",
+              "quote": "I guess, what would stop you from actually, like, just meeting with him once to… to see if this could even help you?"
+            },
+            {
+              "call_id": "rec1tlTKpupDVqmfF",
+              "quote": "she'd rather not have the baby, she'd rather not be here."
+            },
+            {
+              "call_id": "recwyYh5D2HTXy3oB",
+              "quote": "If help can't help me, then at that point, then I have to choose the last option I have."
+            },
+            {
+              "call_id": "recCs5H4hJqOJtQip",
+              "quote": "I was so depressed, like, 3-4 weeks ago"
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "MC-03",
+          "section": "INTRO: RAPPORT & FRAME",
+          "priority": "medium",
+          "type": "missing_from_script",
+          "script_says": null,
+          "reality": "The doc never checks that the person who decides on the money is on the call. It was checked on 31% of calls where a partner or money decision-maker existed (C1g, missed on 7). On recJJyTCIcSpWhIZE the wife who handles money was not there and the sale ended in a $100 deposit. On the won couples call the wife opened alone and said she had to discuss it after.",
+          "what_works": "On recG83GHIMQ9gNUul the husband joined partway, each partner gave their own yes, and they paid on the call (C18h run on 86%, 100% on won calls).",
+          "change": "Right after the 45-minute check, ask who else is part of the decision and get them on now or agree how the decision gets made today.",
+          "new_lines": [
+            "Is there anyone else who'd be part of the decision to get support, like your partner or whoever handles the finances?",
+            "Could they join us for the last part of the call, when I walk through how Barak works? That way you both hear it at the same time and you don't have to explain it afterwards.",
+            "[If they can't] If what I walk you through feels right, are you comfortable making that decision yourself today?"
+          ],
+          "evidence": [
+            {
+              "call_id": "recJJyTCIcSpWhIZE",
+              "quote": "because she is the finance person."
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "So him being open, I mean, after this call, I have to discuss it."
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "I'm up for that."
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "MC-04",
+          "section": "TIE DOWN DISCOVERY",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": "Is there anything about what happened or where your relationship is at that you feel like I should know that we haven't talked about?",
+          "reality": "The setter and Barak's DMs anchor at 'low-to-mid four figures'. The real prices are $4,500 and $5,400. The closer never asks what they were told: C10c ran on 7% of calls (missed on 12 of 14). Prospects arrive expecting less. On rec1tlTKpupDVqmfF they heard the price for the first time and it was 'more than what I expected'. On recPLMk8RaNuavRQv they had been told 'low to mid thousands'. On recbpZf1niLOSFMfR the setter had said $4,000. The closer's own tie-down question ran on 0 of 14 calls (C10b).",
+          "what_works": "No call does this well. The step that would have caught it is missing everywhere.",
+          "change": "Keep the tie-down question and add one question about what they were told on cost, so the closer can reset the number before the pitch rather than after the price.",
+          "new_lines": [
+            "Gotcha. I feel like I've got a really clear picture now. Is there anything about what happened or where things are at that I should know and haven't asked?",
+            "And just so there are no surprises later, did Barak or anyone on the team mention what working with him involves, in terms of time or investment?",
+            "[If they heard a low number or 'low four figures'] Okay, thanks for telling me. The full program sits in the mid four figures, and I'll walk you through exactly what it includes in a minute so you can judge it properly."
+          ],
+          "evidence": [
+            {
+              "call_id": "rec1tlTKpupDVqmfF",
+              "quote": "This is the first time we've heard of any price or the 12-weeks thing as well. So, Brad did mention it would be in the low to mid-thousands, so, you know, understanding. Like, over the 12 weeks."
+            },
+            {
+              "call_id": "rec1tlTKpupDVqmfF",
+              "quote": "It's more than what I expected, if I'm being honest."
+            },
+            {
+              "call_id": "recPLMk8RaNuavRQv",
+              "quote": "5,000, low to mid thousands."
+            },
+            {
+              "call_id": "recbpZf1niLOSFMfR",
+              "quote": "The only question I have is, Emily said it was $4,000."
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "MC-05",
+          "section": "PITCH: HIGH-LEVEL PROMISE",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": "And the way Barak does that is through [BARAK'S ACTUAL PROCESS].",
+          "reality": "The doc stops on a placeholder. Reps fill it in their own words every time: the 12-week, not-talk-therapy, action-and-accountability line ran on 92% of pitched calls (C12d) and the 'rebuild or separate with closure' end state on 85% (C12e). The doc's 'not forgive and move on' opening ran on only 15% (C12a).",
+          "what_works": "All three won calls say 12 weeks, not traditional talk therapy, action and accountability, and that it ends with an answer either way: an emotionally secure partnership or separating with closure.",
+          "change": "Replace the placeholder with the process line the won calls use, and keep the doc's opening lines in front of it.",
+          "new_lines": [
+            "And the way Barak does that is a 12-week process. It isn't traditional therapy where you talk and talk for months and years and nothing gets solved.",
+            "He's very direct. He'll ask you to take action and take accountability, and you'll have work to do between sessions.",
+            "By the end of the 12 weeks you'll have your answer either way. Either you're rebuilding into an emotionally secure partnership grounded in clarity, trust and respect, or you're consciously choosing to separate with closure. It's not about staying together at all costs."
+          ],
+          "evidence": [
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "It's 12 weeks, he… this isn't, like, traditional therapy where you're just gonna talk and talk and talk, and then nothing is gonna be solved."
+            },
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "this program is not about, like, being the bigger person, or trying to forgive, or bypassing"
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "you're rebuilding your relationship into an emotionally secure partnership grounded in clarity, trust, respect, or you're both consciously choosing to separate with emotional closer"
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "MC-06",
+          "section": "BARAK'S METHOD: PILLAR 1",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": "[INSERT BARAK'S ACTUAL FIRST COMPONENT]",
+          "reality": "Pillar 1 has no name or content. Reps already pitch 'find the why' on 88% of pitched calls (C13a), but the doc's link back to what the prospect said ran on only 35% (C13b).",
+          "what_works": "recCs5H4hJqOJtQip (won): identify why you cheat and trace it back to its emotional and developmental origins. Before that, she turned his 'I don't know why' into the reason to see Barak.",
+          "change": "Name Pillar 1 'Find the why' and write the content in, keeping the doc's 'not a band-aid' lines after it. Barak to confirm or rename.",
+          "new_lines": [
+            "PILLAR 1: FIND THE WHY",
+            "The first thing Barak does is figure out why this happened. Not just what happened, but why: what it was giving you, or what was missing, and where that pattern started, whether that's childhood, past relationships or how you see yourself.",
+            "[Cheated-on partner] For you, that means understanding why you're stuck in (their words: checking, replaying, not trusting) so it stops running your day.",
+            "You told me (their 'I don't know why' or their doubt answer). That's exactly why this comes first, because until it's addressed you can try to move forward all you want and keep ending up in the same argument. Make sense?"
+          ],
+          "evidence": [
+            {
+              "call_id": "recCs5H4hJqOJtQip",
+              "quote": "So, identifying why you cheat, trace the behavior back to its kind of emotional, developmental origins."
+            },
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "Well, that's why you're here, right? To figure that out."
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "MC-07",
+          "section": "BARAK'S METHOD: PILLAR 2",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": "This is where we start actually rebuilding what was broken.",
+          "reality": "Pillar 2 has a placeholder title and a fill-in frame only. Reps pitch repair and rebuild on 92% of pitched calls (C13c) but use the prospect's own pain in it on 54% (C13d).",
+          "what_works": "Two versions on the won calls. For the partner who cheated (recCs5H4hJqOJtQip): repair the impulse, attachment and validation systems and build new ones. For the hurt partner (recGhnRsvZefXBVSx): nervous system safety, clarity, emotional boundaries and self-trust.",
+          "change": "Name Pillar 2 'Repair and rebuild' and give the rep both versions, then the doc's 'you mentioned (their pain)' frame.",
+          "new_lines": [
+            "PILLAR 2: REPAIR AND REBUILD",
+            "[Partner who cheated] This is where Barak works on the impulse itself: the attachment and validation needs behind it, and building new ways to meet them, so cheating stops being something you reach for.",
+            "[Partner who was cheated on] This is where Barak works on getting you feeling safe in your own body again, clear on what you want, with real boundaries and trust in your own judgment, so your peace doesn't depend on what your partner does that day.",
+            "For you specifically, you mentioned (their pain). So instead of (current reality), we're working toward (their desired reality). Make sense?"
+          ],
+          "evidence": [
+            {
+              "call_id": "recCs5H4hJqOJtQip",
+              "quote": "So, repairing the impulse, the attachment, the validation systems, and basically building new ones to make cheating very unnecessary and unattractive to you"
+            },
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "So the program is structured around, nervous system safety, clarity, emotional boundaries, personal authority, and then self-trust."
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "MC-08",
+          "section": "BARAK'S METHOD: PILLAR 3",
+          "priority": "medium",
+          "type": "missing_from_script",
+          "script_says": "And then the final piece is making sure this isn't something you temporarily feel better about and then six months later everything resurfaces again.",
+          "reality": "Pillar 3 is generic. Reps cover 'make it last' on 77% of pitched calls (C13e). The doc's closing question ('Does that line up with what you feel like you need?') ran on 4% (C13f). For couples, the won call pitched Barak hearing both sides and challenging both to take accountability (C13g, run on all won couples calls).",
+          "what_works": "recG83GHIMQ9gNUul (won couple): Barak holds both partners accountable and it becomes clear early whether the partner is willing to do the work.",
+          "change": "Name Pillar 3 'Make it last', add the couples line, and keep the doc's closing question.",
+          "new_lines": [
+            "PILLAR 3: MAKE IT LAST",
+            "The last piece is making sure this doesn't resurface six months from now. Barak helps you build your own internal controls and the tools to handle conflict and trust day to day, so the affair stops defining the relationship.",
+            "[Couple] He'll hear both sides, he'll challenge both of you to take accountability, and he'll help you find a middle ground that's realistic for both of you.",
+            "Does that line up with what you feel like you need?"
+          ],
+          "evidence": [
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "Yeah, partner take accountability, so that he understands like that he needs to show up in a certain way to make this relationship work."
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "MC-09",
+          "section": "DELIVERY",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": "[INSERT BARAK'S ACTUAL OFFER DELIVERY]",
+          "reality": "Seven blank fields. Reps state the 12 weeks and weekly session on 100% of pitched calls (C14a) and couple vs individual on 92% (C14b), but between-session resources on 77% (C14c) and Barak's own involvement and contact on 38% (C14d). On recPLMk8RaNuavRQv the couple were confused whether 'bi-weekly' meant twice a week or every two weeks.",
+          "what_works": "Won and supporting calls list: one hour a week with Barak on Zoom, couples together and sometimes one-on-one, homework, weekly exercises, reflection prompts and couples assignments, email and phone between sessions, and Barak fits committed clients in.",
+          "change": "Fill the fields with these lines. Say 'one session a week' and drop 'bi-weekly' unless Mitch approves it as an option.",
+          "new_lines": [
+            "Duration: it's 12 weeks.",
+            "Calls: one session a week with Barak, about an hour, on Zoom like this. 12 sessions in total.",
+            "Couple vs individual: [Couple] most sessions are the two of you together, and sometimes he'll meet each of you one-on-one. [Individual] it's you and Barak one-on-one, and your partner can join sessions later if they're ready.",
+            "Resources: between sessions you'll have weekly relationship-building exercises, prompts for your own reflection and, for couples, assignments to do together.",
+            "Messaging and support: you can reach Barak by email between sessions, and he'll take your number as well.",
+            "Barak's involvement: every session is with Barak himself. If you're committed, he'll find times that work for you.",
+            "Any questions about any of that, or does it all make sense?"
+          ],
+          "evidence": [
+            {
+              "call_id": "recCs5H4hJqOJtQip",
+              "quote": "So, usually he'll meet with you for an hour per week"
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "Yeah, so usually weekly, he might do some with just your partner."
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "Um, he usually does email and then he'll grab your, your number as well."
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "Like if you guys are committed to this, like he's going to find time for you guys."
+            },
+            {
+              "call_id": "recuD9fhc8NSBGK9z",
+              "quote": "you get weekly relationship building exercises."
+            },
+            {
+              "call_id": "recPLMk8RaNuavRQv",
+              "quote": "Does that mean two a week or one every two weeks?"
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "MC-10",
+          "section": "TEMPERATURE CHECK",
+          "priority": "high",
+          "type": "reps_skip_it",
+          "script_says": "Resolve belief gap BEFORE price.",
+          "reality": "Price was said before the temperature check on 13 of 14 calls. The belief gap was resolved before any price on 1 of 13 pitched calls (C15d, 4%). The 1 to 10 scale ran on 11% where the answer was uncertain (C15b). So 16 of 20 money objections came after the price (objection timing), and doubt about the program got answered with payment plans.",
+          "what_works": "The won calls do run a belief check, but after the price: 'Finances aside, though, is this something that you feel can actually help you...' (recGhnRsvZefXBVSx). Moving that question before the price is the doc's own order.",
+          "change": "Hard stop: no number until the prospect has said how they feel about the process and any score of 8 or below has been worked. Train it as 'process, then feeling, then price'.",
+          "new_lines": [
+            "Just curious, in terms of the process itself and the way Barak would work with you, how do you feel about it?",
+            "[Uncertain] Totally fair. What matters most to me is that this is genuinely the right fit. If 1 is 'this isn't what I need at all' and 10 is 'this is exactly the help I've been looking for', where are you right now?",
+            "[8 or below] What's keeping you from being a 9 or 10?",
+            "[Only once they're at 9 or 10, or the gap is resolved] Okay. Let me walk you through what getting started looks like."
+          ],
+          "evidence": [
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "Finances aside, though, is this something that you feel can actually help you gain the self-trust back"
+            },
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "Yeah, I have to, just give me some time to think about it. You said it's 4,500, right?"
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "1800 a month, um, and the four sessions we'd start with."
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "MC-11",
+          "section": "NEXT STEPS",
+          "priority": "medium",
+          "type": "missing_from_script",
+          "script_says": "So once you get started, [INSERT EXACT ONBOARDING PROCESS].",
+          "reality": "The onboarding is blank. Reps explain it on 38% of pitched calls (C16a), but on 67% of won calls vs 30% of the rest. The doc's 'not another few months of trying random things' line ran on 0 of 13 (C16b).",
+          "what_works": "Won calls say: payment link now, then Barak's onboarding link to book the first session, and she briefs Barak on what they shared.",
+          "change": "Write the onboarding steps in, in the order they happen on the call.",
+          "new_lines": [
+            "So once you get started, here's how it works. I'll send you the payment link and a short agreement form while we're on the call.",
+            "As soon as that's done I'll send Barak's onboarding link and we'll book your first session with him, ideally in the next week.",
+            "I'll fill Barak in on everything you told me today, so you don't have to start from scratch.",
+            "The important thing is you're not spending another few months trying random things. You'll start working on (their biggest problem) right away."
+          ],
+          "evidence": [
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "I can send you the link, and then next steps would just be getting on the first call with Barack"
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "I'll send you guys his onboarding link after we submit payment."
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "MC-12",
+          "section": "INVESTMENT",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": "the investment is $X.",
+          "reality": "'[PROGRAM/TIER]' and '$X' are blank. One tier was recommended on 14 of 14 calls, but the full price was stated on 82% (C17c): on the won couples call only '1800 a month' was quoted and the $5,400 total never said, and on recmKsZB35MoB68hY only '$1,500 per month'. The rep stopped talking after the price on 14% (C17e).",
+          "what_works": "recCs5H4hJqOJtQip (won) states the total for the 12 weeks and that it can be split. recGhnRsvZefXBVSx (won) follows with 'assuming we can figure out the financial side...'.",
+          "change": "Fill in the two programs and their totals. Always say the total for 12 weeks before any monthly figure, then stop talking.",
+          "new_lines": [
+            "So based on everything you've told me, I think the [Couples Program, because you're both in this / Individual Program, because (reason from discovery)] makes the most sense.",
+            "To get you from (current pain) to (desired outcome), the investment for the full 12 weeks is [$5,400 for couples / $4,500 for individual]. That can be split into three monthly payments of [$1,800 / $1,500].",
+            "[SHUT UP. Wait for them.]",
+            "Assuming we can figure out the financial side of things, is this something you want to move forward with?"
+          ],
+          "evidence": [
+            {
+              "call_id": "recCs5H4hJqOJtQip",
+              "quote": "So, with just one person, it's $4,500 total for the 12 weeks, and you can break it up if needed, but that's, like, the total amount for… for the 12 weeks."
+            },
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "And assuming that we can kind of figure out the financial side of things, is this something that you do want to move forward with?"
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "1800 a month, um, and the four sessions we'd start with."
+            },
+            {
+              "call_id": "recmKsZB35MoB68hY",
+              "quote": "the process is, about $1,500 per month."
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "MC-13",
+          "section": "INVESTMENT",
+          "priority": "high",
+          "type": "reps_improvise",
+          "script_says": null,
+          "reality": "With no approved plans in the doc, 9 different prices were said and 10 of 14 calls used an off-sheet number. A payment plan was offered on 13 of 14. Improvised plans: $900 every 2 weeks (recbpZf1niLOSFMfR), a $300 first call and then a $100 'lowest that I have' deposit (recJJyTCIcSpWhIZE), the first month split into 2 x $750 (recuD9fhc8NSBGK9z), $2,700 now and the rest 'at a later date' (reckX0EYFDCGQ5w0o), 'craft something on my end' (rec1tlTKpupDVqmfF) and 'get creative with the plan' (recGhnRsvZefXBVSx). Where payment slipped past the call, only part of the money came in.",
+          "what_works": "Won calls used three things only: the full program, the first month (4 sessions) paid in full, or the $500 One Call Session credited toward the program.",
+          "change": "Put a fixed options list in the doc. Reps may offer only these. Anything else needs Mitch's yes before it is said.",
+          "new_lines": [
+            "APPROVED OPTIONS ONLY: (1) full 12 weeks paid in full; (2) 3 monthly payments of $1,800 couples or $1,500 individual; (3) first month, 4 sessions, at $1,800 or $1,500, credited toward the program; (4) One Call Session at $500, credited toward the program. No deposits, bi-weekly splits, $300 calls or 'crafted' plans.",
+            "The way people usually do it is either the full amount or three monthly payments. Which of those works better for you?"
+          ],
+          "evidence": [
+            {
+              "call_id": "recbpZf1niLOSFMfR",
+              "quote": "It would be $900 every 2 weeks versus $1,800 for the month."
+            },
+            {
+              "call_id": "recJJyTCIcSpWhIZE",
+              "quote": "So, I can get you in for the first call for just $300,"
+            },
+            {
+              "call_id": "recJJyTCIcSpWhIZE",
+              "quote": "Would $100 work? Sure. The lowest that I have. That's fine."
+            },
+            {
+              "call_id": "recuD9fhc8NSBGK9z",
+              "quote": "it comes to 750."
+            },
+            {
+              "call_id": "reckX0EYFDCGQ5w0o",
+              "quote": "so I just broke it in half. It would be $2,700, and then we can process the other one at a later date."
+            },
+            {
+              "call_id": "rec1tlTKpupDVqmfF",
+              "quote": "I can see if I can craft something on my end so I can handle it now."
+            },
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "so we can get creative with the plan, that's not a problem."
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "MC-14",
+          "section": "PITCH: HIGH-LEVEL PROMISE",
+          "priority": "high",
+          "type": "reps_improvise",
+          "script_says": null,
+          "reality": "Outcome promises on 10 of 14 calls (plus 1 setter call). Examples: the affair will not recur 'pretty much almost with full certainty' (rec6SUNdHWOTKNy5d), 'by the end of this, like, you should be transformed' (recJJyTCIcSpWhIZE), 'you won't be attracted to the idea anymore' (recPLMk8RaNuavRQv), staying together is 'not really a question' (recuD9fhc8NSBGK9z), and the 80% couples stat given to a single man as 'no reason you shouldn't see the same outcomes' (recCs5H4hJqOJtQip). On recK8cDNTYByeQw69 the prospect heard it as a cure and pushed back. The doc says nothing either way.",
+          "what_works": "The won couples call framed the stat as a track record and paired it with the honest condition that the partner has to do the work.",
+          "change": "Add a rule and the approved wording. Promise the process and an answer by week 12, never a result. Use the 80% stat only as a track record, only for couples, and only if Mitch confirms the source.",
+          "new_lines": [
+            "RULE: never say they will stay together, stop cheating, be transformed or trust fully. Promise the process and the answer, not the outcome.",
+            "I can't promise you how this ends. What I can tell you is that by the end of the 12 weeks you'll have clarity either way, and you'll have done the work to give it a real chance.",
+            "[Couples only, if Mitch approves the stat] For what it's worth, over 80% of the couples Barak works with end up staying together. But that comes down to both of you doing the work, and it'll be clear early on whether that's happening."
+          ],
+          "evidence": [
+            {
+              "call_id": "rec6SUNdHWOTKNy5d",
+              "quote": "pretty much almost with full certainty"
+            },
+            {
+              "call_id": "recJJyTCIcSpWhIZE",
+              "quote": "by the end of this, like, you should be transformed."
+            },
+            {
+              "call_id": "recPLMk8RaNuavRQv",
+              "quote": "you won't be attracted to the idea anymore of even doing it"
+            },
+            {
+              "call_id": "recuD9fhc8NSBGK9z",
+              "quote": "like if you're gonna stick together,"
+            },
+            {
+              "call_id": "recCs5H4hJqOJtQip",
+              "quote": "Yeah, well, if it gives you any reassurance, over 80% of the couples that come into Barack's program end up staying together."
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "I don't know if this is a surprising stat to you, but basically, over 80% of his couples that come in actually do end up staying together and working through it."
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "MC-15",
+          "section": "PITCH: HIGH-LEVEL PROMISE (scope: coaching, not therapy)",
+          "priority": "medium",
+          "type": "missing_from_script",
+          "script_says": null,
+          "reality": "The doc never says what Barak is not. Reps answered clinical questions as if he treats them: 'betrayal trauma' gets 'definitely something Barak can help you both with' (recPLMk8RaNuavRQv), 'addressing nervous system damage' to a grieving mother just out of inpatient care (recmKsZB35MoB68hY), 'backed by actual psychological models' (recK8cDNTYByeQw69), and a bipolar disclosure answered with changing 'that impulse in your body' (recwyYh5D2HTXy3oB). 6 therapy or licensing cases were flagged across calls and texts.",
+          "what_works": "recG83GHIMQ9gNUul (won) draws the line plainly: he is not a therapist who keeps you for years.",
+          "change": "Add a scope line for any trauma, diagnosis or medication mention: Barak is a relationship coach, and clinical care stays with their clinician.",
+          "new_lines": [
+            "Just so you know exactly what this is: Barak is a relationship coach, not a therapist or a doctor. He doesn't treat trauma or mental health conditions.",
+            "If you're dealing with (trauma symptoms / bipolar / grief), keep working with your therapist or doctor on that. Barak works on the relationship and your patterns alongside that, not instead of it."
+          ],
+          "evidence": [
+            {
+              "call_id": "recPLMk8RaNuavRQv",
+              "quote": "I don't know if he helps with betrayal trauma, or if I need to go somewhere else for that."
+            },
+            {
+              "call_id": "recPLMk8RaNuavRQv",
+              "quote": "That's definitely something that Barack can help you both with."
+            },
+            {
+              "call_id": "recmKsZB35MoB68hY",
+              "quote": "addressing nervous system damage."
+            },
+            {
+              "call_id": "recK8cDNTYByeQw69",
+              "quote": "Everything he does is backed by actual, like, psychological models."
+            },
+            {
+              "call_id": "recwyYh5D2HTXy3oB",
+              "quote": "I am bipolar, and I know that, a lot of what happened this last time was driven by my mania."
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "MC-16",
+          "section": "OBJECTIONS: AFTER PACING (money)",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": "Then handle financial objection.",
+          "reality": "The doc ends at 'Then handle financial objection.' Money came up 20 times on 8 calls and was resolved 35% of the time; 16 of 20 came after the price. Close rate when money was raised was 12% vs 21% overall. Without lines, reps went straight to improvised plans (MC-13).",
+          "what_works": "On the won call recGhnRsvZefXBVSx the money question turned out to be 'go to my bank account', and she stayed on until it went through. Isolating the money (C18d) ran on 69% where money was the objection.",
+          "change": "Write the money branch: isolate which money situation it is, then offer only the approved options.",
+          "new_lines": [
+            "Totally fair. Can I ask, is it that you have it but you're not sure about spending it, you have some of it, or it would be a real stretch right now?",
+            "[Have it, unsure] Okay, so it's more about being sure this is worth it. What specifically would you need to feel sure? [go back to the belief gap]",
+            "[Have some / real stretch] That's exactly why most people do the three monthly payments. That puts today at [$1,800 / $1,500]. Is that doable?",
+            "[Still no] Then the other way people start is the first month, the first four sessions with Barak, and that's credited toward the rest of the program if you continue."
+          ],
+          "evidence": [
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "I just have to go to my bank account, make sure that I have enough money there, and then process the payment."
+            },
+            {
+              "call_id": "rec1tlTKpupDVqmfF",
+              "quote": "We want to, but we need to confirm that we can afford it, basically."
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "MC-17",
+          "section": "OBJECTIONS: AFTER PACING (uncertain: step-down)",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": "Then resolve the belief gap before discussing money.",
+          "reality": "The doc says to resolve the belief gap but gives no words and no step-down. All three won calls closed on a step-down after the doubt turned out to be about certainty, not cash: the first four sessions (recGhnRsvZefXBVSx, recG83GHIMQ9gNUul) or the $500 One Call Session (recCs5H4hJqOJtQip). Working the real block before price (C18e) ran on 100% of won calls vs 75% of the rest. The step-down came late or never on the contrast calls.",
+          "what_works": "She asks what the real worry is, works it, then offers a smaller start credited to the program and gets each partner's yes.",
+          "change": "Add the step-down, gated: only after the full pitch and full price, and only when the doubt is about certainty.",
+          "new_lines": [
+            "What specifically are you unsure about: whether it works, whether your partner will do the work, or something else?",
+            "[After working it, if they still want certainty first] Would you be open to doing the first four sessions with Barak, seeing how they go, and deciding from there? If you continue, it goes toward the rest of the program.",
+            "[Individual who wants to test Barak first] Or you can start with one session with Barak for $500, and that's credited toward the program if you carry on.",
+            "[Couple] (Name), are you up for that? And (Partner)?"
+          ],
+          "evidence": [
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "Are you open to doing the first four sessions with Barack and seeing how they go"
+            },
+            {
+              "call_id": "recCs5H4hJqOJtQip",
+              "quote": "It's not the money, it's really not the money"
+            },
+            {
+              "call_id": "recCs5H4hJqOJtQip",
+              "quote": "And then if you do end up deciding to continue, you can just use that towards the rest of the program"
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "Um, are you guys both open to doing, to starting with the four sessions"
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "Yeah, me too."
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "MC-18",
+          "section": "OBJECTIONS: AFTER PACING (think about it, no payment on the call)",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": null,
+          "reality": "'Think about it' came up on 9 of 14 calls, every time after the price, and was resolved on 2 (22%). Handled well 0 times. When no payment was taken, a dated reconnect was booked on 60% (C18i); recwyYh5D2HTXy3oB ended on 'just send me a text'. Reps also added pressure the doc does not allow: 'before he gets booked up for the holidays' (rec1tlTKpupDVqmfF).",
+          "what_works": "recCs5H4hJqOJtQip (won): thinking about it won't give you the answers that talking to Barak will.",
+          "change": "Add the think-about-it lines and a dated next step. No false urgency.",
+          "new_lines": [
+            "Of course. Can I ask what specifically you want to think through? Is it the process, the money, or talking to (partner)?",
+            "I'd just say, thinking about it on your own usually doesn't give the answers that talking to Barak will.",
+            "[If they still want time] That's completely fine. Let's put a time on it now so it doesn't drift. Does (day) at (time) work for a 15-minute call?",
+            "RULE: do not use deadlines or 'he's getting booked up' unless it is true and Mitch has approved it."
+          ],
+          "evidence": [
+            {
+              "call_id": "recCs5H4hJqOJtQip",
+              "quote": "I just don't know that, like, you thinking about it is necessarily gonna give you the answers as much as talking to him will."
+            },
+            {
+              "call_id": "recK8cDNTYByeQw69",
+              "quote": "I don't want to commit to anything till I sleep on it."
+            },
+            {
+              "call_id": "recwyYh5D2HTXy3oB",
+              "quote": "just send me a text"
+            },
+            {
+              "call_id": "rec1tlTKpupDVqmfF",
+              "quote": "before he gets booked up for the holidays"
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "MC-19",
+          "section": "OBJECTIONS: AFTER PACING (skepticism and 'does this work')",
+          "priority": "medium",
+          "type": "missing_from_script",
+          "script_says": null,
+          "reality": "Skepticism came up 10 times on 5 calls and was resolved 20% of the time, 8 of 10 after the price. Prospects asked whether people change, whether 12 weeks is enough, and whether this is the right space. Reps answered with the 80% stat (recCs5H4hJqOJtQip, judged poorly) or turned it back on the prospect ('Ironically, we're talking about trust here', recK8cDNTYByeQw69).",
+          "what_works": "The won couples call answered with what Barak is and is not, and the honest condition that the person has to want it.",
+          "change": "Add a short skepticism branch: agree, ask what they've seen not work, and connect to the process. No arguing.",
+          "new_lines": [
+            "That's fair, and honestly, people don't change just because they pay for something. What have you tried before that didn't stick, and why do you think it didn't?",
+            "That's the difference here: Barak is direct, you'll have work every week, and it'll be clear within the first few weeks whether it's working.",
+            "So what specifically would you need to see to feel this is the right space for you?"
+          ],
+          "evidence": [
+            {
+              "call_id": "recCs5H4hJqOJtQip",
+              "quote": "I really don't think people change, Makena, I'm gonna be honest with you. I really don't."
+            },
+            {
+              "call_id": "recK8cDNTYByeQw69",
+              "quote": "The question is, Makena, is this the right space for me?"
+            },
+            {
+              "call_id": "recPLMk8RaNuavRQv",
+              "quote": "Hard to believe that can be achieved in 12 weeks, but,"
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "MC-20",
+          "section": "TAKE PAYMENT AND BOOK BARAK (new section after Objections)",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": "BOOKING LINK for paid clients first call with B: https://calendly.com/barakvanwyk-support/kickoff-session?month=2026-09",
+          "reality": "The doc has no close: only a bare booking link at the end. All 3 won calls took payment on the call. The payment link was sent on the call on 94% of calls that got that far (C19a), but the agreement form went out on 21% (C19c) and Barak's first session was booked on 36% (C19d). Where payment slipped to 'after work' or payday (reckX0EYFDCGQ5w0o, recJJyTCIcSpWhIZE, recuD9fhc8NSBGK9z), only part of the money came in.",
+          "what_works": "'Typically we do it all on the call.' She stays on until the payment goes through, sends the agreement form and the onboarding link, and gets a time they can commit to.",
+          "change": "Add a closing section with these steps in order.",
+          "new_lines": [
+            "Perfect. Typically we do it all on the call, so let's get you set up now. Do you have access to your card or bank account?",
+            "I'm sending the payment link by text now. Let me know when it comes through and I'll stay on with you until it goes through.",
+            "Great. I'm also sending a short agreement form for the plan you chose. Can you fill that in now?",
+            "And here's Barak's onboarding link. Let's pick your first session together now. Just make sure it's a time you can commit to in the next week.",
+            "I'll fill Barak in on everything you told me today. Really glad you're doing this."
+          ],
+          "evidence": [
+            {
+              "call_id": "recGhnRsvZefXBVSx",
+              "quote": "Do you have access, like, to your bank account now, just so we can kind of square it away before I hop off the call with you?"
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "Typically we do it all on the call."
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "Um, and then I'll send you over the agreement form too, just so you guys, um, can"
+            },
+            {
+              "call_id": "recCs5H4hJqOJtQip",
+              "quote": "just make sure it's a time that you can commit to"
+            }
+          ],
+          "owner": "Sid (training)"
+        }
+      ]
+    },
+    {
+      "script": "Barak Van Dyk DM Framework",
+      "doc_id": "1UElAPat35r2FZmlxaJvBx0acfi0HlMu4tXJizgOi5EI",
+      "last_edited": "2026-10-05",
+      "summary": "Setters run the framework's discovery and the range anchor on every recorded call, but the anchor 'low-to-mid four figures' sets prospects up to be surprised by $4,500 to $5,400, and setters tell leads nothing is due upfront when the closer takes payment on the call. The framework has no branch for safety disclosures, credential questions, a partner joining, or a lead saying no, and texts filled those gaps with guilt and exact prices. The three changes that matter most: fix the price anchor and say payment happens on the call; add the safety branch; add the credentials answer and texting rules.",
+      "patches": [
+        {
+          "id": "DM-01",
+          "section": "Financial Qualification",
+          "priority": "high",
+          "type": "script_is_wrong",
+          "script_says": "it could be anywhere in the low-to-mid four figures. Does that sound doable?",
+          "reality": "Prices are $4,500 and $5,400, which are mid four figures, not low. Setters say the anchor on all 4 recorded setter calls, and prospects push for a number. One setter confirmed 'around $5,000' (acti_VPkoujbISYfJz8H8r8x3z3lYRaRIadlBmRTqf2gXICD), another said $4,000 (recbpZf1niLOSFMfR), and one text lead read 'four figures' as more than he could afford. On the closer calls, couples who heard the anchor said the real price was the first they'd heard and more than expected (rec1tlTKpupDVqmfF), or repeated it as 'low to mid thousands' (recPLMk8RaNuavRQv).",
+          "what_works": "Emily held the range without naming a number when pushed twice (acti_YDDW5MjfFsraQ1SJGF0gZdnJeAnNK4Epv7z5b39bFT2), but the range itself set the wrong expectation.",
+          "change": "Drop 'low'. Say 'mid four figures' and that it can be paid monthly. Never confirm a specific number or a payment plan; that is the closer's job.",
+          "new_lines": [
+            "It depends on the level of support you decide on, but it's a mid four-figure investment for the full program, and there's a monthly option. Is that something you'd be in a position to do if it's the right fit?",
+            "[If pushed for an exact number] I'd rather not guess and be wrong. It depends on whether it's just you or both of you, and Makena will go through it exactly on the call."
+          ],
+          "evidence": [
+            {
+              "call_id": "acti_VPkoujbISYfJz8H8r8x3z3lYRaRIadlBmRTqf2gXICD",
+              "quote": "When you say mid four figure, you say around $5,000?"
+            },
+            {
+              "call_id": "acti_YDDW5MjfFsraQ1SJGF0gZdnJeAnNK4Epv7z5b39bFT2",
+              "quote": "Well, when you say four figures, I mean there's a thousand there's two thousand there's three thousand you see what I'm saying?"
+            },
+            {
+              "call_id": "lead_H5rQ6p8HqLMl19uT6ku7aF0jGKQgrBFIhdiOrxAPTOP",
+              "quote": "right now the cost of four figures seems to be more than I can afford at this time."
+            },
+            {
+              "call_id": "rec1tlTKpupDVqmfF",
+              "quote": "It's more than what I expected, if I'm being honest."
+            },
+            {
+              "call_id": "recPLMk8RaNuavRQv",
+              "quote": "5,000, low to mid thousands."
+            },
+            {
+              "call_id": "recbpZf1niLOSFMfR",
+              "quote": "The only question I have is, Emily said it was $4,000."
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "DM-02",
+          "section": "Financial Qualification",
+          "priority": "high",
+          "type": "missing_from_script",
+          "script_says": "If everything felt like the right fit, is that something you're in a position to do right now?",
+          "reality": "The framework never says payment is taken on the call. Setters told leads the opposite: 'not something that you have to have upfront' (acti_VPkoujbISYfJz8H8r8x3z3lYRaRIadlBmRTqf2gXICD) and 'we don't expect everyone to have the full amount upfront' by text. The closer then asks for payment on the call. Exact prices and plans were also sent by text on lead_mHMopd6tmiTABgHDaDkdyiKnvPcK36WYH51tD2Uo2jj, including negotiating '$750 per week for 6 weeks'.",
+          "what_works": "Won closer calls: 'Typically we do it all on the call.'",
+          "change": "Add one line so the lead arrives knowing a decision and first payment happen on the call if it's a fit. Add a rule: no exact prices or plans by text.",
+          "new_lines": [
+            "Just so you know how it works: if it's the right fit, people usually get started on that call, so have your card handy. If it's not the right fit, there's no pressure at all.",
+            "RULE: no exact prices, payment plans or discounts by text or DM. Range only. Pass price questions to the call."
+          ],
+          "evidence": [
+            {
+              "call_id": "acti_VPkoujbISYfJz8H8r8x3z3lYRaRIadlBmRTqf2gXICD",
+              "quote": "something that you have to have upfront or anything like that. And the decision doesn't"
+            },
+            {
+              "call_id": "lead_H5rQ6p8HqLMl19uT6ku7aF0jGKQgrBFIhdiOrxAPTOP",
+              "quote": "we don't expect everyone to have the full amount upfront."
+            },
+            {
+              "call_id": "lead_mHMopd6tmiTABgHDaDkdyiKnvPcK36WYH51tD2Uo2jj",
+              "quote": "So $750 per week for 6 weeks then?"
+            },
+            {
+              "call_id": "recG83GHIMQ9gNUul",
+              "quote": "Typically we do it all on the call."
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "DM-03",
+          "section": "Impact (new branch: safety)",
+          "priority": "high",
+          "type": "needs_branch",
+          "script_says": "How is this affecting you outside of the relationship",
+          "reality": "The impact question invites distress and the framework has no branch for it. A lead said he was beating his partner down 'emotionally, physically' and the setter moved on to booking (acti_VPkoujbISYfJz8H8r8x3z3lYRaRIadlBmRTqf2gXICD). A lead withdrew by text with 'I'll see what I can do with my life' and got no check-in, then a rebook text the next day (lead_ZFUJPaCwPI9KoGdwm47KJrcJkkxs3PNC1Ac3NNABk3J). Same gap as the closing doc (MC-02).",
+          "what_works": "Nothing in the data. This is a safety rule.",
+          "change": "Add the same stop-and-check branch as the closing doc, short enough for DMs and setter calls. Flag the lead in Slack to the manager and the closer.",
+          "new_lines": [
+            "I want to check something before anything else. When you say (their words), are you safe right now? Is anyone at risk of being hurt?",
+            "[If any risk] Thank you for telling me. Please reach out for support right now: in the US you can call or text 988 any time, or the Domestic Violence Hotline at 1-800-799-7233. If anyone's in danger, call 911. I'll check in with you tomorrow.",
+            "[Then] Do not book a sales call. Post in Slack to the Sales Manager and Makena the same day."
+          ],
+          "evidence": [
+            {
+              "call_id": "acti_VPkoujbISYfJz8H8r8x3z3lYRaRIadlBmRTqf2gXICD",
+              "quote": "I'm, I'm beating her down emotionally, physically,"
+            },
+            {
+              "call_id": "lead_ZFUJPaCwPI9KoGdwm47KJrcJkkxs3PNC1Ac3NNABk3J",
+              "quote": "I'll see what I can do with my life."
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "DM-04",
+          "section": "Transition To Call",
+          "priority": "medium",
+          "type": "script_is_wrong",
+          "script_says": "The next step is a call with my Client Success Manager.",
+          "reality": "Leads don't know who the call is with or who Barak is. A lead asked if he'd be talking to Makena or Barak and was told 'Just me' (lead_H5rQ6p8HqLMl19uT6ku7aF0jGKQgrBFIhdiOrxAPTOP). Another asked if Makena was Barak's assistant after his paid session (lead_mHMopd6tmiTABgHDaDkdyiKnvPcK36WYH51tD2Uo2jj). Another was told 'Barak is a counselor' and asked what to tell his wife (lead_ZFUJPaCwPI9KoGdwm47KJrcJkkxs3PNC1Ac3NNABk3J). Makena introduces herself on calls as helping with his onboarding or application process, not as Client Success Manager.",
+          "what_works": "Nothing consistent. The closer intro 'I help Barak with his onboarding application process' is what leads actually hear.",
+          "change": "Name the person and say plainly the first call is with her, not Barak, and what it is for. Never call Barak a counselor or therapist.",
+          "new_lines": [
+            "The next step is a call with Makena, who works with me on bringing new clients in. It's not a session with me yet. She'll get the full picture and if it's a fit, she'll set you up to start working with me directly.",
+            "[If they ask what to tell their partner] You can tell them it's a call with Barak's team about relationship coaching after infidelity, and they're welcome to join."
+          ],
+          "evidence": [
+            {
+              "call_id": "lead_H5rQ6p8HqLMl19uT6ku7aF0jGKQgrBFIhdiOrxAPTOP",
+              "quote": "One question I had was were we talking to you today or were we talking to Barack?"
+            },
+            {
+              "call_id": "lead_mHMopd6tmiTABgHDaDkdyiKnvPcK36WYH51tD2Uo2jj",
+              "quote": "I think he told me I'm supposed to do that with you are you his assistant?"
+            },
+            {
+              "call_id": "lead_ZFUJPaCwPI9KoGdwm47KJrcJkkxs3PNC1Ac3NNABk3J",
+              "quote": "Barak is a counselor, you can send her his videos or something and I am his client manager."
+            },
+            {
+              "call_id": "lead_ZFUJPaCwPI9KoGdwm47KJrcJkkxs3PNC1Ac3NNABk3J",
+              "quote": "So who do I tell her Barak is?"
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "DM-05",
+          "section": "Commitment Check (new: partner on the call)",
+          "priority": "medium",
+          "type": "missing_from_script",
+          "script_says": "do you actually want to repair this relationship and rebuild the trust, or are you still unsure whether you want to stay?",
+          "reality": "The framework never asks whether the partner or money decision-maker will be on the call. The decision-maker was handled on 2 of 4 recorded setter calls. Leads ask by text how to get the partner on (lead_ZFUJPaCwPI9KoGdwm47KJrcJkkxs3PNC1Ac3NNABk3J). On the closer side, the absent money decision-maker on recJJyTCIcSpWhIZE ended in a $100 deposit.",
+          "what_works": "Emily asked for the wife to join the closer call (acti_QUUtN6EvIuCdLq3EV7m4fPOrMPpxt82GlKkVvwZDrTP).",
+          "change": "After the commitment check, ask if the partner wants to join and who decides on money.",
+          "new_lines": [
+            "And is your partner open to joining the call too? It helps a lot if you both hear it at the same time.",
+            "Is there anyone else who'd be part of the decision to invest in this, like whoever handles the finances?"
+          ],
+          "evidence": [
+            {
+              "call_id": "acti_QUUtN6EvIuCdLq3EV7m4fPOrMPpxt82GlKkVvwZDrTP",
+              "quote": "So I would be helpful to have her on the call with you,"
+            },
+            {
+              "call_id": "lead_ZFUJPaCwPI9KoGdwm47KJrcJkkxs3PNC1Ac3NNABk3J",
+              "quote": "What should I tell her? The zoom call is for? Maybe I can explain better in a different way."
+            },
+            {
+              "call_id": "recJJyTCIcSpWhIZE",
+              "quote": "because she is the finance person."
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "DM-06",
+          "section": "Booking",
+          "priority": "medium",
+          "type": "reps_skip_it",
+          "script_says": "Awesome, You'll receive the Zoom invite by email, just make sure to accept it so it gets added to your Google Calendar.",
+          "reality": "On recorded setter calls the invite was accepted live on 0 of 4 and a verbal show commitment was got on 0. Time zone mix-ups nearly cost calls: a CST vs PST mix-up (lead_4oBuj3RXU8IFVQuDxvCigupgqdF8C5phBjBDDNhryao), a lead unsure if his session was 8 am or 3 pm (lead_mHMopd6tmiTABgHDaDkdyiKnvPcK36WYH51tD2Uo2jj), and the won couple in a different time zone (recG83GHIMQ9gNUul). Confirmation and reminder was the most common drop-off point in texts (6 threads).",
+          "what_works": "Emily set the quiet-place expectation clearly (acti_QUUtN6EvIuCdLq3EV7m4fPOrMPpxt82GlKkVvwZDrTP).",
+          "change": "Have them accept the invite while still on the phone or in the thread, and confirm the time back in their own time zone in writing.",
+          "new_lines": [
+            "Can you open your email now and accept the invite while I'm still here? Just so it's locked in your calendar.",
+            "So that's (day) at (time) your time, which is (time) for Makena. And if anything comes up, can you promise me you'll text to move it rather than miss it?"
+          ],
+          "evidence": [
+            {
+              "call_id": "lead_mHMopd6tmiTABgHDaDkdyiKnvPcK36WYH51tD2Uo2jj",
+              "quote": "not sure if meeting was at 8 am or 3 pm ?"
+            },
+            {
+              "call_id": "acti_QUUtN6EvIuCdLq3EV7m4fPOrMPpxt82GlKkVvwZDrTP",
+              "quote": "So it just needs you to be in a quiet space where you can be"
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "DM-07",
+          "section": "Soft Pitch (new: credentials and therapy questions)",
+          "priority": "medium",
+          "type": "missing_from_script",
+          "script_says": "Honestly, I work with a lot of people dealing with exactly this.",
+          "reality": "The framework has no answer for 'is he licensed?' or 'is this therapy?'. One lead asked repeatedly for Barak's state license; the setter deflected ('studies were done abroad') and he walked (lead_aNHNVe9OXaqww78vziIwemfiJ1W6H7I6L4JyfOIKlyu). A lead said her work only covers in-network therapy and was offered financing without being told this is coaching (lead_6mD6LTyoKbojKzU5fQOtPs6OWmROQ0oVjUwODjU56ti). A spouse asked 'how this style of therapy works' (lead_4oBuj3RXU8IFVQuDxvCigupgqdF8C5phBjBDDNhryao).",
+          "what_works": "Nothing in the texts. The won closer call's 'not a therapist' line is the closest.",
+          "change": "Add an approved, plain answer. Mitch and Barak to confirm his real credentials before it is used.",
+          "new_lines": [
+            "Good question. Barak isn't a licensed therapist. He's a relationship coach who specialises in infidelity, and he's been doing this for (years, per Barak). It's coaching, so it isn't covered by insurance.",
+            "If you want a licensed therapist, that's a completely valid choice. Some people do both. Would it help to talk through what coaching with Barak looks like compared to therapy?"
+          ],
+          "evidence": [
+            {
+              "call_id": "lead_aNHNVe9OXaqww78vziIwemfiJ1W6H7I6L4JyfOIKlyu",
+              "quote": "If this can't be provided, I will not move forward. Thanks"
+            },
+            {
+              "call_id": "lead_6mD6LTyoKbojKzU5fQOtPs6OWmROQ0oVjUwODjU56ti",
+              "quote": "Hello, sorry for the late response, my work only cover therapy in their network."
+            },
+            {
+              "call_id": "lead_4oBuj3RXU8IFVQuDxvCigupgqdF8C5phBjBDDNhryao",
+              "quote": "he just wants to know how this style of therapy works"
+            }
+          ],
+          "owner": "Mitch (decision)"
+        },
+        {
+          "id": "DM-08",
+          "section": "Financial Qualification (new: when they say no)",
+          "priority": "medium",
+          "type": "missing_from_script",
+          "script_says": "Does that sound doable?",
+          "reality": "The framework stops at the question and has no branch for 'can't afford' or 'my partner won't join'. In texts the reply turned into guilt: 'Do you want to keep doing the same thing to her?' to a lead who said he was in a bad place (lead_H5rQ6p8HqLMl19uT6ku7aF0jGKQgrBFIhdiOrxAPTOP) and 'don't you owe it to yourself' after a price objection (lead_mHMopd6tmiTABgHDaDkdyiKnvPcK36WYH51tD2Uo2jj). 4 conduct flags in texts.",
+          "what_works": "Emily's phone line separates money from fit: is it the money, or not sure it's the right fit (triage coaching for acti_QUUtN6EvIuCdLq3EV7m4fPOrMPpxt82GlKkVvwZDrTP).",
+          "change": "Add a respectful no branch. Ask once, then leave the door open. No guilt.",
+          "new_lines": [
+            "Totally understand. Is it more that the money isn't there right now, or that you're not sure yet it's the right fit?",
+            "[Money] That's okay. There are monthly options, and the call is the place to see if it's even the right fit. Would it still be worth having that conversation?",
+            "[No] No problem at all. If things change, just message me here."
+          ],
+          "evidence": [
+            {
+              "call_id": "lead_H5rQ6p8HqLMl19uT6ku7aF0jGKQgrBFIhdiOrxAPTOP",
+              "quote": "Do you want to keep doing the same thing to her?"
+            },
+            {
+              "call_id": "lead_mHMopd6tmiTABgHDaDkdyiKnvPcK36WYH51tD2Uo2jj",
+              "quote": "don't you owe it to yourself (and girlfriend) to commit to the full 12 weeks so you can actually resolve the problem?"
+            },
+            {
+              "call_id": "acti_QUUtN6EvIuCdLq3EV7m4fPOrMPpxt82GlKkVvwZDrTP",
+              "quote": "Uh, yeah, I would just have to look at the finances."
+            }
+          ],
+          "owner": "Sid (training)"
+        },
+        {
+          "id": "DM-09",
+          "section": "Contact Info (new: texting rules)",
+          "priority": "medium",
+          "type": "missing_from_script",
+          "script_says": null,
+          "reality": "No rules for opt-outs or hours. A lead asked to be taken off the list and was texted the next day that he was 'ready to rebook' (lead_ZFUJPaCwPI9KoGdwm47KJrcJkkxs3PNC1Ac3NNABk3J). 12 texts went out before 8am or after 9pm Eastern to 5 leads. 4 threads were flagged as missed leads, including one who offered to talk now within 40 minutes and got no reply (lead_QzvCn0ImMCpMaRui9126OYrfYsTfTxJRkdN9a7mkMbA).",
+          "what_works": "The framework's own 'default to live' line; the gap is that nobody answered.",
+          "change": "Add three rules at the end of the framework. Leah to add quiet hours and an alert for unanswered replies in Close.",
+          "new_lines": [
+            "RULE: if a lead says stop, remove me, or not now, reply once to confirm and stop. Only re-contact if they reach out first.",
+            "RULE: text between 8am and 9pm in the lead's time zone.",
+            "RULE: when a lead says they're free now, call within 5 minutes or reply with a time."
+          ],
+          "evidence": [
+            {
+              "call_id": "lead_ZFUJPaCwPI9KoGdwm47KJrcJkkxs3PNC1Ac3NNABk3J",
+              "quote": "Sorry, MaKena just took me out of your list for now."
+            },
+            {
+              "call_id": "lead_ZFUJPaCwPI9KoGdwm47KJrcJkkxs3PNC1Ac3NNABk3J",
+              "quote": "Hey Victor, Barak told me you're ready to rebook... what's your schedule look like the rest of the week?"
+            },
+            {
+              "call_id": "lead_QzvCn0ImMCpMaRui9126OYrfYsTfTxJRkdN9a7mkMbA",
+              "quote": "I am available now or up to 1PM PST."
+            }
+          ],
+          "owner": "Leah (automation)"
+        }
+      ]
+    }
+  ],
+  "unhandled_objections": [
+    {
+      "type": "think_about_it",
+      "how_often": "9 times on 9 calls, resolved 22%",
+      "what_prospects_say": [
+        "We would… yeah, we'd go away and think about that, I think.",
+        "I don't want to commit to anything till I sleep on it.",
+        "Okay, well, I need to think about all that."
+      ],
+      "what_reps_try": "Ask what's holding them back, offer to send materials, or leave it at 'text me'. Handled well 0 of 9 times.",
+      "recommended_handling": [
+        "Of course. What specifically do you want to think through: the process, the money, or talking to your partner?",
+        "I'd just say, thinking about it on your own usually doesn't give the answers that talking to Barak will.",
+        "If it's certainty you want, would you be open to the first four sessions, credited toward the program if you continue?",
+        "If you still want time, let's book (day) at (time) for 15 minutes so it doesn't drift."
+      ],
+      "evidence": [
+        {
+          "call_id": "rec1tlTKpupDVqmfF",
+          "quote": "We would… yeah, we'd go away and think about that, I think."
+        },
+        {
+          "call_id": "recK8cDNTYByeQw69",
+          "quote": "I don't want to commit to anything till I sleep on it."
+        },
+        {
+          "call_id": "recmKsZB35MoB68hY",
+          "quote": "Okay, well, I need to think about all that."
+        },
+        {
+          "call_id": "recCs5H4hJqOJtQip",
+          "quote": "I just don't know that, like, you thinking about it is necessarily gonna give you the answers as much as talking to him will."
+        }
+      ]
+    },
+    {
+      "type": "price_budget",
+      "how_often": "20 times on 8 calls, resolved 35%",
+      "what_prospects_say": [
+        "It's more than what I expected, if I'm being honest.",
+        "We're on a one income at the moment",
+        "Yes, ma'am, and I do need to break it up into monthly payments."
+      ],
+      "what_reps_try": "Improvised splits and deposits ($900 bi-weekly, $300 call, $100 deposit, 2 x $750, half now), 'craft something', financing she is not sure exists.",
+      "recommended_handling": [
+        "Let's take money off the table for a second. Based purely on the process, is this what you need to get to (their outcome)?",
+        "So it's more about how to make it work financially. Do you have it but you're unsure, have some of it, or is it a real stretch?",
+        "Most people do three monthly payments, so today would be [$1,800 / $1,500]. Is that doable?",
+        "If not, the other way to start is the first four sessions, credited toward the program."
+      ],
+      "evidence": [
+        {
+          "call_id": "rec1tlTKpupDVqmfF",
+          "quote": "It's more than what I expected, if I'm being honest."
+        },
+        {
+          "call_id": "rec1tlTKpupDVqmfF",
+          "quote": "We're on a one income at the moment"
+        },
+        {
+          "call_id": "rec6IqrIcBNPKz9e9",
+          "quote": "Yes, ma'am, and I do need to break it up into monthly payments."
+        }
+      ]
+    },
+    {
+      "type": "skepticism_trust",
+      "how_often": "10 times on 5 calls, resolved 20%",
+      "what_prospects_say": [
+        "I really don't think people change, Makena, I'm gonna be honest with you. I really don't.",
+        "The question is, Makena, is this the right space for me?",
+        "Hard to believe that can be achieved in 12 weeks, but,"
+      ],
+      "what_reps_try": "The 80% stat, reassurance that it will work if they do the work, or turning it back on them ('Ironically, we're talking about trust here').",
+      "recommended_handling": [
+        "That's fair. People don't change just because they sign up for something.",
+        "What have you tried that didn't stick, and why do you think it didn't?",
+        "Here it's weekly work with Barak directly, and it'll be clear in the first few weeks whether it's working.",
+        "What would you need to see to feel this is the right space for you?"
+      ],
+      "evidence": [
+        {
+          "call_id": "recCs5H4hJqOJtQip",
+          "quote": "I really don't think people change, Makena, I'm gonna be honest with you. I really don't."
+        },
+        {
+          "call_id": "recK8cDNTYByeQw69",
+          "quote": "The question is, Makena, is this the right space for me?"
+        },
+        {
+          "call_id": "recPLMk8RaNuavRQv",
+          "quote": "Hard to believe that can be achieved in 12 weeks, but,"
+        }
+      ]
+    },
+    {
+      "type": "timing",
+      "how_often": "6 times on 5 calls, resolved 33%",
+      "what_prospects_say": [
+        "Now, scheduling is gonna be an issue.",
+        "I'm just worried, like, when I'm doing my chemo.",
+        "And maybe I'm asking this to happen too soon after I just got out of that other grief group."
+      ],
+      "what_reps_try": "Reassure that Barak is flexible; on the grief case, ask again what would stop her booking.",
+      "recommended_handling": [
+        "Is it the schedule itself, or is now not the right time for this?",
+        "[Schedule] Barak fits sessions around committed clients. What days and times usually work for you?",
+        "[Health, grief or crisis] It sounds like you need to look after yourself first, and that's the right call. Can I check in with you in (two weeks)?"
+      ],
+      "evidence": [
+        {
+          "call_id": "reckX0EYFDCGQ5w0o",
+          "quote": "Now, scheduling is gonna be an issue."
+        },
+        {
+          "call_id": "recbpZf1niLOSFMfR",
+          "quote": "I'm just worried, like, when I'm doing my chemo."
+        },
+        {
+          "call_id": "recmKsZB35MoB68hY",
+          "quote": "And maybe I'm asking this to happen too soon after I just got out of that other grief group."
+        }
+      ]
+    }
+  ],
+  "decisions_for_mitch": [
+    "Crisis policy: confirm the stop-and-check rule (MC-02, DM-03). Who is told, who follows up, and whether anyone with current suicidal thoughts or current violence in the relationship can be sold the couples program at all. Confirm hotline numbers to give non-US leads.",
+    "Approved payment options: is the list in MC-13 complete? Decide yes or no on deposits, bi-weekly splits, the $300 first call and half-now plans, which reps used on 5 calls.",
+    "Step-downs: confirm the first month (4 sessions) and the $500 One Call Session are approved, and that both are credited toward the 12-week program.",
+    "Setter price anchor: approve 'mid four figures with a monthly option' in place of 'low-to-mid four figures', or allow setters to name $4,500 to $5,400.",
+    "The 80% stat: confirm the source, or stop using it. If kept, couples only and framed as a track record.",
+    "Barak's credentials: provide the exact, true answer to 'is he licensed?' and stop the word 'counselor' (DM-04, DM-07).",
+    "Pillar names: Barak to confirm or rename 'Find the why', 'Repair and rebuild', 'Make it last'.",
+    "Recording: confirm the disclosure wording, whether to ask for a spoken yes, and what to do when a third party is listening.",
+    "Job title: what Makena is called to leads (Client Success Manager vs onboarding), so the DM framework and closer intro match."
+  ]
+}
