@@ -376,3 +376,155 @@ def coaching_packs(reps_deep, sales, coaching, triage_calls, threads_flags, scru
                       "listen": [x for x in [{"call_id": ranked[-1]["call_id"], "why": "Best score"} if ranked else None, {"call_id": ranked[0]["call_id"], "why": "Lowest score"} if ranked else None] if x],
                       "numbers": {"booked": sum(1 for c in sc if c.get("result") in ("booked_calendar", "live_transferred")), "text_flags": len(tf)}})
     return packs
+
+
+# ---------------------------------------------------------------- lead priority score from application answers
+def lead_score(app):
+    if not app or app["base"]["leads"] < 30:
+        return None
+    rows = app["rows"]; base_b = sum(r["booked"] for r in rows) / len(rows); base_s = sum(r["showed"] for r in rows) / len(rows)
+    rules = []
+    for f in app["fields"]:
+        if f["field"] in ("source", "form", "region", "goal_cats"):
+            continue
+        for r in f["rows"]:
+            if r["leads"] < 8:
+                continue
+            sr = r["showed"] / r["leads"]
+            lift = sr - base_s
+            pts = max(-3, min(3, round(lift / max(0.04, base_s) * 2)))
+            if pts:
+                rules.append({"field": f["label"], "answer": r["value"], "leads": r["leads"], "show_pct": round(100 * sr), "booked_pct": r["booked_pct"], "closed": r["closed"], "points": pts})
+    key = {(x["field"], x["answer"]): x["points"] for x in rules}
+    lab = {f["field"]: f["label"] for f in app["fields"]}
+    def score(r):
+        s = 0
+        for f, label in lab.items():
+            v = r.get(f)
+            for vv in (v if isinstance(v, list) else [v]):
+                s += key.get((label, vv), 0)
+        return s
+    for r in rows:
+        r["score"] = score(r)
+    tiers = []
+    for name, lo, hi in [("A: call first", 3, 99), ("B", 1, 2), ("C", -1, 0), ("D: email nurture", -99, -2)]:
+        rs = [r for r in rows if lo <= r["score"] <= hi]
+        tiers.append({"tier": name, "leads": len(rs), "booked": sum(r["booked"] for r in rs), "showed": sum(r["showed"] for r in rs), "closed": sum(r["closed"] for r in rs),
+                      "cash": round(sum(r["cash"] for r in rs)), "show_pct": pct(sum(r["showed"] for r in rs), len(rs))})
+    return {"base_show_pct": round(100 * base_s), "base_book_pct": round(100 * base_b), "rules": sorted(rules, key=lambda x: -x["points"]), "tiers": tiers}
+
+
+# ---------------------------------------------------------------- compliance risk register
+def compliance_register(sales, triage_calls, threads, ops):
+    def fl(src, items, kind):
+        out = []
+        for it in items:
+            for f in it.get("flags") or []:
+                out.append({"src": kind, "id": it.get("call_id") or it.get("lead_id"), "cat": f.get("category"), "sev": f.get("severity"),
+                            "text": (f.get("summary") or "") + " " + " ".join(f.get("evidence") or [])})
+        return out
+    F = fl("closer", sales, "call") + fl("triage", triage_calls, "triage") + fl("text", threads, "thread")
+    import re as _re
+    topics = [
+        ("Credit and loan applications", "Reps collecting SSNs, dates of birth or income for financing, or suggesting what to enter", r"social security|\bssn\b|date of birth|loan app|income|credit (score|check|application)|clarity ?pay|financ"),
+        ("Outcome promises and success claims", "Guaranteeing or implying the prospect will find a partner or fix the relationship", r"promis|guarantee|80%|78%|50%|success rate|find (their|a) partner|will find"),
+        ("Recording disclosure", "Calls recorded without telling the prospect", r"record(ed|ing)? (disclos|without)|not (told|disclos).*record|recording disclosure|no recording"),
+        ("Therapy, licensing and credentials", "Implying therapy, treatment or a licence the coach doesn't hold, or dodging the question", r"therap|licens|counsel|clinical|insurance|credential|certif"),
+        ("Crisis and wellbeing disclosures", "Prospects disclosing self-harm, abuse, violence or crisis without care or referral", r"suicid|self-harm|overdose|abuse|assault|violen|crisis|kill"),
+        ("Confidentiality", "Sharing another client's details or breaking a confidentiality promise", r"confidential|another client|other client"),
+        ("Texting rules and opt-outs", "Texting after a stop request or outside allowed hours", r"opt.?out|\bstop\b|left alone|leave (me|her|him) alone|unsubscribe|quiet hours"),
+        ("Refunds and terms", "Refund, cancellation or payment terms promised outside policy", r"refund|cancel(lation)? (option|policy)|30-day|money back|charged"),
+        ("Pressure and conduct", "Pressure after a no, false urgency, shaming", r"pressur|urgenc|guilt|shame|push(ed|ing)? (after|past)|mock")]
+    reg = []
+    for name, desc, rx in topics:
+        hits = [f for f in F if _re.search(rx, f["text"], _re.I) or (name.startswith("Pressure") and f["cat"] == "conduct") or (name.startswith("Outcome") and f["cat"] == "outcome_promise") or (name.startswith("Crisis") and f["cat"] == "wellbeing_risk")]
+        seen = {}
+        for h in hits:
+            seen.setdefault((h["src"], h["id"]), h)
+        hs = list(seen.values())
+        sev = C.Counter(h["sev"] for h in hs)
+        reg.append({"risk": name, "what": desc, "cases": len(hs), "critical": sev.get("critical", 0), "high": sev.get("high", 0),
+                    "calls": sorted({h["id"] for h in hs if h["src"] == "call"}), "triage": sorted({h["id"] for h in hs if h["src"] == "triage"}), "threads": sorted({h["id"] for h in hs if h["src"] == "thread"})})
+    S = (ops or {}).get("sms") or {}
+    for r in reg:
+        if r["risk"].startswith("Texting"):
+            r["measured"] = f"{S.get('quiet_hours_sends', 0)} texts sent before 8am or after 9pm Eastern to {S.get('quiet_hours_leads', 0)} leads; {S.get('texted_after_opt_out', 0)} lead(s) texted again after asking to stop."
+    return sorted(reg, key=lambda r: -(r["critical"] * 100 + r["high"] * 10 + r["cases"]))
+
+
+# ---------------------------------------------------------------- what leads need to hear before the call
+def precall_topics(threads, triage_calls, sales, scrub):
+    import re as _re
+    topics = [
+        ("Price expectations", r"\$|price|cost|how much|expensive|afford|invest|thousand|budget", "Price range and payment options before the call, so the closer isn't the first to say a number."),
+        ("Is this therapy? Is the coach licensed?", r"therap|licens|counsel|insurance|qualified|certif", "A plain explanation of coaching vs therapy, Kim's/Barak's background, and when we refer out."),
+        ("What actually happens on the call", r"what (is|happens)|what('s| is) the call|how long|zoom|video|link|camera", "What the call is, how long it takes, Zoom and video basics, and how to join."),
+        ("Is it a matchmaking service?", r"match|introduce|set (me )?up|find (me )?(someone|a)", "What the program is and isn't: coaching, not introductions."),
+        ("Does it work for someone like me?", r"too old|my age|work for me|someone like me|different|tried everything|nothing works|skeptic|scam|legit", "Stories from clients like them (age, situation), without outcome promises."),
+        ("Timing and commitment", r"busy|schedule|not ready|later|next month|after the holidays|time commitment", "How much time it takes per week and why starting now matters, told honestly.")]
+    pool = []
+    for t in threads:
+        for o in t.get("objections") or []:
+            pool.append(("text", t["lead_id"], o.get("quote") or ""))
+    for c in triage_calls:
+        for o in c.get("objections") or []:
+            pool.append(("triage", c["call_id"], o.get("raw_quote") or ""))
+    for c in sales:
+        for o in c.get("objections") or []:
+            if o.get("when_raised") == "before_pitch":
+                pool.append(("call", c["call_id"], o.get("raw_quote") or ""))
+        for u in c.get("unmet_demand") or []:
+            pool.append(("call", c["call_id"], u.get("want") or ""))
+    out = []
+    for name, rx, asset in topics:
+        hits = [p for p in pool if _re.search(rx, p[2], _re.I)]
+        out.append({"topic": name, "asset": asset, "mentions": len(hits), "by_source": dict(C.Counter(h[0] for h in hits)),
+                    "quotes": [{"src": h[0], "id": h[1], "quote": scrub(h[2])[:220]} for h in hits[:6]]})
+    return sorted(out, key=lambda x: -x["mentions"])
+
+
+# ---------------------------------------------------------------- marketing brief from avatars + applicants
+def marketing_brief(av, app, sales, scrub):
+    if not av:
+        return None
+    A = av.get("avatars", [])
+    best = sorted([a for a in A if a.get("stats", {}).get("calls")], key=lambda a: (-(a["stats"]["won"] or 0), -(a["stats"]["calls"] or 0)))
+    who = []
+    if app:
+        for f in app["fields"]:
+            if f["field"] in ("age_band", "since_relationship", "hours", "matchmaking", "work_cat", "heard"):
+                rs = [r for r in f["rows"] if r["leads"] >= 8]
+                if rs:
+                    top = max(rs, key=lambda r: (r["showed"] / r["leads"]))
+                    low = min(rs, key=lambda r: (r["showed"] / r["leads"]))
+                    who.append({"field": f["label"], "best": top["value"], "best_show": pct(top["showed"], top["leads"]), "worst": low["value"], "worst_show": pct(low["showed"], low["leads"]), "biggest": max(rs, key=lambda r: r["leads"])["value"]})
+    return {"target": [{"name": a["name"], "tagline": a.get("tagline"), "calls": a["stats"]["calls"], "won": a["stats"]["won"], "cash": a["stats"]["cash"],
+                        "hooks": a.get("marketing_hooks", []), "words": [q.get("quote") for q in a.get("in_their_words", [])[:4]], "spot": a.get("how_to_spot", [])[:2],
+                        "dq": a.get("dq_signals", [])[:2]} for a in best], "who": who, "who_buys": av.get("who_buys"), "icp_gap": av.get("icp_gap")}
+
+
+# ---------------------------------------------------------------- AI call-review rubric (for Leah's call-review automation)
+def review_rubric(playbook, pb_setter, offer_name):
+    hard = [("Outcome promise", "Any guarantee or implied promise that the prospect will find a partner or save the relationship, including success-rate figures not in the script."),
+            ("Off-sheet price", "Any price, discount, trial or payment structure not on the sanctioned price sheet: " + "; ".join(f"${t['price_usd']:,} {t.get('cadence') or t.get('tier') or ''}".strip() for t in playbook.get("sanctioned_offer", []) if t.get("price_usd")) + "."),
+            ("Credit or ID handling", "Rep asks for, hears read aloud, or types an SSN, date of birth or income figure, or suggests what to enter on a financing application."),
+            ("Crisis not handled", "Prospect discloses self-harm, suicidal thoughts, abuse, violence or acute crisis and the rep keeps selling without care, a crisis line or a manager note."),
+            ("No recording disclosure", "The rep doesn't say the call is recorded in the first minutes."),
+            ("Pressure after a clear no", "The rep keeps pushing, shames, or invents urgency after the prospect clearly declines."),
+            ("Therapy or credential claims", "Rep implies therapy, treatment, insurance coverage or a licence, or leaves the prospect believing so.")]
+    def phases(pb):
+        return [{"id": p["id"], "name": p["name"], "weight": p["weight"], "checks": [{"id": c["id"], "text": c["text"]} for c in p["checks"]]} for p in pb["phases"]]
+    md = [f"# AI call review rubric: {offer_name}", "", "Use on every recorded sales call and triage call. Score each check hit / partial / miss / not applicable, quote the evidence, and post the summary to Slack within an hour of the call.", "",
+          "## Hard flags (any one sends the call to a manager the same day)", ""]
+    md += [f"- **{a}**: {b}" for a, b in hard]
+    for title, pb in [("Sales call", playbook), ("Triage / setter call", pb_setter)]:
+        md += ["", f"## {title}: {pb.get('name', '')}", "", "Score = weighted share of applicable steps (hit 1, partial 0.5, miss 0).", ""]
+        for p in phases(pb):
+            md.append(f"### {p['id']} {p['name']} (weight {p['weight']})")
+            md += [f"- {c['id']}: {c['text']}" for c in p["checks"]]
+            md.append("")
+    md += ["## Output per call", "", "```json", '{"call_id": "...", "rep": "...", "score": 0, "hard_flags": [{"flag": "...", "quote": "...", "timestamp": "..."}],',
+           ' "phases": {"C1": {"score": "hit|partial|miss|n/a", "evidence": "quote"}}, "top_3_coaching": [{"issue": "...", "better": "exact words"}],',
+           ' "objections": [{"type": "...", "quote": "...", "handled": "well|partly|poorly|ignored"}], "crm_check": "does the logged outcome match the call?"}', "```", "",
+           "## Slack summary format", "", "`[Rep] · [Prospect initials] · Score 62 · ⚑ Off-sheet price` then the three coaching items, each with its better line, then a link to the recording."]
+    return {"hard_flags": [{"flag": a, "rule": b} for a, b in hard], "closer": phases(playbook), "setter": phases(pb_setter), "markdown": "\n".join(md)}

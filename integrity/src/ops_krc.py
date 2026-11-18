@@ -630,3 +630,79 @@ for w in weeks:
 ops_extra = {"setter_time": time_out, "scorecard": sc}
 json.dump(ops_extra, open(os.path.join(ROOT, f"data/{OFFER}/raw/ops_extra.json"), "w"), default=str)
 print("setter time users", [(u["key"], u["est_hours"], u["days_active"]) for u in time_out["users"]], "weeks", len(sc))
+
+# ---------------------------------------------------------------- opportunities: stuck deals, no-show/cancel recovery, coverage, commission
+def alias(n):
+    w = [x for x in str(n or "").split() if x[:1].isalpha()]
+    return ".".join(x[0].upper() for x in w[:2]) + "." if w else "?"
+def touches_after(lid, t0, days):
+    return [a for a in acts_by_lead.get(lid, []) if a[2].get("direction") == "outbound" and t0 <= a[1] <= t0 + timedelta(days=days)]
+def later_eocs(lid, d0):
+    return [e for e in eoc_by_lead.get(lid, []) if (e.get("Date of Call") or "") > d0]
+stuck = []
+for e in eoc:
+    if e.get("Call Outcome") not in ("Offer Made", "No Pitch - 2 Call Close", "Lost") or not e.get("Date of Call"):
+        continue
+    lid = email_to_lead.get(str(e.get("Lead Email") or "").lower().strip())
+    d0 = e["Date of Call"]; t0 = datetime.fromisoformat(d0).replace(tzinfo=ET)
+    later = later_eocs(lid, d0) if lid else []
+    closed_later = any(CLOSED(x) or x.get("Payment Type") in ("Deposit", "Instalment Paid") for x in later) or (lid and paid_by_lead[lid] > 0)
+    A = [a for a in acts_by_lead.get(lid, []) if a[1] > t0] if lid else []
+    last_out = max((a[1] for a in A if a[2].get("direction") == "outbound"), default=None)
+    last_in = max((a[1] for a in A if a[2].get("direction") == "inbound"), default=None)
+    fu = e.get("Follow Up Date")
+    stuck.append({"alias": alias(e.get("Lead Full Name")), "date": d0, "closer": rep(e.get("Closer Name")), "outcome": e.get("Call Outcome"),
+                  "followup_set": e.get("Was a Follow Up Set?"), "followup_date": fu, "followup_overdue": bool(fu and fu < NOW.date().isoformat() and not later),
+                  "later_calls": len(later), "paid_later": bool(closed_later), "touches_7d": len(touches_after(lid, t0, 7)) if lid else 0,
+                  "days_since": (NOW.date() - datetime.fromisoformat(d0).date()).days,
+                  "last_touch_days": (NOW - last_out).days if last_out else None, "lead_replied_after": bool(last_in),
+                  "reason": (str(e.get("No Close Reason(s) / Objection(s) Faced") or e.get("Lost Reason") or "")[:220]), "lead_id": lid})
+recov = []
+for e in eoc:
+    if e.get("Call Outcome") not in ("No Show", "Cancelled") or (e.get("Date of Call") or "") < SINCE:
+        continue
+    lid = email_to_lead.get(str(e.get("Lead Email") or "").lower().strip())
+    d0 = e["Date of Call"]; t0 = datetime.fromisoformat(d0).replace(tzinfo=ET)
+    later = later_eocs(lid, d0) if lid else []
+    recov.append({"outcome": e.get("Call Outcome"), "type": e.get("No Show Type") or e.get("Cancellation Type"), "date": d0, "closer": rep(e.get("Closer Name")),
+                  "touched_24h": bool(lid and touches_after(lid, t0, 1)), "touched_72h": bool(lid and touches_after(lid, t0, 3)), "touches_7d": len(touches_after(lid, t0, 7)) if lid else 0,
+                  "rebooked": bool(later), "held_later": any(HELD(x) for x in later), "closed_later": any(CLOSED(x) for x in later),
+                  "reason": str(e.get("Cancellation Reason") or e.get("Post Call Notes") or "")[:200], "matched": bool(lid)})
+# coverage: lead arrivals vs any outbound team activity, hour x weekday (Eastern), since SINCE
+arr = [[0] * 24 for _ in range(7)]; act = [[0] * 24 for _ in range(7)]
+for l in leads:
+    if l["date_created"] >= SINCE:
+        t = P(l["date_created"]).astimezone(ET); arr[t.weekday()][t.hour] += 1
+for a in acts:
+    if a["dir"] == "outbound" and a["t"].date().isoformat() >= SINCE:
+        act[a["t"].weekday()][a["t"].hour] += 1
+ndays = max(1, (NOW.date() - datetime.fromisoformat(SINCE).date()).days / 7)
+uncovered = [(d, h) for d in range(7) for h in range(24) if act[d][h] / ndays < 1]
+cov = {"arrivals": arr, "activity": act, "weeks": round(ndays, 1),
+       "leads_in_uncovered": sum(arr[d][h] for d, h in uncovered), "leads_total": sum(map(sum, arr)),
+       "uncovered_windows": [{"day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][d], "hour": h, "leads": arr[d][h]} for d, h in uncovered if arr[d][h]]}
+# commission check
+refunds_ = refunds
+deps = [e for e in eoc if e.get("Payment Type") == "Deposit"]
+dep_rows = []
+for e in deps:
+    lid = email_to_lead.get(str(e.get("Lead Email") or "").lower().strip())
+    later = later_eocs(lid, e.get("Date of Call") or "") if lid else []
+    dep_rows.append({"alias": alias(e.get("Lead Full Name")), "date": e.get("Date of Call"), "closer": rep(e.get("Closer Name")), "cash": e.get("Cash Collected"),
+                     "commission": e.get("Closer Comms"), "became_deal": any(CLOSED(x) or x.get("Payment Type") == "Instalment Paid" for x in later) or (lid and paid_by_lead[lid] > (e.get("Cash Collected") or 0))})
+rs = AT("Rep Scorecard")
+counted = [{"rep": rep(r.get("Rep Name")), "deals_counted": r.get("Closer: Deals Closed"), "cash": r.get("Closer: Cash Collected")} for r in rs if r.get("Reporting Period") == "All Time" and r.get("Closer: Deals Closed")]
+for c in counted:
+    full = [e for e in eoc if rep(e.get("Closer Name")) == c["rep"] and CLOSED(e)]
+    c["full_closes"] = len(full); c["deposits"] = sum(1 for e in eoc if rep(e.get("Closer Name")) == c["rep"] and e.get("Payment Type") == "Deposit")
+    c["instalments"] = sum(1 for e in eoc if rep(e.get("Closer Name")) == c["rep"] and e.get("Payment Type") == "Instalment Paid")
+comm = {"payments": len(pay), "closer_rate": med([(p.get("Closer Commission") or 0) / p["Amount"] for p in pay if p.get("Amount")]),
+        "setter_rate": med([(p.get("Setter Commission") or 0) / p["Amount"] for p in pay if p.get("Amount") and p.get("Setter Commission")]),
+        "closer_total": round(sum(p.get("Closer Commission") or 0 for p in pay)), "setter_total": round(sum(p.get("Setter Commission") or 0 for p in pay)),
+        "on_recurring": round(sum(p.get("Closer Commission") or 0 for p in pay if p.get("Payment Type") == "Recurring")),
+        "deposits": dep_rows, "deposit_commission_no_deal": round(sum(float(r["commission"] or 0) for r in dep_rows if not r["became_deal"])),
+        "refunds": [{"amount": r.get("Amount"), "closer_clawback": r.get("Closer Clawback"), "setter_clawback": r.get("Setter Clawback")} for r in refunds_],
+        "deals_counted": counted}
+ops_extra.update({"stuck": sorted(stuck, key=lambda r: r["date"], reverse=True), "recovery": recov, "coverage": cov, "commission": comm})
+json.dump(ops_extra, open(os.path.join(ROOT, f"data/{OFFER}/raw/ops_extra.json"), "w"), default=str)
+print("stuck", len(stuck), sum(1 for s in stuck if not s["paid_later"]), "recovery", len(recov), "uncovered leads", cov["leads_in_uncovered"], "/", cov["leads_total"], "deals counted", counted)

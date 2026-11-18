@@ -748,7 +748,12 @@ def main():
     action = {"money": BD.money_model(ops, sales, closer["objection_pages"], threads) if ops else None,
               "sticking": BD.coaching_sticking(sales, coaching, real_triage),
               "packs": BD.coaching_packs(closer["reps_deep"], sales, coaching, real_triage, [], scrub, ck_label),
-              "patches": deep(json.load(open(f"{D}/script_patches.json"))) if os.path.exists(f"{D}/script_patches.json") else None}
+              "patches": deep(json.load(open(f"{D}/script_patches.json"))) if os.path.exists(f"{D}/script_patches.json") else None,
+              "lead_score": BD.lead_score(app),
+              "compliance": BD.compliance_register(sales, real_triage, threads, ops),
+              "precall": BD.precall_topics(threads, real_triage, sales, scrub),
+              "marketing": BD.marketing_brief(av, app, sales, scrub),
+              "rubric": BD.review_rubric(playbook, pb_setter, playbook.get("name", OFFER))}
     out = {
         "applicants": app, "avatars": av, "wins": wins, "action": action,
         "meta": {"offer": OFFER, "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "min_n": MIN_N},
@@ -762,6 +767,7 @@ def main():
         "privacy": {"scheme": "prospects shown as initials; emails, phone numbers and ID numbers removed; no transcripts published"},
     }
     os.makedirs(f"{ROOT}/web/data", exist_ok=True)
+    open(f"{ROOT}/web/data/{OFFER}_review_rubric.md", "w").write(action["rubric"]["markdown"])
     clib = closer_library(calls, coaching)
     if app:
         for r in app["rows"]:
