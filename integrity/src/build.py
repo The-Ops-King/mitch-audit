@@ -41,10 +41,10 @@ def norm_rep(r):
 NAME_TOKENS = set()
 STAFF = {"Kimberly", "Kim", "Rae", "Emily", "Wood", "Sidonie", "Sid", "Makena", "Waterhouse", "Brianna", "Patterson", "Elly", "Ellie",
          "Porter", "Mariah", "Casagrande", "Malvezzi", "Mitch", "Leah", "Jeremy", "Alexandra"}
-STOP = {"Will", "Hope", "Grace", "Joy", "Faith", "Love", "May", "June", "April", "August", "Mark", "Bill", "Rose", "Summer", "Dawn",
+STOP = {"Will", "Hope", "Grace", "Joy", "Faith", "Love", "May", "June", "April", "August", "Bill", "Rose", "Summer", "Dawn",
         "Rich", "Art", "Sunny", "Sky", "Star", "King", "Young", "Brown", "White", "Black", "Green", "Gray", "Grey", "Price", "Long",
         "Hill", "Best", "Love", "Man", "Guy", "Lady", "Miss", "Mrs", "Mr", "The", "And", "Not", "You", "Your", "Yes", "Coach",
-        "Dear", "Baby", "Honey", "Angel", "Ray", "Don", "Sir", "Lord", "God", "Christian", "Jesus", "Paris", "London", "Texas",
+        "Dear", "Baby", "Honey", "Ray", "Don", "Sir", "Lord", "God", "Christian", "Jesus", "Paris", "London", "Texas",
         "Florida", "Georgia", "Virginia", "Carolina", "Dakota", "Jersey", "York", "Austin", "Dallas", "Houston", "Phoenix", "Denver",
         "Chase", "Bank", "Apple", "Hinge", "Bumble", "Tinder", "Zoom", "Close", "Kajabi", "Fathom", "Calendly", "Instagram", "Facebook",
         "English", "Spanish", "French", "German", "Italian", "Mexican", "American", "Canadian", "Single", "Dating", "Coaching", "Program", "Call", "Team", "Lead", "Setter", "Closer", "Booking", "Paid", "Ads", "Unknown", "None"}
@@ -54,12 +54,15 @@ def collect_names(calls, threads):
     extra = f"{D}/raw/names.json"
     if os.path.exists(extra):
         NAME_TOKENS.update(n for n in json.load(open(extra)) if n[:1].isupper())
-    for c in calls:
-        p = c.get("prospect") or {}
-        for k in ("first_name", "last_name"):
-            v = (p.get(k) or "").strip()
-            if len(v) >= 3:
-                NAME_TOKENS.add(v)
+    for c in list(calls) + load(f"{D}/setter_calls/*.json"):
+        for key, p in c.items():                      # prospect, partner_prospect, second_prospect, prospect_2 ...
+            if "prospect" not in key or not isinstance(p, dict):
+                continue
+            for k in ("first_name", "last_name", "name"):
+                for v in str(p.get(k) or "").replace(",", " ").split():
+                    v = v.strip(".()'\"")
+                    if len(v) >= 3 and v[:1].isupper():
+                        NAME_TOKENS.add(v)
     for t in threads:
         for v in (t.get("_lead_name") or "").split():
             if len(v) >= 3 and v[0].isupper():

@@ -1,0 +1,743 @@
+{
+  "avatars": [
+    {
+      "id": "hurt_partner_alone",
+      "name": "The Hurt Partner Going It Alone",
+      "tagline": "A wife who found out about the affair and is on the call by herself because her husband will not come.",
+      "playbook_segment": "cheated_on_partner",
+      "call_ids": [
+        "recGhnRsvZefXBVSx",
+        "recmKsZB35MoB68hY"
+      ],
+      "who": "A married woman whose husband had an affair or keeps chasing other women, and who is on the call alone because he will not take part or is too ill to. She is anxious, checking up on him, doubting every decision and not the parent or person she wants to be. She is not sure whether to stay, and wants her own steadiness back whatever he does. She books because she has run out of places to turn, often after watching Barak's content.",
+      "profile": {
+        "gender": "mostly women",
+        "age": "one call gives 79; the other is not stated",
+        "relationship_history": "Married, one for 27 years. One found out in May about a two-year affair with an employee that has not fully ended; the other describes years of her husband's infatuations with other women and messages to a former lover.",
+        "work_and_money": "Working or business-owning women who control their own money. The one who bought paid the first month on the call after checking her bank account.",
+        "kids": "Has children. One is pulling away from her sons; the other lost a son this year and is estranged from a daughter.",
+        "apps_and_tried": "Instagram coaching content, Barak's videos, years of therapy, inpatient grief treatment, past addiction treatment."
+      },
+      "goals": [
+        "Stop her life depending on his mood and what he does",
+        "Calm the anxiety and make decisions again",
+        "Stay in the marriage if it can be saved, or settle it one way or the other",
+        "Be present and patient with her children again",
+        "Trust herself and feel at peace"
+      ],
+      "pains": [
+        "Anxiety and anger since the discovery that spill into work and parenting",
+        "Checking up on him (tracking the car, confronting the other woman) and still not trusting him",
+        "Cannot make simple decisions, feels she is not enough",
+        "Husband dismisses coaching or is not able to take part",
+        "Fear of ending up alone if she changes and he leaves",
+        "Other heavy loss and trauma on top of the betrayal"
+      ],
+      "in_their_words": [
+        {
+          "quote": "I just don't know where to run anymore.",
+          "call_id": "recGhnRsvZefXBVSx"
+        },
+        {
+          "quote": "I don't want my life to depend on him",
+          "call_id": "recGhnRsvZefXBVSx"
+        },
+        {
+          "quote": "I cannot even make decisions anymore",
+          "call_id": "recGhnRsvZefXBVSx"
+        },
+        {
+          "quote": "Maybe just with the right approach, with the right guidance, with the right, like, push",
+          "call_id": "recGhnRsvZefXBVSx"
+        },
+        {
+          "quote": "the boulder in the road is my husband",
+          "call_id": "recmKsZB35MoB68hY"
+        },
+        {
+          "quote": "I keep carrying this rock around.",
+          "call_id": "recmKsZB35MoB68hY"
+        },
+        {
+          "quote": "I wanted to be the bigger person and say, it doesn't matter, you know?",
+          "call_id": "recmKsZB35MoB68hY"
+        },
+        {
+          "quote": "I would like to spend those years how I want to spend them.",
+          "call_id": "recmKsZB35MoB68hY"
+        }
+      ],
+      "objections": [
+        {
+          "type": "spouse_partner",
+          "what_it_really_means": "He thinks help is for crazy people. She needs to hear that this is her own work and her decision, not his.",
+          "quote": "he thinks that, people who go to psychologists are crazy.",
+          "call_id": "recGhnRsvZefXBVSx"
+        },
+        {
+          "type": "fear_uncertain",
+          "what_it_really_means": "She is afraid that getting well will cost her the marriage. The real fear is being alone.",
+          "quote": "I don't want to scare people away with my with my happiness.",
+          "call_id": "recGhnRsvZefXBVSx"
+        },
+        {
+          "type": "price_budget",
+          "what_it_really_means": "Logistics, not a no. Stay on the call while she checks.",
+          "quote": "I just have to go to my bank account, make sure that I have enough money there, and then process the payment.",
+          "call_id": "recGhnRsvZefXBVSx"
+        },
+        {
+          "type": "skepticism_trust",
+          "what_it_really_means": "She has done years of work and is tired; she doubts anything new will reach her.",
+          "quote": "I'm very skeptical because of all the work I've already done.",
+          "call_id": "recmKsZB35MoB68hY"
+        },
+        {
+          "type": "timing",
+          "what_it_really_means": "She is still raw from other care and this is too soon. Believe her.",
+          "quote": "I think I just need to let the stuff I've just done process a little bit more.",
+          "call_id": "recmKsZB35MoB68hY"
+        }
+      ],
+      "what_they_need_vs_what_we_sell": "She needs to feel steady and in charge of her own life whether or not he changes. The Individual Program sells clarity, self-trust and nervous system safety, which fits, as long as it is not framed as a way to fix him or save the marriage. When grief or trauma is the bigger load, she needs other care first.",
+      "how_to_spot": [
+        "A woman on her own who says her husband will not join or thinks coaching is pointless",
+        "Talks about checking on him, tracking him or confronting the other woman",
+        "Says she cannot decide anything, does not know where to turn, or feels she is not enough",
+        "Mentions what it is doing to her kids or her work",
+        "Found Barak through his content and feels he gets it"
+      ],
+      "how_to_sell": [
+        "Press the cost to her and her children, not his behaviour: what happens in six months if she is still this anxious",
+        "Lead with the hurt partner pillar: nervous system safety, clarity, emotional boundaries and self-trust",
+        "Make it her decision: ask what she thinks about his view, then let her disagree with it out loud",
+        "Name the fear that getting better will push him away and mirror it back honestly",
+        "Fit the Individual Program; if she hesitates on $4,500, start with the first four sessions paid on the call",
+        "Stay on while she checks her bank and pays; do not send her away to do it"
+      ],
+      "what_kills_the_deal": [
+        "Grief, trauma or recent treatment that outweighs the betrayal, and the rep keeps asking for a booking anyway",
+        "Quoting only a monthly figure with no total, so she cannot weigh it",
+        "She does not know what she wants yet, and the rep does not slow down"
+      ],
+      "marketing_hooks": [
+        "Your life should not depend on his mood",
+        "Found out about the affair and do not know where to run? Start with you",
+        "He does not believe in help. You do not need his permission to feel steady again",
+        "Stop carrying the rock around",
+        "Make decisions again, stay or go, from a calm place"
+      ],
+      "dq_signals": [
+        "Recent bereavement or inpatient care and says the call is stirring it up",
+        "Past suicidal feelings that come up on the call with no current support in place",
+        "Wants insurance-covered therapy rather than coaching",
+        "Cannot say what she wants and says she needs time to process other work"
+      ],
+      "best_call_id": "recGhnRsvZefXBVSx",
+      "worst_call_id": "recmKsZB35MoB68hY"
+    },
+    {
+      "id": "husband_who_strayed",
+      "name": "The Husband Who Strayed",
+      "tagline": "A married man who cheated, whose wife is waiting to see if he gets help, and who wants to know why he did it.",
+      "playbook_segment": "partner_who_cheated",
+      "call_ids": [
+        "rec6IqrIcBNPKz9e9",
+        "recJJyTCIcSpWhIZE",
+        "recuD9fhc8NSBGK9z"
+      ],
+      "who": "A married man who cheated, sexted another woman or kept a porn and fantasy habit secret, and got caught. His wife is not on the call, or listens without speaking, and is waiting to see whether he changes; some have moved out. He takes the blame, wants to understand why and to rebuild her trust. He is motivated but money is tight or not his to decide.",
+      "profile": {
+        "gender": "mostly men",
+        "age": "not stated on these calls",
+        "relationship_history": "Married, in one case about 25 years and a second marriage, in another about two years. Cheated twice with the same woman, sent a photo and video to a woman online, or fantasised about women his wife knows and lied about it.",
+        "work_and_money": "Mixed. A shift worker, a retired-military driver on about $20 an hour whose wife runs the money, and a business owner waiting on client payments. All three paid in pieces.",
+        "kids": "Has children, sometimes from earlier marriages; one is estranged from some of his.",
+        "apps_and_tried": "Online therapy at $200 a session, a past anger management course, reading and psychology courses, or nothing yet."
+      },
+      "goals": [
+        "Keep the marriage and rebuild his wife's trust",
+        "Understand why he did it, often going back to childhood",
+        "Control his emotions, stop lashing out and stop hiding things",
+        "Be someone his wife and kids can depend on",
+        "Feel worthy again as a husband"
+      ],
+      "pains": [
+        "Wife has left, moved him out or is waiting to see change",
+        "Cannot regulate anger, fear or anxiety; some disclose physical violence",
+        "Guilt, shame and sleepless nights replaying what he did",
+        "Does not know why he did it and cannot answer her questions",
+        "Money is tight or controlled by his wife"
+      ],
+      "in_their_words": [
+        {
+          "quote": "I'm trying to fix my marriage",
+          "call_id": "rec6IqrIcBNPKz9e9"
+        },
+        {
+          "quote": "I have no control over my emotions.",
+          "call_id": "rec6IqrIcBNPKz9e9"
+        },
+        {
+          "quote": "It's worth it to me, it's worth it to do without, to make the sacrifices that need to be made.",
+          "call_id": "rec6IqrIcBNPKz9e9"
+        },
+        {
+          "quote": "Be a stronger husband for my wife.",
+          "call_id": "recJJyTCIcSpWhIZE"
+        },
+        {
+          "quote": "I think it starts with my childhood, growing up.",
+          "call_id": "recJJyTCIcSpWhIZE"
+        },
+        {
+          "quote": "So obviously I'm not smart enough to fix it by myself.",
+          "call_id": "recuD9fhc8NSBGK9z"
+        },
+        {
+          "quote": "I cannot figure out the whole story by myself.",
+          "call_id": "recuD9fhc8NSBGK9z"
+        },
+        {
+          "quote": "I need to fix me, not only for her, but for me as well.",
+          "call_id": "recuD9fhc8NSBGK9z"
+        }
+      ],
+      "objections": [
+        {
+          "type": "price_budget",
+          "what_it_really_means": "He is in, but has to spread the cost. Give the sanctioned monthly plan, not an improvised one.",
+          "quote": "Yes, ma'am, and I do need to break it up into monthly payments.",
+          "call_id": "rec6IqrIcBNPKz9e9"
+        },
+        {
+          "type": "spouse_partner",
+          "what_it_really_means": "His wife holds the money, so she is the real second decision maker even though she is not on the call.",
+          "quote": "I still run by Michelle, because she is the finance person.",
+          "call_id": "recJJyTCIcSpWhIZE"
+        },
+        {
+          "type": "price_budget",
+          "what_it_really_means": "Payday timing, not doubt. Agree a dated payment rather than cutting the price.",
+          "quote": "Probably won't be able to pay for that until Friday when I get paid.",
+          "call_id": "recJJyTCIcSpWhIZE"
+        },
+        {
+          "type": "price_budget",
+          "what_it_really_means": "Cash flow, not commitment. He wants to start now and pay in stages.",
+          "quote": "so I pay two sessions now, in a week,",
+          "call_id": "recuD9fhc8NSBGK9z"
+        },
+        {
+          "type": "timing",
+          "what_it_really_means": "He is at work and out of time, not out of interest. Book the rest of the call with a time.",
+          "quote": "Is there any way to finish these last few minutes at another time?",
+          "call_id": "rec6IqrIcBNPKz9e9"
+        }
+      ],
+      "what_they_need_vs_what_we_sell": "He needs to know why he did it and how to stop, and proof for his wife that he is doing the work. The 'if they cheated' pillar (impulse, attachment and validation, then new internal controls) is exactly that. Several also need anger and violence support that coaching should not promise to cover.",
+      "how_to_spot": [
+        "A man on his own who says 'I cheated' or 'I'm the one who messed up' early",
+        "His wife wants him to get help first, or may join later if she sees change",
+        "Asks why he did it and links it to childhood or his own insecurity",
+        "Mentions anger, lashing out or not remembering things",
+        "Raises money or 'my wife handles the finances' in the first minutes"
+      ],
+      "how_to_sell": [
+        "Spend the time on why: what the cheating gave him and where it started",
+        "Lead with the cheated-partner pillar and the end state of new internal controls",
+        "Ask early who handles the money and whether his wife needs to be part of the decision",
+        "Quote the $4,500 total and the 3 x $1,500 plan, then start with the first month if needed",
+        "Agree a dated payment (payday) rather than a deposit of whatever he has",
+        "If he discloses violence, stop and check safety before any pitch"
+      ],
+      "what_kills_the_deal": [
+        "Selling an off-menu first call or a token deposit, which leaves the program unsold",
+        "Quoting a monthly figure without the total, so the close does not hold",
+        "Leaving the balance undated and no first session booked"
+      ],
+      "marketing_hooks": [
+        "You cheated. Now find out why, so it never happens again",
+        "Be a stronger husband for your wife",
+        "Not smart enough to fix it by yourself? Nobody is",
+        "Fix you, not only for her, but for you as well",
+        "Your wife is waiting to see if you get help. Show her"
+      ],
+      "dq_signals": [
+        "Recent physical violence or a criminal case with no safety plan in place",
+        "Still in contact with the affair partner and not willing to stop",
+        "No money of his own and his wife opposes the spend",
+        "Wants a licensed therapist or insurance cover"
+      ],
+      "best_call_id": "recuD9fhc8NSBGK9z",
+      "worst_call_id": "recJJyTCIcSpWhIZE"
+    },
+    {
+      "id": "serial_cheater",
+      "name": "The Serial Cheater",
+      "tagline": "A man who has cheated in relationship after relationship, is sick of it, and doubts anyone can change.",
+      "playbook_segment": "serial_or_compulsive",
+      "call_ids": [
+        "recCs5H4hJqOJtQip",
+        "recK8cDNTYByeQw69"
+      ],
+      "who": "An older, well-off man who has cheated for many years across several relationships and calls it an addiction or a pattern. He has already paid for help (a residential program, pastoral counseling) that did not hold. He says he is sick of the life, but is unsure he even wants a relationship or that people change. He tests the rep, wants to vet Barak, and decides slowly.",
+      "profile": {
+        "gender": "mostly men",
+        "age": "one call gives 64; the other is not stated",
+        "relationship_history": "Cheated in every relationship or for at least 17 years. Divorced or separated; one is living in a motorhome apart from his wife, the other's girlfriend has blocked him.",
+        "work_and_money": "Business owners or retired with their own company. Money is not the problem.",
+        "kids": "Has children in one case; not stated in the other.",
+        "apps_and_tried": "Dating sites, a residential sex-addiction program, weekly alumni calls, a therapist, pastoral counseling."
+      },
+      "goals": [
+        "Stop cheating and stay faithful past the first few months",
+        "Understand why he keeps doing it",
+        "Get his wife or girlfriend back",
+        "Be a man of integrity and live without secrets",
+        "Not end up alone"
+      ],
+      "pains": [
+        "A cycle of cheating that repeats in every relationship",
+        "Cannot trust himself, so he keeps distance to avoid repeating it",
+        "Needs validation and to be chosen, more than sex",
+        "Past expensive help did not hold",
+        "Depression, anxiety and an empty life while separated"
+      ],
+      "in_their_words": [
+        {
+          "quote": "it's been a vicious, and I mean vicious, cycle of mine",
+          "call_id": "recCs5H4hJqOJtQip"
+        },
+        {
+          "quote": "it's ripping them apart, it's ripping me apart.",
+          "call_id": "recCs5H4hJqOJtQip"
+        },
+        {
+          "quote": "I wish there was a magic pill",
+          "call_id": "recCs5H4hJqOJtQip"
+        },
+        {
+          "quote": "I've let a lot of good girls go, Makena.",
+          "call_id": "recCs5H4hJqOJtQip"
+        },
+        {
+          "quote": "I'd like to not be a serial cheater.",
+          "call_id": "recK8cDNTYByeQw69"
+        },
+        {
+          "quote": "I don't want to be that man anymore.",
+          "call_id": "recK8cDNTYByeQw69"
+        },
+        {
+          "quote": "I'm just sick of the life.",
+          "call_id": "recK8cDNTYByeQw69"
+        },
+        {
+          "quote": "I want to be a man of integrity",
+          "call_id": "recK8cDNTYByeQw69"
+        },
+        {
+          "quote": "I don't even know how to fix me.",
+          "call_id": "recK8cDNTYByeQw69"
+        }
+      ],
+      "objections": [
+        {
+          "type": "burned_in_past",
+          "what_it_really_means": "He paid a lot before and it did not hold. He needs to hear what is different, not that this one is better.",
+          "quote": "I've been through an extensive, extensive program before that I spent $25,000 on.",
+          "call_id": "recCs5H4hJqOJtQip"
+        },
+        {
+          "type": "skepticism_trust",
+          "what_it_really_means": "He does not believe he can change. That is the belief gap to work on, not the price.",
+          "quote": "I really don't think people change, Makena, I'm gonna be honest with you. I really don't.",
+          "call_id": "recCs5H4hJqOJtQip"
+        },
+        {
+          "type": "fear_uncertain",
+          "what_it_really_means": "He is not sure he wants this badly enough. A small first step lets him find out.",
+          "quote": "I gotta ask myself how serious I am about this.",
+          "call_id": "recCs5H4hJqOJtQip"
+        },
+        {
+          "type": "skepticism_trust",
+          "what_it_really_means": "He wants to meet Barak before committing. Offer the One Call Session rather than fighting it.",
+          "quote": "I might be more interested in having a 30-minute call with him paid.",
+          "call_id": "recK8cDNTYByeQw69"
+        },
+        {
+          "type": "think_about_it",
+          "what_it_really_means": "He did not know he had to decide on the call and feels sold to.",
+          "quote": "I don't want to commit to anything till I sleep on it.",
+          "call_id": "recK8cDNTYByeQw69"
+        }
+      ],
+      "what_they_need_vs_what_we_sell": "He needs to find out if he really wants to change, and to meet the person who would help him before he commits. The 12-week program asks for a commitment he is not sure of; the $500 One Call Session, credited toward the program, is the right first sale.",
+      "how_to_spot": [
+        "Uses the words 'serial cheater', 'addict' or 'every relationship'",
+        "Has paid for rehab, a residential program or long counseling before",
+        "Says he is not sure he wants a relationship, or that people change",
+        "Business owner or retired, money mentioned as no issue",
+        "Asks about Barak's background or content before anything else"
+      ],
+      "how_to_sell": [
+        "Set the frame at the open: what the call is for and that a decision is made on it",
+        "Name his mixed signals honestly and ask which version of him is on the call",
+        "Ask what was missing from the program that did not hold, then show how the why work differs",
+        "Pitch the Individual Program, then offer the $500 One Call Session credited to it",
+        "Never promise he will not cheat again"
+      ],
+      "what_kills_the_deal": [
+        "Price said mid-pitch before his belief gap is resolved",
+        "No frame set, so he feels ambushed by a decision and wants to research first",
+        "Implying a cure, which he hears as overselling"
+      ],
+      "marketing_hooks": [
+        "Sick of the life? You do not have to be that man anymore",
+        "Tried rehab and it did not hold? Find out why you keep doing it",
+        "There is no magic pill. There is a reason, and it can be found",
+        "Become a man of integrity, one relationship at a time",
+        "It is ripping them apart and it is ripping you apart"
+      ],
+      "dq_signals": [
+        "Says plainly he does not want a relationship and is only here for family",
+        "Wants a guarantee he will be cured before paying",
+        "Will not book a session even after paying"
+      ],
+      "best_call_id": "recCs5H4hJqOJtQip",
+      "worst_call_id": "recK8cDNTYByeQw69"
+    },
+    {
+      "id": "couple_fresh_betrayal",
+      "name": "The Couple Fresh From the Discovery",
+      "tagline": "Both partners on the call within months of finding out, one hurt and checking, the other wanting to prove he or she has changed.",
+      "playbook_segment": "couple_together",
+      "call_ids": [
+        "rec6SUNdHWOTKNy5d",
+        "recPLMk8RaNuavRQv",
+        "recbpZf1niLOSFMfR",
+        "reckX0EYFDCGQ5w0o",
+        "recwyYh5D2HTXy3oB"
+      ],
+      "who": "A couple, often together for many years, both on the call weeks or months after an affair, sex workers, escorts or a string of lies came out. The hurt partner has intrusive thoughts, cannot sleep or eat, checks up and keeps finding new things. The partner who cheated wants to keep the relationship and to know why, but may still blame or minimise. They may argue on the call, and they decide together, usually needing to talk money first.",
+      "profile": {
+        "gender": "mixed",
+        "age": "mostly middle aged; one partner is 57, the rest not stated",
+        "relationship_history": "Together seven to 24 years where stated, some married 16 to 22 years, one engaged with the wedding postponed. The cheating is often repeated: two affairs with co-workers, sex workers three times this year and once before, years of lies and escorts.",
+        "work_and_money": "Mixed. Business owners, people with three jobs or 'good jobs', a long-haul truck driver, one couple paying in Australian dollars. Most say money is a stretch at $1,800 a month.",
+        "kids": "Usually children at home or from earlier relationships.",
+        "apps_and_tried": "A few sessions of couples counselling, BetterHelp, telehealth therapy, a pastor, Barak's videos, ChatGPT. Some are also talking to another provider."
+      },
+      "goals": [
+        "Keep the relationship if it can be saved, or know it cannot",
+        "The partner who cheated understands why and owns it",
+        "Hurt partner's intrusive thoughts, anxiety and anger ease",
+        "Talk without it turning into a fight",
+        "See action, not words, and feel wanted and a priority again"
+      ],
+      "pains": [
+        "Hurt partner cannot trust anything and keeps finding new messages or trickle truth",
+        "Intrusive thoughts, sleeplessness and bad days that come out of nowhere",
+        "The partner who cheated cannot explain why or falls back on excuses",
+        "Constant arguing and no calm conversation",
+        "Mental and physical health on top: bipolar, mania, chemo, PTSD"
+      ],
+      "in_their_words": [
+        {
+          "quote": "I feel like we need the professional help because of the situation.",
+          "call_id": "rec6SUNdHWOTKNy5d"
+        },
+        {
+          "quote": "where he understands why he did it",
+          "call_id": "recPLMk8RaNuavRQv"
+        },
+        {
+          "quote": "it's too exhausting to stay in this state.",
+          "call_id": "recPLMk8RaNuavRQv"
+        },
+        {
+          "quote": "How do you start rebuilding a relationship based on lies right out the gate?",
+          "call_id": "recbpZf1niLOSFMfR"
+        },
+        {
+          "quote": "I just don't want to hear the words and not see the action go with it.",
+          "call_id": "recbpZf1niLOSFMfR"
+        },
+        {
+          "quote": "I just want to feel wanted, to be honest with you.",
+          "call_id": "recbpZf1niLOSFMfR"
+        },
+        {
+          "quote": "I want to feel a priority in his life.",
+          "call_id": "reckX0EYFDCGQ5w0o"
+        },
+        {
+          "quote": "I don't want to feel like this no more, I carry weight that no person should carry.",
+          "call_id": "reckX0EYFDCGQ5w0o"
+        },
+        {
+          "quote": "It's really hard to be having a good day and have that day just turned to crap",
+          "call_id": "recwyYh5D2HTXy3oB"
+        },
+        {
+          "quote": "I really strongly want to change as a person.",
+          "call_id": "recwyYh5D2HTXy3oB"
+        }
+      ],
+      "objections": [
+        {
+          "type": "think_about_it",
+          "what_it_really_means": "They are shopping. Find out what the other provider offers and what would make Barak the one.",
+          "quote": "We do have another meeting with someone.",
+          "call_id": "rec6SUNdHWOTKNy5d"
+        },
+        {
+          "type": "skepticism_trust",
+          "what_it_really_means": "The hurt partner has read that trust takes years and does not believe 12 weeks is enough. Explain what changes by week 12; do not promise trust is restored.",
+          "quote": "Hard to believe that can be achieved in 12 weeks, but,",
+          "call_id": "recPLMk8RaNuavRQv"
+        },
+        {
+          "type": "price_budget",
+          "what_it_really_means": "The couples price is a stretch, often in another currency. Offer the first month or the One Call Session, not a new tier.",
+          "quote": "Is there a lower program?",
+          "call_id": "recPLMk8RaNuavRQv"
+        },
+        {
+          "type": "skepticism_trust",
+          "what_it_really_means": "She does not believe he will change. The sale depends on him owning his why on the call, in front of her.",
+          "quote": "From what I've seen from this man so far, no.",
+          "call_id": "recbpZf1niLOSFMfR"
+        },
+        {
+          "type": "timing",
+          "what_it_really_means": "Real-life load such as treatment or three jobs. Show the sessions can flex.",
+          "quote": "I'm just worried, like, when I'm doing my chemo.",
+          "call_id": "recbpZf1niLOSFMfR"
+        },
+        {
+          "type": "price_budget",
+          "what_it_really_means": "The second partner is not in on the money. Go through the numbers with both on the call.",
+          "quote": "We don't necessarily always have an extra $1,800 per month",
+          "call_id": "recwyYh5D2HTXy3oB"
+        }
+      ],
+      "what_they_need_vs_what_we_sell": "They need the partner who cheated to find and own the why, and the hurt partner to feel safe again, with someone to referee. The Couples Program covers both sides. Many also need help with trauma symptoms, bipolar or violence that coaching should not claim to treat, and a price that fits one income.",
+      "how_to_spot": [
+        "Both partners on the call, or one says the other will join",
+        "The discovery was recent: last month, this summer, a named date",
+        "Hurt partner talks about intrusive thoughts, trickle truth or checking",
+        "They interrupt or correct each other in the first minutes",
+        "Mentions another therapist or provider they are also talking to"
+      ],
+      "how_to_sell": [
+        "Get each partner's own goal, commitment and yes, out loud",
+        "Push the partner who cheated on why while the hurt partner listens; that is the proof she wants",
+        "Ask the future-consequences question to both: where are you in six months if nothing changes",
+        "Ask what they were told about price and correct the anchor before the pitch",
+        "Run the temperature check before the price, then quote $5,400 and 3 x $1,800",
+        "If money is the gap, isolate it and go through the numbers with both on the call"
+      ],
+      "what_kills_the_deal": [
+        "Price said before the pitch or the temperature check, then 'we need to talk about it'",
+        "A competing provider never addressed",
+        "The hurt partner's doubt that 12 weeks can work is never answered",
+        "The partner not in on the money refuses to look at the numbers on the call"
+      ],
+      "marketing_hooks": [
+        "Found out recently? You do not have to work out what is true alone",
+        "Words are not enough. See the action that goes with them",
+        "Too exhausting to stay in this state? There is a way through, together",
+        "Find out why it happened, so you can decide what comes next",
+        "Feel wanted, and a priority, again"
+      ],
+      "dq_signals": [
+        "Physical violence disclosed and the hurt partner has not been asked privately if she is safe",
+        "Active mania or untreated mental illness driving the behaviour",
+        "Still in contact with the affair partner, escorts or sex workers",
+        "Only one partner wants to be there"
+      ],
+      "best_call_id": "recbpZf1niLOSFMfR",
+      "worst_call_id": "rec6SUNdHWOTKNy5d"
+    },
+    {
+      "id": "couple_stuck_after",
+      "name": "The Couple Stuck Long After the Affair",
+      "tagline": "The affair was a year or two ago; now it is lies, withdrawal and the same fights, and they cannot get out of the cycle.",
+      "playbook_segment": "post_affair_communication",
+      "call_ids": [
+        "recG83GHIMQ9gNUul",
+        "rec1tlTKpupDVqmfF"
+      ],
+      "who": "A couple where the cheating happened a year or two back and they stayed together, but it has not settled. Now the live problem is a pattern: one partner shuts down or lies when scared, the other cannot believe anything or keeps raising it. They have awareness, sometimes therapy, but say they are stuck in the same cycle. One partner usually drives the call while the other joins late or thinks they can fix it themselves.",
+      "profile": {
+        "gender": "mixed",
+        "age": "not stated on these calls",
+        "relationship_history": "Together about two years, cheating after the first year; or married with a blended family, the wife's affair and lies about two years back.",
+        "work_and_money": "One couple owns a business and paid on the call; the other lives on one income with babies and many children and found the price more than expected.",
+        "kids": "Children in both, including babies and children from earlier marriages.",
+        "apps_and_tried": "Couples therapy that did not stick; Barak's videos and messaging him."
+      },
+      "goals": [
+        "Raise a problem without it turning into a fight or a shutdown",
+        "Stop the lying and find out where it comes from",
+        "Know the cheating will not happen again",
+        "A clear next step: living together, telling the families",
+        "Be happy together"
+      ],
+      "pains": [
+        "Same cycle for a long time, despite awareness",
+        "One partner pulls away or gets defensive when issues come up",
+        "Lies told by default when scared, and new things keep coming out",
+        "Every day has become a therapy session and one partner is drained",
+        "Low self-esteem, racing thoughts and dark moments"
+      ],
+      "in_their_words": [
+        {
+          "quote": "we have been in the cycle now for a very long time",
+          "call_id": "recG83GHIMQ9gNUul"
+        },
+        {
+          "quote": "I feel the awareness is there. But we still can't get out of it.",
+          "call_id": "recG83GHIMQ9gNUul"
+        },
+        {
+          "quote": "basically it's become a big therapy session",
+          "call_id": "recG83GHIMQ9gNUul"
+        },
+        {
+          "quote": "I can't have these conversations every day.",
+          "call_id": "recG83GHIMQ9gNUul"
+        },
+        {
+          "quote": "I can bring it up and feel like I'm in a safe space. And it's not the end of the relationship.",
+          "call_id": "recG83GHIMQ9gNUul"
+        },
+        {
+          "quote": "I believe we've got the ingredients.",
+          "call_id": "rec1tlTKpupDVqmfF"
+        },
+        {
+          "quote": "the truth will kill a lie",
+          "call_id": "rec1tlTKpupDVqmfF"
+        },
+        {
+          "quote": "Sometimes I feel like I'm here, but not here.",
+          "call_id": "rec1tlTKpupDVqmfF"
+        },
+        {
+          "quote": "Happiness, you know, that's what we want. We want to be happy.",
+          "call_id": "rec1tlTKpupDVqmfF"
+        }
+      ],
+      "objections": [
+        {
+          "type": "spouse_partner",
+          "what_it_really_means": "The other partner is the one who has to agree. Get them on the call before the pitch.",
+          "quote": "So him being open, I mean, after this call, I have to discuss it.",
+          "call_id": "recG83GHIMQ9gNUul"
+        },
+        {
+          "type": "has_solution_or_no_value",
+          "what_it_really_means": "One partner thinks awareness is enough. Show that awareness has not broken the cycle so far.",
+          "quote": "I think for him, he believes that like he can do it himself.",
+          "call_id": "recG83GHIMQ9gNUul"
+        },
+        {
+          "type": "other",
+          "what_it_really_means": "They want a shorter commitment. A first month of four sessions answers it.",
+          "quote": "is there so it's only 12 weeks, or can it be six weeks",
+          "call_id": "recG83GHIMQ9gNUul"
+        },
+        {
+          "type": "price_budget",
+          "what_it_really_means": "The setter's range did not prepare them for $5,400. Correct the anchor before the pitch.",
+          "quote": "It's more than what I expected, if I'm being honest.",
+          "call_id": "rec1tlTKpupDVqmfF"
+        },
+        {
+          "type": "price_budget",
+          "what_it_really_means": "A real limit on one income. Isolate it and work the plan on the call.",
+          "quote": "We're on a one income at the moment",
+          "call_id": "rec1tlTKpupDVqmfF"
+        },
+        {
+          "type": "fear_uncertain",
+          "what_it_really_means": "The price came before they had weighed the process, so saying yes feels rushed.",
+          "quote": "it's almost feeling a bit impulsive",
+          "call_id": "rec1tlTKpupDVqmfF"
+        }
+      ],
+      "what_they_need_vs_what_we_sell": "They need a way to break a communication and honesty pattern that outlived the affair, not more processing of the affair itself. The Couples Program's why work and between-session assignments fit, if it is sold as breaking the cycle rather than healing the betrayal.",
+      "how_to_spot": [
+        "The affair is a year or more back and they bring up communication first",
+        "'We know what the problem is, we just cannot get out of it'",
+        "One partner talks about the other, who is listening off camera or joins late",
+        "Couples therapy already tried with no lasting change",
+        "Lying, shutting down or defensiveness described as the main issue"
+      ],
+      "how_to_sell": [
+        "Hold the pitch until both partners are on the call",
+        "Ask the partner who cheated what he or she was looking for at the time",
+        "Contrast awareness with change: what has their awareness got them so far",
+        "Offer the first four sessions as the start, priced with the $5,400 total and the credit",
+        "Take payment on the call and book Barak live"
+      ],
+      "what_kills_the_deal": [
+        "Price before the pillars and before the temperature check",
+        "A setter range that does not match the real price and is never corrected",
+        "Wellbeing disclosures passed over on the way to the pitch"
+      ],
+      "marketing_hooks": [
+        "You have the awareness. So why can you not get out of the cycle?",
+        "When every conversation turns into a therapy session",
+        "Bring it up and feel safe, not like it is the end",
+        "The affair was a year ago. Why does it still feel like yesterday?",
+        "You have got the ingredients. Here is the recipe"
+      ],
+      "dq_signals": [
+        "One partner says 'maybe this is not for us' and will not commit",
+        "Active dark thoughts or self-harm that need clinical care first",
+        "No room in the budget on one income and no way to start smaller"
+      ],
+      "best_call_id": "recG83GHIMQ9gNUul",
+      "worst_call_id": "rec1tlTKpupDVqmfF"
+    }
+  ],
+  "universal_objections": [
+    {
+      "type": "think_about_it",
+      "insight": "'Give me time to think' right after the price is almost always money or belief not yet named. When the rep asked what was behind it and offered the first four sessions, it closed on the call.",
+      "quote": "Yeah, I have to, just give me some time to think about it. You said it's 4,500, right?",
+      "call_id": "recGhnRsvZefXBVSx"
+    },
+    {
+      "type": "price_budget",
+      "insight": "Setters say 'low to mid four figures' and some prospects hear $5,400 for the first time on the closer call. Ask what they were told before pitching.",
+      "quote": "It's more than what I expected, if I'm being honest.",
+      "call_id": "rec1tlTKpupDVqmfF"
+    },
+    {
+      "type": "skepticism_trust",
+      "insight": "Hurt partners have read that rebuilding trust takes years. Say what 12 weeks does deliver (an answer and a path), not that trust will be fixed.",
+      "quote": "Hard to believe that can be achieved in 12 weeks, but,",
+      "call_id": "recPLMk8RaNuavRQv"
+    },
+    {
+      "type": "spouse_partner",
+      "insight": "The absent partner often holds the money or the belief. Ask early who else decides and get them on the call where possible.",
+      "quote": "I still run by Michelle, because she is the finance person.",
+      "call_id": "recJJyTCIcSpWhIZE"
+    },
+    {
+      "type": "timing",
+      "insight": "Grief, illness and other treatment make some prospects not ready. Pushing for a booking after they say so loses trust.",
+      "quote": "I think I just need to let the stuff I've just done process a little bit more.",
+      "call_id": "recmKsZB35MoB68hY"
+    }
+  ],
+  "who_buys": "The sample is small: 14 sales calls, only 3 won in full and 5 more closed on a deposit or instalment, so treat these patterns as early signals, not rules. The people who paid were problem-aware, had the person paying on the call, and could say why now; the full wins (a hurt wife alone, a serial cheater, a couple stuck after the affair) all took a smaller first step (the first month or the $500 One Call Session) paid on the call rather than the full $4,500 or $5,400. Men who cheated and came alone all paid something but only in pieces, because money was tight or their wife held it. Non-buyers were mostly couples fresh from the discovery who heard the price before the pitch, compared providers, doubted 12 weeks could rebuild trust or found $1,800 a month too much on one income, plus a serial cheater who wanted to vet Barak first and a grieving woman who was not ready.",
+  "icp_gap": "The closing doc pictures a couple or one partner ready to rebuild after infidelity who can invest low to mid four figures. Who actually shows up carries far more: past suicidal thoughts, choking and physical violence, bipolar and mania, cancer treatment, a son's recent death, and several on low or single incomes or paying in another currency, with threads showing people asking for licensed therapists and insurance cover. Who actually buys in full is narrower still: someone with their own money who accepts a one-month or one-session start on the call. The script has no step for wellbeing checks or for correcting the setter's price anchor, and both gaps appear in calls that did not close."
+}

@@ -1,7 +1,7 @@
 /* Core helpers shared by every section. Plain JS, no build step. */
 const OFFERS = [
   { id: "krc", name: "Kimberly Rae", data: "data/krc" },
-  { id: "bvw", name: "Barak Van Wyk", data: null },   // switch to "data/bvw" when the build is ready
+  { id: "bvw", name: "Barak Van Wyk", data: "data/bvw" },
   { id: "offer3", name: "Offer 3", data: null },
 ];
 const SECTIONS = [];            // filled by section files: {id, name, subs:[[id,name]], render(d, sub)}
