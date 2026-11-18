@@ -1,20 +1,20 @@
 {
   "name": "Barak Van Wyk Coaching: Closing Playbook (derived from calls)",
-  "source": "There is no written script. Derived from 14 recorded closer calls (12 Zoom, 2 Drive recordings transcribed without speaker labels), Sep to Nov 2026, all run by Makena Waterhouse. 3 won (Call Outcome 'Closed' and Payment Type not 'Deposit' or 'Instalment Paid'): recGhnRsvZefXBVSx, recCs5H4hJqOJtQip, recG83GHIMQ9gNUul. 5 more closed on a deposit or first instalment and are used only as supporting evidence. 6 did not close (5 Offer Made, 1 Lost) and are the contrast set. Checks marked '(best practice: missing on his calls)' are standard high-ticket steps added only where the lost and offer-made calls show their absence hurt.",
+  "source": "There is no written script. Derived from 14 recorded closer calls in closer_all.json, of which 12 Zoom calls were read in full (all run by Makena Waterhouse, Sep to Nov 2026). The 2 Drive calls (recG83GHIMQ9gNUul, recuD9fhc8NSBGK9z) are still being transcribed and are not used as evidence either way. Of the 12 read, 2 are won (Call Outcome 'Closed' and Payment Type not 'Deposit' or 'Instalment Paid'): recGhnRsvZefXBVSx (individual, first month 1500) and recCs5H4hJqOJtQip (One Call Session 500). 4 more closed on a first instalment or deposit (rec6IqrIcBNPKz9e9, recbpZf1niLOSFMfR, reckX0EYFDCGQ5w0o, recJJyTCIcSpWhIZE) and are used as supporting evidence only. 6 did not close (5 Offer Made, 1 Lost) and are the contrast set. With only 2 strict wins this is a thin base; re-check once the Drive calls are in. Checks marked '(best practice: missing on his calls)' are standard high-ticket steps added only where the non-closing calls show their absence hurt.",
   "sanctioned_offer": [
     {
       "product": "12-Week Couples Program",
       "price_usd": 5400,
       "weeks": 12,
       "cadence": "weekly 1-hour session with Barak (both partners), couples exercises and individual homework between sessions",
-      "payment_plan": "3 x 1800 monthly (900 bi-weekly offered once). Calls also used a first-month start at 1800, a half-now split (2700) and a 1-call start."
+      "payment_plan": "3 x 1800 monthly (900 bi-weekly offered once). Not shown on the 2 strict wins; price and plan come from the instalment closes (rec bpZ, kX0) and the offer-made calls. One close took half up front (2700)."
     },
     {
       "product": "12-Week Individual Program",
       "price_usd": 4500,
       "weeks": 12,
       "cadence": "weekly 1-hour 1:1 session with Barak plus homework",
-      "payment_plan": "3 x 1500 monthly. Won calls show 4500 total and a 1500 first-month start; 1800 was never quoted for an individual. One deposit call quoted the first session at 300 and took a 100 deposit, which is off-sheet."
+      "payment_plan": "3 x 1500 monthly. Both won Zoom calls quote 4500 total; one won call started on the 1500 first month. 1800 was never quoted for an individual. One deposit call quoted the first session at 300 and took a 100 deposit, which is off-sheet."
     },
     {
       "product": "One Call Session",
