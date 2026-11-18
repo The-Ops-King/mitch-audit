@@ -1,0 +1,1192 @@
+{
+ "scripts": [
+  {
+   "script": "Master Closing Doc",
+   "doc_id": "1qky7geyNPwuRk23XX98us31N2Ud3tF1Ht_GQTA5pZiU",
+   "last_edited": "2026-11-17",
+   "summary": "Reps run the discovery half well (why now on 90% of calls, doubt question 81%, pillars 64 to 81%) but the back half is improvised: money is never qualified before the pitch (0 of 55 calls), 26 of 47 pitched calls quoted an off-sheet price (the $1,000 first session on 15, the $2,400 starter on 9), 37 of 55 carried an outcome promise such as '80% find a partner', and next steps before price were run in full on 6 of 47. The three changes that matter most: lock prices to $3,600 / $7,200 / $14,000 with Tier 1.5 as the planned lower option, add a budget check before the pitch, and add the missing safety sections (recording disclosure, crisis pause, prospect-only financing applications). Nov 17 edit: no change is detectable. playbook_closer.json already cites the 2026-11-17 edit and was written at 01:25 UTC on 18 Nov, after the 19:19 UTC edit; every one of its 51 checks and 3 prices matches the current text, and Drive returned no revision history. Text in the current doc that the playbook does not score: the 'when did you realize / specific event' probes, 'How long has it been like this for you?' in Current Situation, the optional proof point in Transition, the pillar working-names note, and the 'Tier 2/3' delivery line. All 55 analysed calls (5 Jun to 11 Nov) predate the edit, so the patches target the current text.",
+   "patches": [
+    {
+     "id": "MC-01",
+     "section": "INVESTMENT",
+     "priority": "high",
+     "type": "reps_improvise",
+     "script_says": "Recommend the fit based on discovery, anchor it, then SHUT UP.",
+     "reality": "26 of 47 pitched calls (55%) quoted at least one price that is not on the sheet, 15 distinct prices in all. The two that recur: a $1,000 'first call / first session with Kim' on 15 calls and a $2,400 '6 weeks, 4 sessions' or 'first month' starter on 9 calls. Also $13,900 and $13,997 for the $14,000 tier, $3,400, $3,500, $3,800 and $4,000 for the $3,600 tier, and $500 or $337 entries. Calls with an off-sheet price closed 2 of 26 (8%); pitched calls that stayed on the sheet closed 5 of 21 (24%). The $1,000 offer turned into a $100 deposit on one call and a 'Foundation Program' at $2,400 in the CRM on another.",
+     "what_works": "The won calls mostly stayed on one sheet price and stopped talking: recuYUaiJrHqjgDoh, recDSlt2076AjpWME and recHhuHL21q8NAwRy closed on sanctioned tiers. Where the prospect asked to pay for one session first (recQgbOLAOMtxKfce), the close came from a 1 to 10 check and a payment split, not a new product.",
+     "change": "Add a hard rule under TIER MAPPING: the only prices a closer says are $3,600, $7,200 and $14,000. No trial calls, deposits for a single session, 6-week starters, first-month options or rounded numbers. If a prospect asks to try one session first, use the trial-request lines below. Anything else goes to Mitch before it is said on a call.",
+     "new_lines": [
+      "[Rule] The only three prices you say on a call are $3,600, $7,200 and $14,000. Never quote a single session, a deposit for one call, a 6-week or first-month option, or a number you round.",
+      "If they ask to pay for one session first: \"I get why you'd want to feel it out first. Kim doesn't sell single sessions, because one hour can't change how you show up. What the three months does is give you the first few weeks to feel the difference. What would you need to see in those first weeks to know it's working?\"",
+      "If they ask for something cheaper: \"The option that keeps Kim one on one with you at a lower investment is the bi-weekly three months at $3,600. Would that fit better?\""
+     ],
+     "evidence": [
+      {
+       "call_id": "recvpTnwx7EBHQ2hV",
+       "quote": "That would be just $1K."
+      },
+      {
+       "call_id": "recS608c0FD1pE8Dt",
+       "quote": "Yeah, so to book in a one-call session with Kimberly, we take down a deposit of $1,000."
+      },
+      {
+       "call_id": "recBs4M5WwMoXRskQ",
+       "quote": "I think that we should just start with the 6 weeks. You'll get at least 4 sessions with her. It comes out to about $2,400."
+      },
+      {
+       "call_id": "recouq288EEBxK1Kp",
+       "quote": "I think just starting with the first 6 weeks will be beneficial, so you'll get four sessions, that comes out to about $2,400."
+      },
+      {
+       "call_id": "recI2zEIFqyTVILeO",
+       "quote": "Our second tier is going to be six months and that's, um, 13,900."
+      }
+     ],
+     "owner": "Mitch (decision)"
+    },
+    {
+     "id": "MC-02",
+     "section": "TIE DOWN DISCOVERY",
+     "priority": "high",
+     "type": "missing_from_script",
+     "script_says": null,
+     "reality": "Money was qualified before the pitch on 0 of 55 calls, won or lost. The script has no step for it: the first time money comes up is the price. Price/budget objections came up 57 times on 37 of 55 calls, 49 of them after the price, and were resolved 16% of the time. The setters do not fill the gap: the means gate was weak or missed on 22 of 28 setter calls, and setters did not give the sanctioned anchor on 16 of the 18 calls where they named a price.",
+     "what_works": "Nothing to copy before the pitch: no call did it. After the price, the won calls used 'money aside, does the process feel right' (C13a hit on 5 of 7 won calls).",
+     "change": "Add a short budget check at the end of TIE DOWN DISCOVERY, before TRANSITION. It asks how they would fund it, not whether they like the price, and it does not reveal a number. If they say they have no way to invest anything, stop and do not pitch.",
+     "new_lines": [
+      "Before I walk you through how Kim would work with you, one practical question so I point you at the right option. (Setter) mentioned working with Kim is an investment in the four figures. If this turns out to be exactly what you need, how would you normally handle something like that: pay upfront, spread it over a few months, or would you need to look at financing?",
+      "[If they say they have no income or no way to invest anything] I really appreciate you being honest. I don't want to walk you through something that only adds pressure right now. Let's get you the free resources and reconnect when the timing is better. Fair?"
+     ],
+     "evidence": [
+      {
+       "call_id": "rec3AX0Fkb3McFdmj",
+       "quote": "Oh, yeah. No, there's no way."
+      },
+      {
+       "call_id": "rec2vZiTr7sex6D2Z",
+       "quote": "As far as that sort of amount, I wouldn't be able to commit, to that now."
+      },
+      {
+       "call_id": "acti_Kxlmgo46VKJtPYWRpdQ0ydWJi1SoVri2rooNOMYEj0L",
+       "quote": "I'm probably not going to make any monetary commitments anytime soon."
+      },
+      {
+       "call_id": "acti_qFOCLVqsoyymRXwpxRaGKIgmrN4619V4cqlA3Iu4KbE",
+       "quote": "I don't have money. It's not like that."
+      }
+     ],
+     "owner": "Sid (training)"
+    },
+    {
+     "id": "MC-03",
+     "section": "PITCH: HIGH-LEVEL PROMISE",
+     "priority": "high",
+     "type": "reps_improvise",
+     "script_says": "[Note: dating outcomes can't be guaranteed. Promise the process and the visible near-term change, the relationship is the destination, not a guarantee.]",
+     "reality": "37 of 55 calls (67%) carried an outcome promise, with 40 outcome-promise flags. 28 calls cite a success rate: '80% find a partner in the first year' or '50% within six months and 78% within 12 months', said in near-identical words by different reps. 13 calls promise 'at least two dates a week'. Others say '100%' or 'she's going to help you find your person'. The note in the script has no approved line to replace these, so reps use the stats. Promises did not lift the close rate: 5 of 37 calls with a promise closed (14%) against 2 of 18 without.",
+     "what_works": "The script's own line works when used: 'visible near-term change' (new matches, conversations that go somewhere, real dates). C9a, the no-guarantee promise, was fully hit on only 3 calls.",
+     "change": "Turn the note into a rule with banned phrases and one approved proof line. Ban any percentage of clients finding a partner, any dates-per-week number, '100%', 'she will get you there'. Mitch decides whether the 50%/78% figure is real and documented; until then it is not said.",
+     "new_lines": [
+      "[Never say] any percentage of clients who find a partner, any number of dates per week, '100%', 'guaranteed', or 'she'll get you your person'.",
+      "I can't promise you a relationship, and nobody honest can. What I can tell you is what changes: within the first few weeks most people see different responses, because the profile, the messaging and how you show up all get fixed. The relationship is where this leads, and Kim's job is to get you showing up as the person who gets there."
+     ],
+     "evidence": [
+      {
+       "call_id": "rec2vZiTr7sex6D2Z",
+       "quote": "Over 80% of our clients do find their partner in the first year,"
+      },
+      {
+       "call_id": "rec4PWwpX5E7trAGZ",
+       "quote": "approximately 50% of our clients enter a relationship within six months and 78% of our clients enter a relationship within 12 months."
+      },
+      {
+       "call_id": "recGKZs9W2uilOrBj",
+       "quote": "If you put time into this, you will a hundred percent reach your goal."
+      },
+      {
+       "call_id": "recrae8WpaHedIgrN",
+       "quote": "they should be getting minimum around two dates a week"
+      },
+      {
+       "call_id": "recS608c0FD1pE8Dt",
+       "quote": "She's going to help you find your person."
+      }
+     ],
+     "owner": "Mitch (decision)"
+    },
+    {
+     "id": "MC-04",
+     "section": "INTRO: RAPPORT & FRAME",
+     "priority": "high",
+     "type": "reps_skip_it",
+     "script_says": "This call is recorded in the case that you end up working with Kim, in which case I’ll forward all of my notes over to her, but if not, everything we go over today will be kept between you and I",
+     "reality": "The recording disclosure was said on 10 of 53 calls and partly on 3; it was missed on all 7 won calls. Confidentiality was stated on 14 of 52. Most calls open with 'My name is Makena, I help Kimberly with her application client process' and go straight to questions. On 4 calls the prospect raised the recording first, and on 3 calls reps promised it would be discarded or deleted, which did not happen (the recordings are in this audit). The script's own wording ('kept between you and I') also implies the recording is not kept.",
+     "what_works": "Nothing to copy: no won call disclosed. recdjmrdH9buz4W7B shows the cost of skipping it: the prospect asked about it at the end.",
+     "change": "Make the disclosure the first thing after hello on every call, ask for a yes, and replace the 'kept between you and I' wording with what actually happens to the recording. Never promise deletion. Mitch sets the retention rule.",
+     "new_lines": [
+      "Before we start, quick heads up: this call is recorded so I have accurate notes, and if you end up working with Kim, she gets them too. It stays inside our team either way. Is that okay with you?",
+      "[If they say no] No problem, I'll stop the recording now. [Stop it, then carry on.]",
+      "[Never say] that the recording will be deleted or discarded."
+     ],
+     "evidence": [
+      {
+       "call_id": "recAUjmML6vyYadLa",
+       "quote": "And if not, you know, we discard all of these Fathoms and recorded meetings."
+      },
+      {
+       "call_id": "recdjmrdH9buz4W7B",
+       "quote": "if you don't end up going forward with the program, I'm just gonna delete the call"
+      },
+      {
+       "call_id": "recxGZkQn8F14QKyl",
+       "quote": "I wasn't, sure that this is being recorded. Is it necessary?"
+      },
+      {
+       "call_id": "recBs4M5WwMoXRskQ",
+       "quote": "My name is Makena, by the way. I help Kimberly with her application client process."
+      }
+     ],
+     "owner": "Mitch (decision)"
+    },
+    {
+     "id": "MC-05",
+     "section": "OBJECTIONS",
+     "priority": "high",
+     "type": "missing_from_script",
+     "script_says": null,
+     "reality": "The script has no financing section, and 23 of 55 calls offered a third-party financing partner (ClarityPay on 17). Reps run the application live: on recGKZs9W2uilOrBj the rep had the prospect read his Social Security number and income aloud on a recorded call and typed them in on her own shared screen; on recs3px0F2ml4Yv7v the rep told a prospect who earns $18,000 to put at least $30,000. Reps also told prospects financing had 'no extra cost' while the offer carried 17% APR and a 5% fee, and ran screen-shared credit checks after 'I can't afford it' (reck9JVOjrzpNKQQY, recC4gM25DJe88Ryw).",
+     "what_works": "Nothing on the calls. The phone setting script already says the setter is 'not collecting bank details'; the closer needs the same rule.",
+     "change": "Add a FINANCING section after the objection pacing. The prospect fills in any application themselves, on their own device, off the recording. The rep never hears or types an SSN, date of birth or income, never suggests a number, and reads the APR and total cost back before they sign. Only offer financing after the process tie-down is a clear yes.",
+     "new_lines": [
+      "If spreading it out would help, there's a financing option. You fill that in yourself, on your own phone or laptop, and I don't need to see or hear any of your details. Put in your real numbers, because that's what keeps it right for you.",
+      "Before you accept anything, read me the monthly payment, the number of months and the APR on your screen, so we're both clear on the total you'd pay.",
+      "[Never] ask for a Social Security number, date of birth or income out loud, type a prospect's details yourself, suggest what income to enter, or run a credit check after they have said they can't afford it."
+     ],
+     "evidence": [
+      {
+       "call_id": "recGKZs9W2uilOrBj",
+       "quote": "Okay, and what's your social number?"
+      },
+      {
+       "call_id": "recGKZs9W2uilOrBj",
+       "quote": "Okay, so opposite. And what's your total annual income before tax?"
+      },
+      {
+       "call_id": "recs3px0F2ml4Yv7v",
+       "quote": "Okay. So you should put at least $30,000 there."
+      },
+      {
+       "call_id": "recs3px0F2ml4Yv7v",
+       "quote": "Right. Okay. It's not a hard pull."
+      },
+      {
+       "call_id": "recC4gM25DJe88Ryw",
+       "quote": "I'd kind of like to check my own credit first."
+      }
+     ],
+     "owner": "Mitch (decision)"
+    },
+    {
+     "id": "MC-06",
+     "section": "WHY NOW & COST: THE MOST IMPORTANT PART OF THE CALL",
+     "priority": "high",
+     "type": "missing_from_script",
+     "script_says": "Can I ask you something real? … What's this actually been costing you? Not just in dating … like how does it spill into the rest of your life?",
+     "reality": "The cost questions open up heavy disclosures and the script has nothing for them. 14 of 55 calls (25%) carry a wellbeing-risk flag: suicidal history ('I haven't killed myself yet'), rape and assault, PTSD, depression with medication changes. On none of them did the rep pause or check in, and on several the disclosure was used as cost-of-inaction leverage. 1 of the 14 closed. 4 calls also blurred coaching with therapy (one prospect left thinking Kim is a licensed therapist who takes insurance).",
+     "what_works": "Nothing to copy from the calls.",
+     "change": "Add a pause branch right after the cost questions: if they mention self-harm, suicide, abuse, assault or a mental-health crisis, stop selling, check in, and point them to support. If there is any current risk, end the sales part of the call. Never use the disclosure as a reason to buy. Add one line saying Kim is a dating coach, not a therapist.",
+     "new_lines": [
+      "[If they mention self-harm, suicide, abuse, assault or a current crisis] Thank you for trusting me with that. I want to pause the dating stuff for a second. How are you doing right now, today?",
+      "[If there is any current risk] I'm really glad you told me. This matters more than anything we were going to talk about. If you're in the US you can call or text 988 any time, and if you're working with a therapist, please let them know too. Let's pick this conversation up another time.",
+      "[Always] Kim is a dating and relationship coach, not a therapist, and this isn't a replacement for therapy. Lots of her clients do both.",
+      "[Never] use something painful they shared as a reason to decide today."
+     ],
+     "evidence": [
+      {
+       "call_id": "rec2vZiTr7sex6D2Z",
+       "quote": "I think I've broken it, I think. I think I'm okay. I haven't killed myself yet, so…"
+      },
+      {
+       "call_id": "recibugxeXybSQ5Db",
+       "quote": "I would have to increase my medication dosage"
+      },
+      {
+       "call_id": "recGE0qSwa0QxwjON",
+       "quote": "It's, you know, life and death-ish, kind of in the balance type of thing."
+      },
+      {
+       "call_id": "recAWUbKy15BIepYM",
+       "quote": "she's a licensed therapist. So I don't know. Would she take insurance?"
+      }
+     ],
+     "owner": "Mitch (decision)"
+    },
+    {
+     "id": "MC-07",
+     "section": "INVESTMENT",
+     "priority": "high",
+     "type": "script_is_wrong",
+     "script_says": "Most prospects were qualified at low-to-mid four figures, so Tier 1 is the natural default.",
+     "reality": "The note sends closers to $7,200 for prospects the setter anchored at 'low to mid four figures', which $7,200 is not. The $3,600 bi-weekly tier, the one that matches that anchor, was quoted on only 4 calls; reps instead invented $3,400 to $4,000 versions or the $1,000 and $2,400 starters (MC-01). On recd2WbFpUUNdfhxj the prospect asked if $7,200 was the only option, was told yes, and was then offered ad-hoc discounts. On recuYUaiJrHqjgDoh the prospect said the setter had set a $3,000 to $4,000 expectation, and the closer quoted $14,000.",
+     "what_works": "recuYUaiJrHqjgDoh closed once the rep moved to the three-month bi-weekly option after financing was declined.",
+     "change": "Rewrite the note: Tier 1 ($7,200) is the default when they can fund it; when the budget check (MC-02) or the price reaction says the budget is lower, go straight to Tier 1.5 at $3,600 as the planned second option, not a discount.",
+     "new_lines": [
+      "[Note] Recommend Tier 1 ($7,200) when their answer to the budget question says they can fund it. If their budget is clearly lower, recommend Tier 1.5 ($3,600) from the start. Tier 1.5 is the planned lower option, so never invent a price between them.",
+      "Based on what you've told me, the one I'd point you to is three months with Kim every other week. That keeps you one on one with her, and the investment is $3,600."
+     ],
+     "evidence": [
+      {
+       "call_id": "recd2WbFpUUNdfhxj",
+       "quote": "So is this the only option that I have for that price or do you guys offer something less?"
+      },
+      {
+       "call_id": "recWcnUc0ET44X8uP",
+       "quote": "Is that more doable for you, to do $500 a month instead and not have to do the Clarity Pay with the interest?"
+      },
+      {
+       "call_id": "recuYUaiJrHqjgDoh",
+       "quote": "After I filled out my details and salary, says clarity pay financing was declined."
+      }
+     ],
+     "owner": "Mitch (decision)"
+    },
+    {
+     "id": "MC-08",
+     "section": "DELIVERY",
+     "priority": "medium",
+     "type": "script_is_wrong",
+     "script_says": "(For Tier 2/3 prospects, add:) And on top of that you get private 1:1 time with Kim directly",
+     "reality": "The tier map lists Tier 1.5, Tier 1 and Tier 2, all with 1:1 calls, but DELIVERY says 1:1 is only for 'Tier 2/3'. Reps are confused by the labels: on 6 calls the rep called the $14,000 six-month program 'tier one' or 'the first tier', so prospects left thinking the entry price is $14,000 (1 of the 6 closed). On recC5UEp94Pe8qvhW and recrae8WpaHedIgrN, $7,200 was described as 'weekly or bi-weekly', which is the $3,600 tier. One rep told a prospect there is no group component.",
+     "what_works": "Calls where the rep named the option by what it is (three months weekly, three months every other week, six months weekly) had no label confusion.",
+     "change": "Drop tier numbers from anything said to a prospect. Name each option by length and cadence. Fix DELIVERY so 1:1 with Kim is in every option and the group calls, library and community are in every option.",
+     "new_lines": [
+      "Every option includes the twice-weekly group calls, the full library, the community, and private one-on-one calls with Kim. The only difference is how often you're with Kim and for how long: three months every other week, three months every week, or six months every week.",
+      "[Never say] 'tier one', 'tier two' or 'the first tier' to a prospect."
+     ],
+     "evidence": [
+      {
+       "call_id": "recmUvMWP6493ural",
+       "quote": "the one I'd actually point you towards is the first tier"
+      },
+      {
+       "call_id": "recjHkwZ3dmDRi3xt",
+       "quote": "the one I'd actually point you towards is tier one"
+      },
+      {
+       "call_id": "recrae8WpaHedIgrN",
+       "quote": "I think we can start with the three months, either weekly or biweekly calls. The investment ends up being around $7,200."
+      }
+     ],
+     "owner": "Sid (training)"
+    },
+    {
+     "id": "MC-09",
+     "section": "NEXT STEPS (before revealing investment)",
+     "priority": "medium",
+     "type": "reps_skip_it",
+     "script_says": "[Paint the picture of getting started before they hear the number. This raises certainty.]",
+     "reality": "Run fully on 6 of 47 pitched calls (13%) and partly on 7; most reps go from the pillars or the temperature check straight to the number. Where it was run in full, 2 of 6 closed (33%); everywhere else 5 of 41 (12%). Small sample, but it points the same way as the script.",
+     "what_works": "recuYUaiJrHqjgDoh and recDSlt2076AjpWME (both won) said it almost word for word: immediate access to the library, then the first session with Kim booked.",
+     "change": "Keep the step and make it a short script with a check question so it is not skipped. Say it right after the temperature check, every time.",
+     "new_lines": [
+      "Cool. So here's what happens once you're in. Today you get access to the full library and the community, and you're on the next group call this week.",
+      "Then we get your first one-on-one with Kim booked in the next few days, so she can look at your (profile / situationship / what you told me) straight away. You'd basically start showing up differently this week. How does that sound?"
+     ],
+     "evidence": [
+      {
+       "call_id": "recDSlt2076AjpWME",
+       "quote": "Once you're in though too, you'll get a mini access to everything and we can book your first session with Kim"
+      },
+      {
+       "call_id": "recWcnUc0ET44X8uP",
+       "quote": "we'll give you immediate access to everything, and we'll get your first session with Kim booked"
+      }
+     ],
+     "owner": "Sid (training)"
+    },
+    {
+     "id": "MC-10",
+     "section": "COMMITTING PHASE: TEMPERATURE CHECK",
+     "priority": "medium",
+     "type": "reps_skip_it",
+     "script_says": "So on a scale of 1 to 10, where 1 is \"this isn't for me\" and 10 is \"this is exactly what I've been looking for\" … where are you, honestly?",
+     "reality": "Reps ask how they feel about the process (hit on 32 of 47), but on 24 of 47 pitched calls the price came before the temperature check was finished. The 1 to 10 scale was used on 8 of 37 calls where the answer was uncertain; 'I think so' is usually taken as a yes. Order alone did not decide outcomes (5 of 24 priced-first calls closed, 2 of 23 others), but handling what kept them from a 9 or 10 (C10c) was done on every won call where it applied and on 32% of the rest.",
+     "what_works": "Won calls named the hesitation: recHhuHL21q8NAwRy ('You said I think so, which sounds, like, not 100% certain') and recuYUaiJrHqjgDoh ('You said the library is kind of keeping you from being a 10?').",
+     "change": "Make 'I think so', 'probably' or 'yeah' a trigger for the 1 to 10 question, and do not move to NEXT STEPS or price until whatever is below a 9 has been answered.",
+     "new_lines": [
+      "You said 'I think so'. That's totally fine, and I'd rather know now. On a scale of 1 to 10, where are you, honestly?",
+      "What would need to be true for that to be a 9 or 10?",
+      "[Do not go to Next Steps or price until that is answered.]"
+     ],
+     "evidence": [
+      {
+       "call_id": "recHhuHL21q8NAwRy",
+       "quote": "You said I think so, which sounds, like, not 100% certain, which is fine. Is there anything that you don't think or you're unsure of that, like, won't be helpful for you?"
+      },
+      {
+       "call_id": "recuYUaiJrHqjgDoh",
+       "quote": "You said the library is kind of keeping you from being a 10?"
+      }
+     ],
+     "owner": "Sid (training)"
+    },
+    {
+     "id": "MC-11",
+     "section": "OBJECTIONS: PACING THE FIRST OBJECTION",
+     "priority": "high",
+     "type": "reps_skip_it",
+     "script_says": "So in other words, this isn't a 'should I do this' thing, it's more of a 'how do I make this work' thing?",
+     "reality": "Reps take money off the table (C13a hit on 24 of 50) but rarely land the tie-down: hit on 2 of 51, partly on 17. Payment plans or financing were offered on 38 of 47 pitched calls, often to prospects who were unsure about the process, which the script forbids (C13c missed on 20 of 50). Price objections were resolved 16% of the time. C13b was run on 50% of won calls and 16% of the rest.",
+     "what_works": "recuYUaiJrHqjgDoh (won) said the tie-down nearly word for word before talking payments. recfCGXhoVRpBHdtY (won) set the cost against the outcome.",
+     "change": "Add the next line after the tie-down: only when they agree it is a 'how' question do you offer the sanctioned split or financing. If they hesitate, go back to the 1 to 10, not to a plan.",
+     "new_lines": [
+      "So in other words, this isn't a 'should I do this' thing, it's more of a 'how do I make this work' thing?",
+      "[If yes] Okay. Then let's look at how. Would it be easier to do it in one payment, or split across the three months?",
+      "[If they hesitate] That's fine. Then it's not really about the money yet. On a scale of 1 to 10, where are you on the process itself?"
+     ],
+     "evidence": [
+      {
+       "call_id": "recuYUaiJrHqjgDoh",
+       "quote": "So like, in other words, this isn't a, I should, should I do this thing? It's more of like, how do I make this work?"
+      },
+      {
+       "call_id": "recfCGXhoVRpBHdtY",
+       "quote": "do you feel like that's still a lot if you're comparing it to getting more confidence in dating and ultimately, like, leading to a relationship?"
+      },
+      {
+       "call_id": "recpp0AwZg8dp8moV",
+       "quote": "I'm okay financially, and I can afford what she asked me, but, like, as I said, my previous… dating coach experience, I'm kind of more cautious."
+      }
+     ],
+     "owner": "Sid (training)"
+    },
+    {
+     "id": "MC-12",
+     "section": "OBJECTIONS",
+     "priority": "high",
+     "type": "needs_branch",
+     "script_says": null,
+     "reality": "The script has no branch for a prospect who asks for time or says no. 27 conduct flags on 25 calls, 5 of them high or critical: reps kept pressing after repeated requests for 24 hours, told prospects they could not sleep on it, used 'limited spots' to ask for deposits, asked prospects to check bank accounts or share finances live, and on one call kept a prospect on after he said three times it would not work. 'Think about it' was raised 32 times on 29 calls and resolved 6% of the time, so the pressure did not convert.",
+     "what_works": "recfCGXhoVRpBHdtY (won) asked one clear question before letting them go: 'before you kind of go and think about it, do you feel like this process would actually help you'.",
+     "change": "Add a respect-the-no branch: ask once what is behind the request for time, answer it, then book a short follow-up. Ban fake scarcity, live bank or finance checks, and a second push after a clear no.",
+     "new_lines": [
+      "Of course. Before you go and think, can I ask what specifically you want to think through: the process, the money, or talking it over with someone?",
+      "[Answer that one thing, then] That makes sense. Let's put 15 minutes in for (day) at (time), so you can come back with a yes or a no and it doesn't drift. Does that work?",
+      "[Never] say spots are limited unless Mitch has confirmed it, ask them to check a bank account or share their finances on screen, or ask again after a clear no."
+     ],
+     "evidence": [
+      {
+       "call_id": "recFjVn1ogcd1osin",
+       "quote": "Do I need to make a decision today or do I have some time"
+      },
+      {
+       "call_id": "recZFfk7vkbm0qPlG",
+       "quote": "Is that why you weren't letting me say, this isn't going to work, and just like hang up the call?"
+      },
+      {
+       "call_id": "reck9JVOjrzpNKQQY",
+       "quote": "In order to reserve your spot, is there something would you want to put down a deposit?"
+      },
+      {
+       "call_id": "recmUvMWP6493ural",
+       "quote": "I don't want to be pressured into doing something that I'm not ready for."
+      }
+     ],
+     "owner": "Sid (training)"
+    },
+    {
+     "id": "MC-13",
+     "section": "TRANSITION",
+     "priority": "medium",
+     "type": "reps_improvise",
+     "script_says": "(Optional: drop one relevant proof point here, e.g. an older divorced client who went from zero confidence to dating again in a few months, matched to their segment.)",
+     "reality": "There is no approved proof point, so reps make them up or use real clients: on 3 calls the rep named another client and shared their mental-health details or payment arrangement, after promising this call was confidential. Others claimed Kim has been to clients' weddings or consulted to the matchmaker the prospect named.",
+     "what_works": "Nothing documented. The won calls did not depend on a proof story.",
+     "change": "Give reps 2 to 4 approved, anonymous proof points per segment (Mitch to supply from real clients with consent). Never use a client's name, health details or price.",
+     "new_lines": [
+      "[Never] name another client or share their health, history or what they paid.",
+      "[Approved proof, once Mitch signs off] One client I can tell you about without names: (segment-matched story, approved wording)."
+     ],
+     "evidence": [
+      {
+       "call_id": "rec4PWwpX5E7trAGZ",
+       "quote": "she's been to a few of our clients' weddings"
+      },
+      {
+       "call_id": "reczdNC6Wv7LSimwv",
+       "quote": "we have N., and not to get into his personal business, because that's his, but we had N., who we worked with, and N. has extreme anxiety to the point where he physically feels like he'll get attacked"
+      },
+      {
+       "call_id": "recWcnUc0ET44X8uP",
+       "quote": "so D., who we worked with, we, he did 500 a month for."
+      },
+      {
+       "call_id": "recyX5Qyb5tS208WF",
+       "quote": "Kim has actually worked for a lot of matchmaking companies, like Talkify."
+      }
+     ],
+     "owner": "Mitch (decision)"
+    }
+   ]
+  },
+  {
+   "script": "Master Setting Doc",
+   "doc_id": "1jUZo5ODHXquolicFvKVG_3IO583ZSbrt2iO8WX5WybA",
+   "last_edited": "2026-11-17",
+   "summary": "Setters follow the opening and core discovery (intro, anchor to the opt-in, biggest problem and dig-in run on 78 to 92% of calls) but the back half breaks: 16 of 18 price mentions were off the 'low to mid four figures' anchor, the money answer is weak or missing on 22 of 28 calls, and no booking had the invite accepted live. The three changes: one true price anchor said word for word, drop the credit-score DQ for a yes/no financing question, and add invite-accepted-live plus a Zoom check and a word to reschedule. All 28 recorded setter calls (9 Sep to 16 Nov) predate the 17 Nov edit. No change is detectable against playbook_setter.json, which was built after the edit and already encodes the 650 credit rule and the low-to-mid anchor.",
+   "patches": [
+    {
+     "id": "MS-01",
+     "section": "FINANCIAL QUAL",
+     "priority": "high",
+     "type": "reps_improvise",
+     "script_says": "It depends entirely on the plan you come up with with our advisor, how many sessions you end up having with Kim, the timeline, etc … but for most people it ends up being in the low to mid four figure range",
+     "reality": "Of 28 recorded setter calls (27 by Emily), a price was said on 18 and 16 of those were outside the anchor: 'mid to high four figures' on 11 calls, a specific '5,000 to 9,000' on 6 (said or confirmed), and '500 to 700' for a single conversation with Kim on 1. Only 2 used 'low to mid' or 'mid four figures'. The drift has a cause: the anchor does not match the offer ($3,600, $7,200, $14,000), and a texted lead who heard 'low to mid four figures' said he would not have taken the call had he known it was $7,200. Of 10 CRM bookings from these calls, 4 showed and 0 closed.",
+     "what_works": "Texts sent from the scripts used the anchor word for word (12 threads), so the wording is not the problem; the mismatch with the real prices is.",
+     "change": "Mitch picks one anchor that is true for the offer and every setter script uses it word for word. Until then, setters use the current line exactly and never give a dollar figure, a 'five to nine' range or a per-session price. Suggested anchor if Mitch approves: 'starts in the mid four figures'.",
+     "new_lines": [
+      "It depends on how much one-on-one time with Kim makes sense for you, but most people invest somewhere in the low to mid four figures. I'm not asking you to commit to anything today. If it's the right fit, is that something that would be feasible for you?",
+      "[If they ask for an exact number] The advisor will map that out with you, because it depends on how often you'd be working with Kim. What I can tell you is it's a four-figure investment, so I just want to make sure that's realistic before we book.",
+      "[Never say] 'mid to high four figures', a dollar range like 'five to nine thousand', or a price for a single session."
+     ],
+     "evidence": [
+      {
+       "call_id": "acti_Kxlmgo46VKJtPYWRpdQ0ydWJi1SoVri2rooNOMYEj0L",
+       "quote": "It can be anywhere in the mid to high four figures."
+      },
+      {
+       "call_id": "acti_gfccAHUyxjd6Exoi7cxODX7XCThDbqrCduVARLqw3Rc",
+       "quote": "I will say it ranges anywhere from five to 9,000"
+      },
+      {
+       "call_id": "acti_NjGLc7McYk2pRpXYmd0YSGprkRyU9fHUjQuuZ41EeBp",
+       "quote": "that typically can run anywhere, I believe, between five to 700."
+      },
+      {
+       "call_id": "lead_IWXetR7L0ipGxKM4kxkYZOlDCnhZPum25xSXLtHgOf5",
+       "quote": "Had I known you wanted $7200 usd ($10,000 Canadian for me)for 3 months, I wouldn't have taken the consultation"
+      }
+     ],
+     "owner": "Mitch (decision)"
+    },
+    {
+     "id": "MS-02",
+     "section": "FINANCIAL QUAL",
+     "priority": "high",
+     "type": "script_is_wrong",
+     "script_says": "If it’s 650 or higher, book them in, if not, DQ",
+     "reality": "The script makes the setter collect a credit score and disqualify on it. On calls setters ask for the score and state different cut-offs ('six seventy' on acti_NvgrXJ8lDoNPiF3HBxGBInbNhf4mvtB7dtyaG5WUP4d). By text, 5 threads were flagged for asking leads their credit score, including after a lead said she would prefer not to discuss it. A self-reported score is not a qualification, and the closer then runs the real application anyway (see Master Closing Doc MC-05).",
+     "what_works": "acti_sGZOx51mCwiK3tkbY5gGECQ6C5OciifUMVsWRN6roCg stated the financing option with the credit condition and took the lead's answer without asking for a number.",
+     "change": "Replace the credit-score step with a yes/no question about whether a split or financing would be an option for them. Setters never ask for a score, income or account details, by phone or text. If they say they cannot take on any payment or debt, use the hard-no line from the phone setting script.",
+     "new_lines": [
+      "And if it was the right fit, would spreading it out, either a split payment with us or a financing option, make it workable for you?",
+      "[If no] I really appreciate you being honest. I don't want to put you on a call that just adds pressure. Let's keep you on the free training and reconnect when things have shifted. Sound fair?",
+      "[Never ask] for a credit score, income, or bank details."
+     ],
+     "evidence": [
+      {
+       "call_id": "acti_NvgrXJ8lDoNPiF3HBxGBInbNhf4mvtB7dtyaG5WUP4d",
+       "quote": "Do you happen to know your credit score?"
+      },
+      {
+       "call_id": "acti_NvgrXJ8lDoNPiF3HBxGBInbNhf4mvtB7dtyaG5WUP4d",
+       "quote": "I believe you do have to have at least like a six seventy for financing to be an option."
+      },
+      {
+       "call_id": "lead_xuEfF8tFIdC6zR4lwGF2kD8zL1cgH1Fg2YrlZ8iOsUC",
+       "quote": "I'd prefer not to discuss my credit score"
+      },
+      {
+       "call_id": "lead_xuEfF8tFIdC6zR4lwGF2kD8zL1cgH1Fg2YrlZ8iOsUC",
+       "quote": "Before we write it off completely, do you to know roughly what your credit score is?"
+      }
+     ],
+     "owner": "Mitch (decision)"
+    },
+    {
+     "id": "MS-03",
+     "section": "BOOK THE CALL",
+     "priority": "high",
+     "type": "missing_from_script",
+     "script_says": "Find a time that works for them & book them in manually",
+     "reality": "The invite was accepted live on 0 of 28 setter calls (0 of 12 bookings made on the call). The Master Setting Doc never asks for it; the phone setting script does, but no one uses that step. Email was confirmed on 28% of the calls where it applied. Of 10 CRM bookings from these calls, 4 showed. Several bookings were left as 'I'll email you a day' or 'circle back' with nothing on the calendar.",
+     "what_works": "acti_Kxlmgo46VKJtPYWRpdQ0ydWJi1SoVri2rooNOMYEj0L and acti_RLyfsQjWFWxUZHxI1tYLG6MUfgWdQ07hftoC0pLGRM5 had the lead text the closer on the call, which the doc already asks for; do the same with the invite.",
+     "change": "After picking the time: confirm time zone and read the email back, send the invite while on the phone, and wait until they say it is accepted. Do not hang up on 'I'll look for it'.",
+     "new_lines": [
+      "Perfect, I've got you down for (DAY) at (TIME) your time. What's the best email for the invite? [Read it back letter by letter.]",
+      "I'm sending it now. Can you open it and hit accept while I'm still on with you, so I know it's locked in on your end? Let me know when you see it."
+     ],
+     "evidence": [
+      {
+       "call_id": "acti_RLyfsQjWFWxUZHxI1tYLG6MUfgWdQ07hftoC0pLGRM5",
+       "quote": "I've already sent you the information to your email for tomorrow at 11.30"
+      },
+      {
+       "call_id": "acti_IS1uCaP12fsxxvJ9Yg8n8fYaT7gfFaCMk08XQfQFd8W",
+       "quote": "So, so nothing going to cost, right?"
+      }
+     ],
+     "owner": "Sid (training)"
+    },
+    {
+     "id": "MS-04",
+     "section": "BOOK THE CALL",
+     "priority": "high",
+     "type": "missing_from_script",
+     "script_says": "Can you confirm you’ll be able to set aside 10 minutes to watch that before your call on [DAY]?",
+     "reality": "A verbal commitment to reschedule rather than no-show was got on 1 of 28 calls; the Master Setting Doc has no step for it. 5 leads with a booked closer call told the setter they had never used Zoom, had no computer, or had Zoom on neither phone nor laptop, and the call was booked anyway without checking they could join; one refused to download it and the call was lost. 26 of 28 setter-call leads are men, many over 50.",
+     "what_works": "acti_jq4Ld51gHIHPtXH32f70qvKX0K7Wfn7hRUQIOfP5YXO set a quiet-place expectation and kept the driver off his phone; that part of the close should stay.",
+     "change": "Add a lock-the-show block after the pre-call video: a Zoom check on the device they will use, then their word to reschedule instead of missing it.",
+     "new_lines": [
+      "Quick one: the call is on Zoom. Have you used it before? Which device will you be on? [If not] Let's get it downloaded now while I'm on with you, so you're not stuck at (TIME).",
+      "And can you do me a favor? (Closer Name) blocks real time to prep for these. If anything comes up, just text them to reschedule instead of missing it. Can you give me your word on that?"
+     ],
+     "evidence": [
+      {
+       "call_id": "acti_XPzgnea3bkWJgpmAR37rWFRwoGPa74LvhTOAv5uEt9L",
+       "quote": "Yes, but I don't have that on my computer or on my phone."
+      },
+      {
+       "call_id": "acti_gfccAHUyxjd6Exoi7cxODX7XCThDbqrCduVARLqw3Rc",
+       "quote": "I don't have a desktop or a laptop."
+      },
+      {
+       "call_id": "acti_r1eVLR2r2MgmP51hOK5p17qBppBA9f3xyStq66eEhln",
+       "quote": "you can just get rescheduled with her if necessary."
+      }
+     ],
+     "owner": "Sid (training)"
+    },
+    {
+     "id": "MS-05",
+     "section": "FINANCIAL QUAL",
+     "priority": "medium",
+     "type": "needs_branch",
+     "script_says": "With all that said, if our advisor lays out a clear path to get you there... are you in a position to invest in yourself to make it happen?",
+     "reality": "The question gets asked (S6a on 75% of calls), but the answer is rarely heard: the means gate was solid on 2 of 28 calls, partial on 4, and weak or missed on 22. Leads who said 'I don't have money', 'I can't pay that amount again' or 'I'm probably not going to make any monetary commitments' were booked anyway, so the closer meets them cold (money never qualified before the pitch on 0 of 55 closer calls).",
+     "what_works": "The phone setting script's resourcefulness reframe is the right next line; it was used on 24% of calls where it applied.",
+     "change": "Add a branch for a weak or no answer: ask the resourcefulness question once; if the answer is still no, do not book. Put the lead's exact money answer in the CRM note for the closer.",
+     "new_lines": [
+      "Totally fair, and I appreciate you being straight with me. Let me ask it this way: if this turned out to be the thing that finally got you (what they want), are you the type of person who'd find a way to make it work?",
+      "[If still no] I'd never want to put you on a call that turns into pressure. Let's keep you on the free resources and reconnect when the timing is better.",
+      "[CRM note] Write their exact answer to the money question for the closer."
+     ],
+     "evidence": [
+      {
+       "call_id": "acti_qFOCLVqsoyymRXwpxRaGKIgmrN4619V4cqlA3Iu4KbE",
+       "quote": "I don't have money. It's not like that."
+      },
+      {
+       "call_id": "acti_RLyfsQjWFWxUZHxI1tYLG6MUfgWdQ07hftoC0pLGRM5",
+       "quote": "I paid a lot of money to Sony and I can't pay that amount of money again."
+      },
+      {
+       "call_id": "acti_321cFpg9EPn6yBcyDd57h75tpP8yaV5qhFupW1LEhgc",
+       "quote": "I maybe can work this out work that part off but"
+      }
+     ],
+     "owner": "Sid (training)"
+    },
+    {
+     "id": "MS-06",
+     "section": "ISOLATE THE PROBLEM",
+     "priority": "medium",
+     "type": "missing_from_script",
+     "script_says": "What's it been costing you personally? Like how does it spill over into the rest of your life?",
+     "reality": "The why-now gate was solid on 1 of 28 setter calls and weak or missed on 19. The desired-picture question (S4c) was asked on 9% of calls, and the Master Setting Doc does not contain one. Closers then start with no urgency to build on.",
+     "what_works": "The phone setting script already has the line; the closer doc's 'paint me the picture' gets answered on 68% of closer calls.",
+     "change": "Add the desired-situation question after the cost question, and do not move to the transition until there is a reason it matters now.",
+     "new_lines": [
+      "Okay, let me flip it. If we fast forward a year and this was completely handled, what does your love life actually look like? Paint me the picture.",
+      "And why does that matter to you now, rather than next year?"
+     ],
+     "evidence": [
+      {
+       "call_id": "acti_Kxlmgo46VKJtPYWRpdQ0ydWJi1SoVri2rooNOMYEj0L",
+       "quote": "It's not of a sense of urgency"
+      },
+      {
+       "call_id": "acti_PCw1UGGFIX2e8VWXDNA4LQyYZDRpt3k4CQ2zzft9hUj",
+       "quote": "If it comes, it comes. If it doesn't, it doesn't."
+      }
+     ],
+     "owner": "Sid (training)"
+    },
+    {
+     "id": "MS-07",
+     "section": "ISOLATE THE PROBLEM",
+     "priority": "high",
+     "type": "missing_from_script",
+     "script_says": null,
+     "reality": "Setter scripts have no branch for distress. On acti_33kgUAAPzRBCkOjGxHyiJyy8i0j3eln4dzK5tqoEYT2 the lead said he had lost all hope and was beyond desperate; the setter moved to whether he would invest, then called him a victim and cancelled his call. On acti_XPzgnea3bkWJgpmAR37rWFRwoGPa74LvhTOAv5uEt9L the lead described violent confrontations and was booked without a pause. By text there are 11 wellbeing-risk flags, one a disclosed overdose that got a one-line reply and a later unanswered message.",
+     "what_works": "Nothing on the calls.",
+     "change": "Add the same pause branch as the closer doc (MC-06), short enough for a 15-minute call, plus an escalation step: any self-harm or overdose mention goes to Mitch the same day, and the lead is not booked onto a sales call that week.",
+     "new_lines": [
+      "Thank you for telling me that. I want to pause for a second. How are you doing right now, today?",
+      "[If there is any risk] I'm really glad you told me. If you're in the US you can call or text 988 any time, day or night. I'm going to have someone from our team check in with you, and we'll leave the coaching side for now.",
+      "[Internal] Flag to Mitch the same day. Do not book a sales call that week. Never challenge or argue with someone who says they have lost hope."
+     ],
+     "evidence": [
+      {
+       "call_id": "acti_33kgUAAPzRBCkOjGxHyiJyy8i0j3eln4dzK5tqoEYT2",
+       "quote": "I'm totally hopeless and I'm, and I'm beyond desperate."
+      },
+      {
+       "call_id": "acti_33kgUAAPzRBCkOjGxHyiJyy8i0j3eln4dzK5tqoEYT2",
+       "quote": "And if you want to just be a victim to your situation,"
+      },
+      {
+       "call_id": "lead_nGKEZvUvxDh4ID4ImwwMm9kjJY8TVxwjo55iuDi83qM",
+       "quote": "Please call the 988 lifeline. You are not alone and support is available."
+      }
+     ],
+     "owner": "Mitch (decision)"
+    }
+   ]
+  },
+  {
+   "script": "Kimberly Rae Chapman Phone Setting Script",
+   "doc_id": "1U_h-5MJlNJyPaxRSjh7vmLfVtgjSGZWO0hW19NGN6G8",
+   "last_edited": "2026-06-25",
+   "summary": "An unfilled template written for women, while 26 of 28 recorded setter calls are with men; [RANGE] and other brackets are blank, so setters improvise price ranges. Its book-and-confirm, lock-the-show and objection-bank sections are the best setter material KRC has and are not being used (invite accepted live on 0 of 28 calls). Fill the brackets and neutral language, or fold sections 6 to 8 into the Master Setting Doc.",
+   "patches": [
+    {
+     "id": "PS-01",
+     "section": "10. CUSTOMIZE BEFORE YOU RUN IT",
+     "priority": "high",
+     "type": "script_is_wrong",
+     "script_says": "this draft assumes women seeking a committed partner. If she serves men, divorce recovery, post-breakup, or a different niche, swap the gendered and situational wording throughout.",
+     "reality": "This is still the unfilled template from 25 June: [RANGE], [THE TRAINING], [BREAKTHROUGH CALL] and [LENGTH] are blank, and every line speaks to a woman. 26 of 28 recorded setter calls were with men, and 41 of 55 closer calls. With [RANGE] blank and an 'only if you choose to anchor' note, setters make up their own range (16 of 18 price mentions off-anchor, see MS-01).",
+     "what_works": "The structure (frame, mini-discovery, sell the call, book and confirm, lock the show) is sound; the book-and-confirm and lock-the-show steps are exactly what the Master Setting Doc is missing.",
+     "change": "Fill the brackets and make the language gender-neutral, or retire this doc and fold its sections 6 to 8 into the Master Setting Doc so setters run one script.",
+     "new_lines": [
+      "[RANGE] = low to mid four figures (or the anchor Mitch approves in MS-01). Remove 'only if you choose to anchor': setters always use the anchor when price comes up.",
+      "So while I've got you, part of what I do is make sure the people who grab Kimberly's training actually get pointed in the right direction, instead of it just sitting in their downloads."
+     ],
+     "evidence": [
+      {
+       "call_id": "acti_LUQCo3XTMxh8UkBJvn9BJwag2csY00WCti6Hhu8BSi2",
+       "quote": "the typical range, and this is a very rough estimate, can be anywhere from like five to nine thousand."
+      },
+      {
+       "call_id": "acti_VNdr8y3K2yzyjduVRy3nyyNyHpjYTmlVPr4WABiC7TP",
+       "quote": "It's typically anywhere within the mid to high four figures."
+      }
+     ],
+     "owner": "Mitch (decision)"
+    },
+    {
+     "id": "PS-02",
+     "section": "8. OBJECTION BANK",
+     "priority": "medium",
+     "type": "needs_branch",
+     "script_says": "Great question. The call itself is completely free, it's a strategy session, not a pitch fest.",
+     "reality": "Said alone, 'completely free' leaves some leads thinking the coaching is free. On acti_IS1uCaP12fsxxvJ9Yg8n8fYaT7gfFaCMk08XQfQFd8W the lead asked about cost twice and the setter answered 'right now, no' to 'nothing going to cost, right?'. By text, one lead said she did not realize there was a cost. The script then says not to quote any price, which is how setters end up improvising one when pushed.",
+     "what_works": "Most texts already pair the call with the anchor (12 threads used 'low to mid four figures'); the phone script should do the same.",
+     "change": "Keep 'the call is free' and add one sentence that working with Kim is a paid program, with the anchor.",
+     "new_lines": [
+      "Great question. The call itself is free. If you decide to work with Kim after it, that's a paid program, usually in the low to mid four figures depending on how much one-on-one time you want. The call is where you find out if it's worth it for you. Fair enough?"
+     ],
+     "evidence": [
+      {
+       "call_id": "acti_IS1uCaP12fsxxvJ9Yg8n8fYaT7gfFaCMk08XQfQFd8W",
+       "quote": "So, so nothing going to cost, right?"
+      },
+      {
+       "call_id": "lead_9z7qQQyfxDb1ZrMH8E3ZJl8Kl7gbdQGqzIaztrUdFuS",
+       "quote": "I saw it was for $150 I didn't realize there was a cost"
+      }
+     ],
+     "owner": "Sid (training)"
+    }
+   ]
+  },
+  {
+   "script": "Dialing Script",
+   "doc_id": "1bx3VXnMb105fI6LDZ4MTEmXvb6qcVY-wJfPbd7kHI5w",
+   "last_edited": "2026-09-22",
+   "summary": "The DM-to-phone handoff script. It already uses the 'low-to-mid four figures' anchor and a live-transfer default, which are right. No recorded calls are tagged as DM handoffs, so evidence comes from the setter calls overall. The one change that matters: get the invite accepted while on the phone, plus a word to reschedule, instead of 'make sure to accept it' later. The crisis branch (MS-07) and financing rule (MS-02) apply here too.",
+   "patches": [
+    {
+     "id": "DS-01",
+     "section": "Contact Info",
+     "priority": "medium",
+     "type": "script_is_wrong",
+     "script_says": "Awesome, You'll receive the Zoom invite by email, just make sure to accept it so it gets added to your Google Calendar.",
+     "reality": "The script asks the lead to accept the invite later, on their own. Across all 28 recorded setter calls the invite was accepted live 0 times, and 4 of 10 CRM bookings showed. No DM-handoff calls are in the recorded set yet, so this is based on the setter calls overall.",
+     "what_works": "The same section's intro text to Makena is done live and works; do the invite the same way.",
+     "change": "Have the lead accept the invite while still on the phone, and get their word to reschedule rather than no-show. Also replace 'not walking the dog or driving' with a Zoom check on the device they will use.",
+     "new_lines": [
+      "I'm sending the Zoom invite now. Can you open it and hit accept while I'm still on with you? Let me know when it's on your calendar.",
+      "And if anything comes up, just text Makena to move it rather than missing it. Can you give me your word on that?"
+     ],
+     "evidence": [
+      {
+       "call_id": "acti_RLyfsQjWFWxUZHxI1tYLG6MUfgWdQ07hftoC0pLGRM5",
+       "quote": "I've already sent you the information to your email for tomorrow at 11.30"
+      },
+      {
+       "call_id": "acti_XPzgnea3bkWJgpmAR37rWFRwoGPa74LvhTOAv5uEt9L",
+       "quote": "it's a call that's done over Zoom."
+      }
+     ],
+     "owner": "Sid (training)"
+    }
+   ]
+  },
+  {
+   "script": "DM Script",
+   "doc_id": "1tQV5qa8xvSPGdUi7XPPLqu3lF41LPTyeQZqudqSldmY",
+   "last_edited": "2026-09-28",
+   "summary": "There is no Instagram DM data yet, so these patches use the 256 analysed text-message threads, where setters face the same questions in writing; treat them as provisional until DM threads are pulled. The script's flow is fine; it breaks on price (a third version of the anchor, and by text reps typed ranges up to $15k), on credit-score questions by text, on distress disclosures with no branch, and on pushing after a no. The changes: one anchor everywhere, never ask credit or income in writing, and a pause branch plus a clean exit.",
+   "patches": [
+    {
+     "id": "DM-01",
+     "section": "Financial Qualification",
+     "priority": "high",
+     "type": "script_is_wrong",
+     "script_says": "If they ask how much: Again it entirely depends on the level of support you guys decide on, but to be conservative it could be anywhere in the four figure range. Does that sound doable?",
+     "reality": "No Instagram DM threads are in the data yet, so this uses the text-message threads (462 threads, 256 with replies analysed), where the same price question comes up. The DM line ('anywhere in the four figure range') is a third version of the anchor; the phone scripts say 'low to mid four figures'. By text, 12 threads used 'low to mid four figures', 1 'mid four figures', 2 'mid to high four figures', 6 gave dollar ranges from '$3k to $15k' or '$5k-15k' to 'starts at around $5,000', and at least 4 named specific prices ($3,500, $3,600, $7,200, $14k). 13 threads went silent right after a price or investment message.",
+     "what_works": "12 threads already used one consistent sentence ('the coaching is an investment in the low to mid four figures, depending on the level of support that's right for your situation'). That is the wording to keep.",
+     "change": "Use the same anchor as the setter scripts, word for word (whatever Mitch approves in MS-01). Never type dollar figures or ranges in a DM.",
+     "new_lines": [
+      "Totally fair question. It depends on the level of support that's right for your situation, but the coaching is an investment in the low to mid four figures. Is that something you'd be in a position to do if it felt like the right fit?",
+      "[Never type] a dollar amount, a range like $3k to $15k, or a price for one session."
+     ],
+     "evidence": [
+      {
+       "call_id": "lead_H92bibj91mNJ92NKKJjPW4061V5KdKmPUniinmYIc6s",
+       "quote": "the coaching is an investment in the low to mid four figures, depending on the level of support that's right for your situation"
+      },
+      {
+       "call_id": "lead_oJj66WSEpdRBORBCdxVykwgMGZ8czi0hsO6IqV2yRAS",
+       "quote": "Kimberly's programs typically range anywhere from $3k-15k, depending on the length of the program and the level of support that's the best fit for you."
+      },
+      {
+       "call_id": "lead_vxxPlU5lKUv7rQMrhNhTYNmwUyfr3RyQzy0CIXDCqYi",
+       "quote": "our programs typically range anywhere from $5k-15k"
+      },
+      {
+       "call_id": "lead_73k9soWRNGMow5sP70yi3okHJrmDSkkNISratPasL7s",
+       "quote": "working directly with Kimberly is typically an investment in the mid-to-high four figures"
+      }
+     ],
+     "owner": "Mitch (decision)"
+    },
+    {
+     "id": "DM-02",
+     "section": "Financial Qualification",
+     "priority": "high",
+     "type": "reps_improvise",
+     "script_says": "If everything felt like the right fit, is that something you’re in a position to do right now?",
+     "reality": "Text-message data (no DM data yet): 5 threads were flagged for asking the lead's credit score by text, one after the lead said 'I'd prefer not to discuss my credit score', and one lead texted his score back. The DM script never asks for it; reps carry the Master Setting Doc's 650 rule into writing.",
+     "what_works": "Nothing to copy; the phone setting script's rule ('You are not collecting bank details') should apply in writing too.",
+     "change": "Add a line under Financial Qualification: never ask for a credit score, income or account details in DMs or texts. Take the yes or no and book; financing is for the call.",
+     "new_lines": [
+      "[Never ask in writing] for a credit score, income or bank details.",
+      "Totally get it. There are a few ways to make it work, including spreading it out, and the call is where we'd figure out what fits. Want me to grab you a time?"
+     ],
+     "evidence": [
+      {
+       "call_id": "lead_kzeE1oxUSbDrVLDRKNUvYPtoBnhLUO6qJyVChU4iTOC",
+       "quote": "do you happen to know roughly what your credit score is?"
+      },
+      {
+       "call_id": "lead_xuEfF8tFIdC6zR4lwGF2kD8zL1cgH1Fg2YrlZ8iOsUC",
+       "quote": "I'd prefer not to discuss my credit score"
+      },
+      {
+       "call_id": "lead_hxy6WVoNw3T9rM0dKC2QyHa98RHW7HQckU2Rrx9LlG3",
+       "quote": "680"
+      }
+     ],
+     "owner": "Sid (training)"
+    },
+    {
+     "id": "DM-03",
+     "section": "Impact",
+     "priority": "high",
+     "type": "missing_from_script",
+     "script_says": "Most people reach out because they’re exhausted from never feeling secure in where they stand.",
+     "reality": "Text-message data (no DM data yet): 11 threads carry a wellbeing-risk flag ('I'm destined to die alone', 'I feel hopeless', 'have considered just cutting off the entire thing'), and on several the setter carried on with sales questions. The most serious: a lead disclosed an overdose, got a one-line 988 reply, and a later message asking to work with Kim was unanswered when the data was pulled. The DM script's Impact and Future Consequences questions invite these answers and give no next step.",
+     "what_works": "The 988 line itself was right; what was missing was a human follow-up and an escalation.",
+     "change": "Add a pause branch after Impact: if the lead mentions self-harm, an overdose, abuse or hopelessness, stop the sales sequence, reply as a person, give 988, and escalate to Mitch the same day. Do not send the soft pitch or price to that lead that week.",
+     "new_lines": [
+      "Thank you for telling me that, and I'm really sorry you're carrying it. Are you safe right now?",
+      "If you're in the US, you can call or text 988 any time, day or night, and talk to someone straight away. I'm going to have someone from our team check in with you personally.",
+      "[Internal] Flag to Mitch the same day. No pitch, price or booking link to this lead that week."
+     ],
+     "evidence": [
+      {
+       "call_id": "lead_73k9soWRNGMow5sP70yi3okHJrmDSkkNISratPasL7s",
+       "quote": "I feel hopeless"
+      },
+      {
+       "call_id": "lead_jfTtrSSKGg36nZLJ4Kn6PKOgWmBiYa4WDrqPgt96B9U",
+       "quote": "have considered just cutting off the entire thing. It's just too painful."
+      },
+      {
+       "call_id": "lead_nGKEZvUvxDh4ID4ImwwMm9kjJY8TVxwjo55iuDi83qM",
+       "quote": "I took propofol from the hospital."
+      },
+      {
+       "call_id": "lead_nGKEZvUvxDh4ID4ImwwMm9kjJY8TVxwjo55iuDi83qM",
+       "quote": "Can I please work with her"
+      }
+     ],
+     "owner": "Mitch (decision)"
+    },
+    {
+     "id": "DM-04",
+     "section": "Commitment Check",
+     "priority": "medium",
+     "type": "needs_branch",
+     "script_says": null,
+     "reality": "Text-message data (no DM data yet): 66 of the 256 analysed threads have a conduct flag, most for pushing after a no: re-asking after 'I'm going to cancel', challenging a lead who said the approach was pushy, scarcity offers after a decline, and 2 more texts after a lead said 'leave me alone'. The DM script's Commitment Check is a challenge question with no branch for a no.",
+     "what_works": "Nothing measured; the fix is a rule, not a technique.",
+     "change": "Add an exit branch: on any no, cancel, or 'leave me alone', send one polite close and stop. On 'leave me alone' or 'remove me', mark do-not-contact in Close the same day.",
+     "new_lines": [
+      "Totally understand, and thanks for letting me know. If anything changes down the line, you know where to find us. Wishing you the best.",
+      "[Internal] After a no, send nothing else. After 'leave me alone', 'stop' or 'remove me', mark do-not-contact in Close the same day."
+     ],
+     "evidence": [
+      {
+       "call_id": "lead_73k9soWRNGMow5sP70yi3okHJrmDSkkNISratPasL7s",
+       "quote": "you're being very pushy. I already gave you my answer you suck at sales now go away thank you."
+      },
+      {
+       "call_id": "lead_ZjMvgIRXha1JWFs79aVJIBZUNm6x9QYRYRKhexMz8MI",
+       "quote": "Then leave me the alone!"
+      },
+      {
+       "call_id": "lead_4nSs0CvOGAsINAFfcmqdRoAJpCm6BYEgrTOLeUT7ew0",
+       "quote": "You can be completely straight with me here, what's the real reason you're not willing to even have the conversation and see if we can help?"
+      }
+     ],
+     "owner": "Leah (automation)"
+    }
+   ]
+  }
+ ],
+ "unhandled_objections": [
+  {
+   "type": "price_budget",
+   "how_often": "57 times on 37 of 55 calls (49 after the price), resolved 16%; 57 times by text; 13 times on setter calls",
+   "what_prospects_say": [
+    "Oh, yeah. No, there's no way.",
+    "As far as that sort of amount, I wouldn't be able to commit, to that now.",
+    "Hi thanks i think it's too expensive"
+   ],
+   "what_reps_try": "Money aside (C13a) and then straight to splits, financing or an improvised cheaper product; 40 of 63 handlings judged poor. The closing doc stops after the pacing tie-down, so there is no next step.",
+   "recommended_handling": [
+    "Thanks for being straight with me. For a second, let's take money off the table. Do you feel like this is genuinely what you need to finally (their outcome)?",
+    "[If yes] So this isn't a 'should I' thing, it's a 'how do I make this work' thing?",
+    "[If $7,200 is the issue] The option that keeps you one on one with Kim at a lower investment is three months every other week, at $3,600. Would that fit better?",
+    "[Then] Would one payment or a split across the three months be easier?",
+    "[If still no] I'd rather you not stretch into something that adds pressure. Let's leave it here, and if things change, you've got my number."
+   ],
+   "evidence": [
+    {
+     "call_id": "rec3AX0Fkb3McFdmj",
+     "quote": "Oh, yeah. No, there's no way."
+    },
+    {
+     "call_id": "rec2vZiTr7sex6D2Z",
+     "quote": "As far as that sort of amount, I wouldn't be able to commit, to that now."
+    },
+    {
+     "call_id": "lead_0JylNoESVX6GDERMiRtbS0vuHl6wVsB8jGQXQFd2h51",
+     "quote": "Hi thanks i think it's too expensive"
+    },
+    {
+     "call_id": "rec4dTUVpMszdUtjL",
+     "quote": "Assuming we can kind of figure out, like, a financial way to break down the 3 months, is this something that you do want to move forward with to work with Kim?"
+    }
+   ]
+  },
+  {
+   "type": "think_about_it",
+   "how_often": "32 times on 29 of 55 calls (28 after the price), resolved 6%; 11 times by text; 3 on setter calls",
+   "what_prospects_say": [
+    "Yes. Now, can I take a day or two to think this over?",
+    "I feel it will, but I also feel I need to sleep on it.",
+    "Can you send me some details? I'll look it over, and then I'll make a decision."
+   ],
+   "what_reps_try": "Ask what is behind it, then press for a decision on the call (several conduct flags for pushing after repeated requests for time). 4 of 41 handled well.",
+   "recommended_handling": [
+    "Of course. Usually when someone wants to sleep on it there's one thing still sitting there. Is it the process, the money, or talking it over with someone?",
+    "[Answer that one thing.]",
+    "On a scale of 1 to 10, how confident are you that this is the right process for you?",
+    "[If they still want time] That's fair. Let's put 15 minutes in for (day) at (time) so you can come back with a yes or a no. Does that work?"
+   ],
+   "evidence": [
+    {
+     "call_id": "recGKZs9W2uilOrBj",
+     "quote": "Yes. Now, can I take a day or two to think this over?"
+    },
+    {
+     "call_id": "rec5kJn5AwTCE6Zpi",
+     "quote": "I feel it will, but I also feel I need to sleep on it."
+    },
+    {
+     "call_id": "recBs4M5WwMoXRskQ",
+     "quote": "Can you send me some details? I'll look it over, and then I'll make a decision."
+    },
+    {
+     "call_id": "recGE0qSwa0QxwjON",
+     "quote": "what's kind of causing you to want to think about it a little bit more, just to see if I can help?"
+    }
+   ]
+  },
+  {
+   "type": "timing",
+   "how_often": "24 times on 18 of 55 calls, resolved 25%; 29 times by text; 4 on setter calls",
+   "what_prospects_say": [
+    "I think it's a, it's a not right now. It's a not right now.",
+    "I'm not gonna prioritize it over work and school right now, because I just need to get school done.",
+    "Also, holiday season's coming up, so I'll be traveling a bit"
+   ],
+   "what_reps_try": "Reassure that Kim is flexible, or book a vague follow-up. The won call asked a concrete question ('Do you have an hour a week?').",
+   "recommended_handling": [
+    "Totally fair. Can I ask what 'not right now' looks like: is it time in the week, money, or something else going on?",
+    "[If time] Realistically, could you find one hour a week for a call with Kim? Everything else fits around you.",
+    "[If a real event, such as exams or a move] When does that settle? Let's put a call in for then, so this doesn't just drift."
+   ],
+   "evidence": [
+    {
+     "call_id": "recBq8fCyBcNDaZd9",
+     "quote": "I think it's a, it's a not right now. It's a not right now."
+    },
+    {
+     "call_id": "rec4dTUVpMszdUtjL",
+     "quote": "Do you have an hour a week?"
+    },
+    {
+     "call_id": "recBs4M5WwMoXRskQ",
+     "quote": "Also, holiday season's coming up, so I'll be traveling a bit"
+    }
+   ]
+  },
+  {
+   "type": "fear_uncertain",
+   "how_often": "20 times on 16 of 55 calls, resolved 25%",
+   "what_prospects_say": [
+    "It's just that doubt of like, will anything work for me?",
+    "I just fear that I'm gonna be hearing a lot of things that'll be hard.",
+    "I don't know what's gonna happen, has way too much time passed?"
+   ],
+   "what_reps_try": "Reframe as commitment or 'the only way is to try'; 14 of 25 handlings judged poor. Some reps answered with outcome promises.",
+   "recommended_handling": [
+    "That makes complete sense, and I'm not going to promise you how it turns out, because nobody honestly can.",
+    "What I can tell you is what changes: you stop guessing, because Kim tells you exactly what's working and what isn't, with care and a plan.",
+    "On a scale of 1 to 10, how do you feel about the process itself? What would make it a 9 or 10?"
+   ],
+   "evidence": [
+    {
+     "call_id": "recWcnUc0ET44X8uP",
+     "quote": "It's just that doubt of like, will anything work for me?"
+    },
+    {
+     "call_id": "recBs4M5WwMoXRskQ",
+     "quote": "I just fear that I'm gonna be hearing a lot of things that'll be hard."
+    },
+    {
+     "call_id": "rec3CDQLtgxnFBuZU",
+     "quote": "I don't know what's gonna happen, has way too much time passed?"
+    }
+   ]
+  },
+  {
+   "type": "has_solution_or_no_value",
+   "how_often": "14 times on 12 of 55 calls, resolved 0%; 13 times by text",
+   "what_prospects_say": [
+    "If this is something I could do on my own, I would absolutely love to do it. If this is something I could do that was local with a therapist",
+    "I don't want to potentially spend money to be told something that I kind of have a gut feeling of",
+    "I'm going to work through this on my own.  I think I can handle things."
+   ],
+   "what_reps_try": "Accountability pressure ('you have to make a decision') or move on. Never resolved.",
+   "recommended_handling": [
+    "I hear you, and doing it on your own is exactly what you've been doing for (how long they said).",
+    "What's been missing isn't effort, it's someone who can tell you honestly how you're coming across. Do you think you can get that on your own?",
+    "[If they have a therapist] Keep your therapist. Kim isn't therapy; she's the honest read on your profile, your messages and your dates that therapy doesn't give you."
+   ],
+   "evidence": [
+    {
+     "call_id": "rec4dTUVpMszdUtjL",
+     "quote": "If this is something I could do on my own, I would absolutely love to do it. If this is something I could do that was local with a therapist"
+    },
+    {
+     "call_id": "rec3CDQLtgxnFBuZU",
+     "quote": "I don't want to potentially spend money to be told something that I kind of have a gut feeling of"
+    },
+    {
+     "call_id": "lead_4nSs0CvOGAsINAFfcmqdRoAJpCm6BYEgrTOLeUT7ew0",
+     "quote": "I'm going to work through this on my own.  I think I can handle things."
+    }
+   ]
+  },
+  {
+   "type": "skepticism_trust",
+   "how_often": "14 times on 12 of 55 calls, resolved 21%; 9 times by text; 3 on setter calls",
+   "what_prospects_say": [
+    "I don't know anything about her, right? And then I have to trust that this is gonna actually work and help me, and I'm paying $7,000 for this",
+    "how many of those people would have been in a relationship in six months? How many of those people would have been in a relationship in a year? That's the denominator, right?",
+    "4. I don't know anyone who has worked with her"
+   ],
+   "what_reps_try": "Absolute reassurances ('That has never happened'), success-rate stats, or '100%' hypotheticals; 7 of 14 handlings judged poor.",
+   "recommended_handling": [
+    "That's a fair thing to want to know before you spend this kind of money.",
+    "I'm not going to throw a success rate at you. What I can tell you is exactly what happens: in your first session Kim looks at your (profile / situation) and gives you an honest read.",
+    "What would you want to see from her in the first couple of weeks to know this was the right call?"
+   ],
+   "evidence": [
+    {
+     "call_id": "rec4dTUVpMszdUtjL",
+     "quote": "I don't know anything about her, right? And then I have to trust that this is gonna actually work and help me, and I'm paying $7,000 for this"
+    },
+    {
+     "call_id": "recAUjmML6vyYadLa",
+     "quote": "how many of those people would have been in a relationship in six months? How many of those people would have been in a relationship in a year? That's the denominator, right?"
+    },
+    {
+     "call_id": "lead_Rgn5bsNS0YdhjuLQQOadviucJSsg6cBng1DBYdKnehu",
+     "quote": "4. I don't know anyone who has worked with her"
+    },
+    {
+     "call_id": "rec5kJn5AwTCE6Zpi",
+     "quote": "That has never happened. I've never seen that happen."
+    }
+   ]
+  },
+  {
+   "type": "trial_request",
+   "how_often": "5 calls asked to pay for one session or a month first (logged under skepticism, fear or other); the request drives the $1,000 first-session offer made on 15 calls; by text a lead declined a '$1000 trial session'",
+   "what_prospects_say": [
+    "is there a way where you do like you pay for the first session and just see like get the feel for it first before you commit to the $7,000 or it might be?",
+    "Can it be, like, a one-on-one session, like, in the sense, like, one session at a time? We try a session, and then if it works out",
+    "I want to have that call with her and feel it out. And what I'm saying is I would pay for the call and then make a decision."
+   ],
+   "what_reps_try": "Invent a $1,000 first call, a $2,400 six-week package or a first-month option (see MC-01).",
+   "recommended_handling": [
+    "I get why you'd want to feel it out first. Kim doesn't do single sessions, because one hour can't change how you show up.",
+    "What would you need to see in the first few weeks to know it's working?",
+    "If budget is part of it, the lower-commitment way in is three months every other week, at $3,600."
+   ],
+   "evidence": [
+    {
+     "call_id": "recQgbOLAOMtxKfce",
+     "quote": "is there a way where you do like you pay for the first session and just see like get the feel for it first before you commit to the $7,000 or it might be?"
+    },
+    {
+     "call_id": "recBs4M5WwMoXRskQ",
+     "quote": "Can it be, like, a one-on-one session, like, in the sense, like, one session at a time? We try a session, and then if it works out"
+    },
+    {
+     "call_id": "rec5kJn5AwTCE6Zpi",
+     "quote": "I want to have that call with her and feel it out. And what I'm saying is I would pay for the call and then make a decision."
+    },
+    {
+     "call_id": "lead_Rgn5bsNS0YdhjuLQQOadviucJSsg6cBng1DBYdKnehu",
+     "quote": "I wasn't prepared to spend $1000 for a trial session . Her prices have also doubled."
+    }
+   ]
+  },
+  {
+   "type": "burned_in_past",
+   "how_often": "3 times on 3 of 55 calls, resolved 0%; 5 times by text; 2 on setter calls",
+   "what_prospects_say": [
+    "I paid a lot of money for it, and… In retrospect, I just don't think I should have.",
+    "I'm okay financially, and I can afford what she asked me, but, like, as I said, my previous… dating coach experience, I'm kind of more cautious.",
+    "Hired a dating coach ( who didn't help)"
+   ],
+   "what_reps_try": "'The only way to find out is to try' or questioning why they won't commit.",
+   "recommended_handling": [
+    "That makes total sense after what happened last time.",
+    "What specifically did they do that you don't want repeated?",
+    "And what would you need to see from Kim in the first few weeks to know this is different?"
+   ],
+   "evidence": [
+    {
+     "call_id": "recWQptVD3IVcaLFd",
+     "quote": "I paid a lot of money for it, and… In retrospect, I just don't think I should have."
+    },
+    {
+     "call_id": "recpp0AwZg8dp8moV",
+     "quote": "the only way to find out is to… to actually try something, right?"
+    },
+    {
+     "call_id": "lead_sE08h8zCygLQfW3ADHamGMFMFG5DYbO00BDLLN9Mmtd",
+     "quote": "Hired a dating coach ( who didn't help)"
+    }
+   ]
+  },
+  {
+   "type": "financing_denied",
+   "how_often": "3 times on 3 of 55 calls, resolved 1 (33%); 1 time by text",
+   "what_prospects_say": [
+    "After I filled out my details and salary, says clarity pay financing was declined.",
+    "Because it's pretty high APR.",
+    "Not at this time, I can't take on any debt"
+   ],
+   "what_reps_try": "Improvise a cheaper version ($3,400) or an in-house monthly plan.",
+   "recommended_handling": [
+    "Thanks for trying that, and I'm sorry it didn't go through.",
+    "The option that fits is three months every other week at $3,600, and we can split that across the three months with our own payment link.",
+    "[If they don't want any debt] Then we won't use financing at all. Would the split work, or is now not the right time?"
+   ],
+   "evidence": [
+    {
+     "call_id": "recuYUaiJrHqjgDoh",
+     "quote": "After I filled out my details and salary, says clarity pay financing was declined."
+    },
+    {
+     "call_id": "recWcnUc0ET44X8uP",
+     "quote": "Because it's pretty high APR."
+    },
+    {
+     "call_id": "lead_n7EP7ua5TmRRwhzHsnHIQMA9CwnbCgqXlTBuArULNzX",
+     "quote": "Not at this time, I can't take on any debt"
+    }
+   ]
+  },
+  {
+   "type": "not_interested",
+   "how_often": "25 times by text (no DM script branch); 1 on a setter call",
+   "what_prospects_say": [
+    "Thank you, but I don't wish to talk. You can remove me from your call list.",
+    "I'm going to cancel.  I appreciate it.",
+    "Not looking for help at this time.  Thank you"
+   ],
+   "what_reps_try": "Re-ask, challenge the reason, or offer a 'rare' slot with Kim (conduct flags on 66 of 256 analysed text threads).",
+   "recommended_handling": [
+    "Totally understand, thanks for letting me know.",
+    "If anything changes down the line, you know where to find us. Wishing you the best.",
+    "[Then stop. If they asked to be removed, mark do-not-contact in Close the same day.]"
+   ],
+   "evidence": [
+    {
+     "call_id": "lead_B9xjpuJq9F6ZjNEtzNO1gBjsVrxTf3faoN4qfbcc3i6",
+     "quote": "Thank you, but I don't wish to talk. You can remove me from your call list."
+    },
+    {
+     "call_id": "lead_4nSs0CvOGAsINAFfcmqdRoAJpCm6BYEgrTOLeUT7ew0",
+     "quote": "I'm curious what changed between applying for support 6 hours ago and now?"
+    },
+    {
+     "call_id": "lead_H9yAUQcEr9AcnQUmGgxYnf0BJJbryCaDuibkmDrI1Ia",
+     "quote": "Not looking for help at this time.  Thank you"
+    }
+   ]
+  }
+ ],
+ "decisions_for_mitch": [
+  "Approved prices: confirm the only three prices are $3,600 (3 months, bi-weekly), $7,200 (3 months, weekly) and $14,000 (6 months, weekly), and whether any entry option (a paid first session, a deposit) is allowed. Today reps invent them: $1,000 first session on 15 calls, $2,400 starter on 9.",
+  "Setter price anchor: 'low to mid four figures' does not match $7,200 or $14,000, and setters drift to 'mid to high' or '5 to 9 thousand' on 16 of 18 calls. Pick one true anchor for every setter and DM script.",
+  "Success-rate claims: the '50% within six months, 78% within 12 months' and '80% find a partner' lines are said on 28 calls. Either document them with a real source or ban them.",
+  "Recording and retention: what happens to recordings of prospects who do not buy, so the closer's disclosure line can be accurate. Reps have promised deletion on 3 calls.",
+  "Financing: which partners are approved, the rule that prospects apply on their own device with no rep hearing an SSN or income, and whether setters ever ask about credit at all (the Master Setting Doc's 650 DQ).",
+  "Crisis protocol: who gets the same-day escalation when a prospect mentions self-harm, overdose or abuse, and whether those leads are paused from sales. One texted overdose disclosure was still awaiting a human follow-up when the data was pulled (lead_nGKEZvUvxDh4ID4ImwwMm9kjJY8TVxwjo55iuDi83qM).",
+  "Approved proof points: 2 to 4 anonymous client stories per segment, with consent, so reps stop naming clients or quoting their health details.",
+  "Phone Setting Script: fill and de-gender it, or retire it and move its book-and-confirm, lock-the-show and objection-bank sections into the Master Setting Doc."
+ ]
+}
