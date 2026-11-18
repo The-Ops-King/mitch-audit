@@ -1,0 +1,6 @@
+# Client data: raw transcripts and per-call extractions contain real names. Never commit.
+data/**/raw/
+data/**/closer_calls/
+data/**/setter_calls/
+data/**/threads/
+data/**/*.db

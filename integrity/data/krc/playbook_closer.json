@@ -1,0 +1,89 @@
+{
+  "name": "Kimberly Rae Coaching: Master Closing Doc",
+  "source": "Google Drive, 'KRC - Master Closing Doc' (last edited 2026-11-17). Calls before late June 2026 may predate it.",
+  "sanctioned_offer": [
+    {"tier": "1.5", "price_usd": 3600, "months": 3, "cadence": "bi-weekly 1:1 with Kim"},
+    {"tier": "1", "price_usd": 7200, "months": 3, "cadence": "weekly 1:1 with Kim"},
+    {"tier": "2", "price_usd": 14000, "months": 6, "cadence": "weekly 1:1 with Kim"}
+  ],
+  "offer_includes": "Group coaching calls twice a week, full education library, community. 1:1 time with Kim on paid tiers.",
+  "rules": [
+    "Recommend ONE tier based on discovery, then stay silent. Do not list all tiers.",
+    "Dating outcomes can't be guaranteed. Promise the process and near-term visible change.",
+    "Do not reveal price into uncertainty. Run the temperature check first.",
+    "Do not offer payment plans to solve an uncertainty objection."
+  ],
+  "phases": [
+    {"id":"C1","name":"Intro & frame","weight":10,"checks":[
+      {"id":"C1a","text":"States the call is confidential"},
+      {"id":"C1b","text":"Discloses the call is recorded"},
+      {"id":"C1c","text":"Credibility: has taken hundreds of these calls"},
+      {"id":"C1d","text":"Invites full transparency"},
+      {"id":"C1e","text":"Frames the goal of the call and gets agreement"},
+      {"id":"C1f","text":"References setter notes (or Kim's DM notes) so they feel seen","conditional":"only if a setter or DM preceded the call"},
+      {"id":"C1g","text":"Opens with why they took an hour out of their day"}]},
+    {"id":"C2","name":"Isolate the problem","weight":15,"checks":[
+      {"id":"C2a","text":"Asks the biggest thing not working in dating/relationships"},
+      {"id":"C2b","text":"Asks what they mean, in their own words"},
+      {"id":"C2c","text":"Asks if anything else is getting in the way"},
+      {"id":"C2d","text":"Probes duration (how long, always been this way)"},
+      {"id":"C2e","text":"Probes spillover into other areas of life"}]},
+    {"id":"C3","name":"Background & segment read","weight":10,"checks":[
+      {"id":"C3a","text":"Relationship status (single, seeing someone, undefined)"},
+      {"id":"C3b","text":"Apps usage"},
+      {"id":"C3c","text":"Work and meeting people organically"},
+      {"id":"C3d","text":"How long actively dating"},
+      {"id":"C3e","text":"Flexes the call to the segment (novice, achiever, rebuilder, returner)"}]},
+    {"id":"C4","name":"Current situation & what they've tried","weight":10,"checks":[
+      {"id":"C4a","text":"Gets weekly mechanics (apps time, conversations, dates)"},
+      {"id":"C4b","text":"Asks where it usually falls apart"},
+      {"id":"C4c","text":"Asks what they have tried (apps, coaching, books, therapy)"},
+      {"id":"C4d","text":"Asks how that went"}]},
+    {"id":"C5","name":"Doubt question","weight":10,"checks":[
+      {"id":"C5a","text":"Asks what they think has been getting in the way"},
+      {"id":"C5b","text":"Does not correct the belief yet (saves it for the pitch)"}]},
+    {"id":"C6","name":"Why now & cost","weight":20,"checks":[
+      {"id":"C6a","text":"Asks why now vs six months ago"},
+      {"id":"C6b","text":"Asks what it has been costing them, beyond dating"},
+      {"id":"C6c","text":"Goes deeper with a segment-aware cost question"},
+      {"id":"C6d","text":"Magic wand: what changes if this were solved"},
+      {"id":"C6e","text":"Lets silence breathe instead of rushing"}]},
+    {"id":"C7","name":"Desired situation","weight":10,"checks":[
+      {"id":"C7a","text":"Asks them to paint the picture a year from now"},
+      {"id":"C7b","text":"Asks why that is important to them"},
+      {"id":"C7c","text":"Asks what part they most look forward to"}]},
+    {"id":"C8","name":"Tie-down & transition","weight":5,"checks":[
+      {"id":"C8a","text":"Asks if there is anything else they should know"},
+      {"id":"C8b","text":"Reflects their situation back and gets permission to walk through how Kim helps"}]},
+    {"id":"C9","name":"Pitch: promise, 4 pillars, delivery","weight":15,"checks":[
+      {"id":"C9a","text":"High-level promise of process and visible change, no outcome guarantee"},
+      {"id":"C9b","text":"Pillar 1, The Honest Read, tied to what they've tried"},
+      {"id":"C9c","text":"Pillar 2, The Reset (profile, photos, messaging)"},
+      {"id":"C9d","text":"Pillar 3, The Inner Game"},
+      {"id":"C9e","text":"Pillar 4, Read & Lead"},
+      {"id":"C9f","text":"Delivery: group calls twice weekly, library, community, 1:1 for paid tiers"},
+      {"id":"C9g","text":"Checks for questions or understanding"}]},
+    {"id":"C10","name":"Temperature check","weight":10,"checks":[
+      {"id":"C10a","text":"Asks how they feel about the process"},
+      {"id":"C10b","text":"Uses the 1 to 10 scale when the answer is uncertain","conditional":"only if uncertain"},
+      {"id":"C10c","text":"Handles what keeps them from 9 or 10 before price","conditional":"only if 8 or below"}]},
+    {"id":"C11","name":"Next steps before price","weight":5,"checks":[
+      {"id":"C11a","text":"Paints getting started before revealing the investment"}]},
+    {"id":"C12","name":"Investment","weight":15,"applies_when":"price_presented","checks":[
+      {"id":"C12a","text":"Recommends one tier based on discovery"},
+      {"id":"C12b","text":"Ties the recommendation to what they said"},
+      {"id":"C12c","text":"States the price and stays silent"},
+      {"id":"C12d","text":"Does not dump all tiers"}]},
+    {"id":"C13","name":"Objection pacing","weight":10,"applies_when":"objection_raised","checks":[
+      {"id":"C13a","text":"Takes money off the table and checks belief in the process first"},
+      {"id":"C13b","text":"Tie-down: 'not should I, but how do I make this work'"},
+      {"id":"C13c","text":"Does not hand out payment plans to an uncertainty objection"}]}
+  ],
+  "segments": {
+    "overlooked_novice": "Younger man, few or no matches, shy. Pain: freezing, left on read, feeling broken.",
+    "achiever": "Successful woman, situationships, running out of time. Pain: passive men, the clock, fear of the DTR talk.",
+    "rebuilder": "Older woman, divorced, overwhelmed by apps. Pain: lost with modern dating, self-doubt, too late.",
+    "returner": "Older man, divorced, secure, out of practice. Pain: doesn't get the apps, no responses, fear of seeming creepy, loneliness.",
+    "other": "Does not fit. Propose a label in signals[0]."
+  }
+}
