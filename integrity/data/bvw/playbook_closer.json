@@ -1,0 +1,383 @@
+{
+  "name": "Barak Van Wyk Coaching: Closing Playbook (derived from calls)",
+  "source": "There is no written script. Derived from 14 recorded closer calls (12 Zoom, 2 Drive recordings transcribed without speaker labels), Sep to Nov 2026, all run by Makena Waterhouse. 3 won (Call Outcome 'Closed' and Payment Type not 'Deposit' or 'Instalment Paid'): recGhnRsvZefXBVSx, recCs5H4hJqOJtQip, recG83GHIMQ9gNUul. 5 more closed on a deposit or first instalment and are used only as supporting evidence. 6 did not close (5 Offer Made, 1 Lost) and are the contrast set. Checks marked '(best practice: missing on his calls)' are standard high-ticket steps added only where the lost and offer-made calls show their absence hurt.",
+  "sanctioned_offer": [
+    {
+      "product": "12-Week Couples Program",
+      "price_usd": 5400,
+      "weeks": 12,
+      "cadence": "weekly 1-hour session with Barak (both partners), couples exercises and individual homework between sessions",
+      "payment_plan": "3 x 1800 monthly (900 bi-weekly offered once). Calls also used a first-month start at 1800, a half-now split (2700) and a 1-call start."
+    },
+    {
+      "product": "12-Week Individual Program",
+      "price_usd": 4500,
+      "weeks": 12,
+      "cadence": "weekly 1-hour 1:1 session with Barak plus homework",
+      "payment_plan": "3 x 1500 monthly. Won calls show 4500 total and a 1500 first-month start; 1800 was never quoted for an individual. One deposit call quoted the first session at 300 and took a 100 deposit, which is off-sheet."
+    },
+    {
+      "product": "One Call Session",
+      "price_usd": 500,
+      "cadence": "one 1-hour session with Barak",
+      "payment_plan": "Paid in full. Credited toward the 12-week program if they continue."
+    }
+  ],
+  "offer_includes": "12 weekly 1-hour Zoom sessions with Barak (couples meet him together, sometimes separately), homework and couples exercises between sessions, a structured path: find why the cheating or lying happened, trace it to its emotional and developmental origins, repair the impulse, attachment and validation systems, and build new internal controls; for the hurt partner, healing from betrayal trauma, clarity and self-trust. End state: rebuild into a secure partnership, or separate with closure.",
+  "rules": [
+    "No outcome promise. Promise the process and the answer: by week 12 they either rebuild or separate with closure. Say 'this isn't about staying together at all costs.'",
+    "Never excuse the cheating and never take sides. Name the partner's part without making it a justification.",
+    "Hear from each person first, before the closer's own read. In couples, ask both partners every key question.",
+    "The buyer must want change for themselves, not only to keep the partner. Check this out loud.",
+    "Present the 12-week program first at full price. Step down to a first month or one call only after the program is pitched and only when the hesitation is about certainty, not to dodge a money objection.",
+    "Every step-down is credited toward the full program and comes with Barak's booking link on the same call.",
+    "Take payment and book Barak while still on the call. 'Think about it' is not an ending; get a dated next step.",
+    "If the '80% of couples stay together' stat is used, frame it as a track record, never as what will happen for them.",
+    "Do not argue with a skeptical or sales-savvy prospect about the call itself. Restate the purpose of the call and the next step.",
+    "Recording disclosure: none of the 14 calls tells the prospect the call is recorded. Add a one-line disclosure at the open (compliance item, not a closing lever)."
+  ],
+  "phases": [
+    {
+      "id": "C1",
+      "name": "Open and frame",
+      "weight": 10,
+      "checks": [
+        {
+          "id": "C1a",
+          "text": "Introduces self and role ('I help Barak with his client application process')"
+        },
+        {
+          "id": "C1b",
+          "text": "Confirms they still have about 45 minutes and a private, quiet spot (not driving, not at work)"
+        },
+        {
+          "id": "C1c",
+          "text": "References what Barak or the setter shared, then asks to hear it from them first"
+        },
+        {
+          "id": "C1d",
+          "text": "Confirms everyone who decides on the money is on the call, or gets agreement to decide without them",
+          "conditional": "only if a partner or money decision-maker exists"
+        },
+        {
+          "id": "C1e",
+          "text": "Sets the agenda: understand the situation, see if Barak can help, and if so get the first session booked today (best practice: missing on his calls)"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "name": "Goal from each person",
+      "weight": 10,
+      "checks": [
+        {
+          "id": "C2a",
+          "text": "Asks what they want to achieve, for themselves or the relationship"
+        },
+        {
+          "id": "C2b",
+          "text": "In couples, asks each partner separately and reflects each answer back",
+          "conditional": "only if both partners are on"
+        },
+        {
+          "id": "C2c",
+          "text": "Asks whether the goal is to stay together if there is a clear path to healing"
+        },
+        {
+          "id": "C2d",
+          "text": "Asks the partner who strayed whether they want this for themselves, not just for the other person"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "name": "What happened and the pattern",
+      "weight": 10,
+      "checks": [
+        {
+          "id": "C3a",
+          "text": "Gets how long ago it happened and how it came out (told, found out, trickle truth)"
+        },
+        {
+          "id": "C3b",
+          "text": "Asks whether it was once or a pattern, and how long the pattern goes back"
+        },
+        {
+          "id": "C3c",
+          "text": "Asks whether it has stopped or the hurt partner fears it is continuing"
+        },
+        {
+          "id": "C3d",
+          "text": "Asks the hurt partner how it felt to find out"
+        },
+        {
+          "id": "C3e",
+          "text": "Keeps detail to what matters and pauses a couple who start fighting on the call",
+          "conditional": "only if the couple argues on the call"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "name": "The why under it",
+      "weight": 10,
+      "checks": [
+        {
+          "id": "C4a",
+          "text": "Asks what feeling they were after, or what void it filled"
+        },
+        {
+          "id": "C4b",
+          "text": "Asks where it comes from (childhood, past relationships, self-worth)"
+        },
+        {
+          "id": "C4c",
+          "text": "Challenges the easy answer ('if it were that simple you would have stopped')"
+        },
+        {
+          "id": "C4d",
+          "text": "Normalizes not knowing why: that is what the work with Barak is for"
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "name": "Accountability and the honest mirror",
+      "weight": 15,
+      "checks": [
+        {
+          "id": "C5a",
+          "text": "Asks permission to be honest, then names the mixed signals or justifications back to them"
+        },
+        {
+          "id": "C5b",
+          "text": "Asks whether the behavior fits who they want to be ('is that how you want to be known?')"
+        },
+        {
+          "id": "C5c",
+          "text": "Asks the strayer how it feels to hear the partner's hurt and whether they understand why trust is gone",
+          "conditional": "only if both partners are on"
+        },
+        {
+          "id": "C5d",
+          "text": "Holds the line that the partner's faults or the marriage's problems do not justify cheating, without judging"
+        },
+        {
+          "id": "C5e",
+          "text": "States plainly that Barak can only help someone with a real will to change"
+        }
+      ]
+    },
+    {
+      "id": "C6",
+      "name": "What they tried and why now",
+      "weight": 10,
+      "checks": [
+        {
+          "id": "C6a",
+          "text": "Asks what they have tried (therapy, pastor, rehab, self-help, nothing)"
+        },
+        {
+          "id": "C6b",
+          "text": "Asks why it did not work or why they stopped"
+        },
+        {
+          "id": "C6c",
+          "text": "Asks why now, after living with it this long"
+        },
+        {
+          "id": "C6d",
+          "text": "Asks what in Barak's content made them think he is the right fit"
+        }
+      ]
+    },
+    {
+      "id": "C7",
+      "name": "Future picture and identity",
+      "weight": 10,
+      "checks": [
+        {
+          "id": "C7a",
+          "text": "Asks the ideal outcome at the end of 12 weeks"
+        },
+        {
+          "id": "C7b",
+          "text": "Asks who that will help them become"
+        },
+        {
+          "id": "C7c",
+          "text": "Asks how that would feel, for each partner where both are on"
+        }
+      ]
+    },
+    {
+      "id": "C8",
+      "name": "Cost of staying stuck",
+      "weight": 10,
+      "checks": [
+        {
+          "id": "C8a",
+          "text": "Asks what happens if nothing changes in 6 to 12 months"
+        },
+        {
+          "id": "C8b",
+          "text": "Asks whether that is something they are willing to settle for"
+        },
+        {
+          "id": "C8c",
+          "text": "Ties the cost to the people they care about (kids, partner, themselves)"
+        }
+      ]
+    },
+    {
+      "id": "C9",
+      "name": "Commitment and belief check",
+      "weight": 10,
+      "checks": [
+        {
+          "id": "C9a",
+          "text": "Asks if they believe change is possible for them"
+        },
+        {
+          "id": "C9b",
+          "text": "Asks if they are ready to commit to the work, regardless of how the relationship turns out"
+        },
+        {
+          "id": "C9c",
+          "text": "Reassures: 'your situation is not inconsistent with the people we work with'"
+        },
+        {
+          "id": "C9d",
+          "text": "Asks what they were told about the investment and corrects any mismatch before the pitch (best practice: missing on his calls)"
+        }
+      ]
+    },
+    {
+      "id": "C10",
+      "name": "Pitch: Barak's 12-week process",
+      "weight": 15,
+      "checks": [
+        {
+          "id": "C10a",
+          "text": "Frames it as not traditional talk therapy: action, accountability, homework, only 12 weeks"
+        },
+        {
+          "id": "C10b",
+          "text": "Walks the steps: find the why, trace it to its origins, repair impulse and validation systems, build new controls; healing for the hurt partner"
+        },
+        {
+          "id": "C10c",
+          "text": "Ties the steps to the words they used earlier (their kids, their self-trust, their partner)"
+        },
+        {
+          "id": "C10d",
+          "text": "Gives the end state: rebuild a secure partnership or separate with closure, not staying together at all costs"
+        },
+        {
+          "id": "C10e",
+          "text": "Explains delivery: weekly 1-hour sessions with Barak plus work between sessions"
+        },
+        {
+          "id": "C10f",
+          "text": "Makes no outcome promise ('not an overnight thing')"
+        },
+        {
+          "id": "C10g",
+          "text": "Checks for questions or understanding"
+        }
+      ]
+    },
+    {
+      "id": "C11",
+      "name": "Investment and the commitment question",
+      "weight": 10,
+      "checks": [
+        {
+          "id": "C11a",
+          "text": "States the full price for their program (5400 couples, 4500 individual) and that it can be broken up"
+        },
+        {
+          "id": "C11b",
+          "text": "Asks 'assuming we can figure out the financial side, is this something you want to move forward with?'"
+        },
+        {
+          "id": "C11c",
+          "text": "Separates belief from money: 'finances aside, do you feel this can actually help you?'"
+        },
+        {
+          "id": "C11d",
+          "text": "Offers the monthly plan (1800 or 1500) when they cannot pay in one go"
+        }
+      ]
+    },
+    {
+      "id": "C12",
+      "name": "Objection and step-down",
+      "weight": 15,
+      "applies_when": "objection_raised",
+      "checks": [
+        {
+          "id": "C12a",
+          "text": "Asks what is really holding them back and isolates it: have the money but unsure, have some, or a real stretch"
+        },
+        {
+          "id": "C12b",
+          "text": "Works the real block (fear, identity, trust in Barak) with questions before touching price"
+        },
+        {
+          "id": "C12c",
+          "text": "Points out that thinking it over will not answer it; meeting Barak will"
+        },
+        {
+          "id": "C12d",
+          "text": "Steps down to the first four sessions or one call, credited to the full program",
+          "conditional": "only if hesitation is about certainty"
+        },
+        {
+          "id": "C12e",
+          "text": "Gets both partners' own yes before taking payment",
+          "conditional": "only if both partners are on"
+        },
+        {
+          "id": "C12f",
+          "text": "If they still need time, books a dated reconnect on the call rather than 'text me' (best practice: missing on his calls)",
+          "conditional": "only if no payment on the call"
+        }
+      ]
+    },
+    {
+      "id": "C13",
+      "name": "Take payment and book Barak live",
+      "weight": 15,
+      "checks": [
+        {
+          "id": "C13a",
+          "text": "Sends the payment link by text or email while still on the call"
+        },
+        {
+          "id": "C13b",
+          "text": "Stays on until the payment goes through, solving card, bank or fraud-hold problems live"
+        },
+        {
+          "id": "C13c",
+          "text": "Sends Barak's onboarding and booking link and gets a session booked"
+        },
+        {
+          "id": "C13d",
+          "text": "Asks them to pick a time they can commit to, within the next week"
+        },
+        {
+          "id": "C13e",
+          "text": "Says she will brief Barak on what they shared and ends warm"
+        }
+      ]
+    }
+  ],
+  "segments": {
+    "strayer_alone": "The person who cheated or lied comes in alone wanting to know why and to stop the pattern; partner absent, sometimes skeptical or waiting to see change.",
+    "couple_in_crisis": "Both partners on the call after discovery or trickle truth; the hurt partner wants proof and the why, the strayer wants to keep the relationship. Often fights on the call.",
+    "betrayed_partner_alone": "The hurt partner comes alone, anxious or numb, unsure whether to stay; the other partner will not join. Sold on clarity, self-trust and peace either way.",
+    "serial_or_compulsive": "Long-running pattern (sex addiction, sex workers, dating apps, serial affairs), often with past therapy or rehab that did not hold; ambivalent about wanting a relationship at all.",
+    "other": "Does not fit. Propose a label in signals[0]."
+  }
+}

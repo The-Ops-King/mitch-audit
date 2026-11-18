@@ -1,0 +1,532 @@
+{
+  "avatars": [
+    {
+      "id": "late_starter",
+      "name": "The Late Starter",
+      "tagline": "A man who never really got going with dating and now feels behind everyone he knows.",
+      "playbook_segment": "overlooked_novice",
+      "call_ids": ["recGE0qSwa0QxwjON", "recGKZs9W2uilOrBj", "recS608c0FD1pE8Dt", "recUG12HoKVjeAVbJ", "recfCGXhoVRpBHdtY", "recg9xSnQrSbFdj5k", "recibugxeXybSQ5Db", "reck9JVOjrzpNKQQY", "recoc2N8dvhZoCtZ6", "recpp0AwZg8dp8moV", "recs3px0F2ml4Yv7v", "recuYUaiJrHqjgDoh", "recvpTnwx7EBHQ2hV", "rec2vZiTr7sex6D2Z", "recZFfk7vkbm0qPlG"],
+      "who": "A single man, usually late 20s to early 40s (with an older tail in his 50s), who has never had an official girlfriend or whose longest relationship lasted a few months. He gets few or no matches, ends up in the friend zone, or gets first dates that never turn into second ones, and he freezes or overthinks around women he likes. Many work hands-on or hourly jobs, live in small towns or rural areas, and are in therapy for anxiety, depression or old family wounds. He books the call because he has run out of ideas on his own and wants someone to show him, step by step, what he is doing wrong.",
+      "profile": {
+        "gender": "mostly men",
+        "age": "21 to mid 50s, most between 28 and 42",
+        "relationship_history": "Never had a committed relationship, or only short flings and 'almosts'. Some were burned once (cheated on, an abusive partner, a one-sided friendship) and have been single for years since.",
+        "work_and_money": "Mixed and often thin: tradesmen, techs, hospitality, freelancers, people between jobs or with no income, plus a few salaried IT or office workers. Money is the most common blocker; several had no savings, no credit or under a thousand dollars available.",
+        "kids": "No kids.",
+        "apps_and_tried": "Hinge, Tinder or Facebook Dating with few or no replies; some have stopped using apps. Tried therapy, books, YouTube or pickup content, friends reviewing profiles, speed dating, and in a couple of cases a previous dating coach that did not help."
+      },
+      "goals": [
+        "A first real, committed relationship that leads to marriage and kids",
+        "Confidence to start conversations and approach women without freezing",
+        "An honest outside read, ideally from a woman, on what he is doing wrong",
+        "Move from first dates and friend zone to a second date and real interest",
+        "Stop feeling behind his friends and family",
+        "Someone to come home to instead of evenings alone"
+      ],
+      "pains": [
+        "Few or no matches, and women go quiet once he asks them out",
+        "Stuck in the friend zone or first dates that fizzle with no explanation",
+        "Anxiety, overthinking and freezing around women he is attracted to",
+        "Low self-worth: feels like a loser, not marriage material, or too late",
+        "Lonely evenings and few places to meet women, especially in small towns",
+        "Embarrassment at family events and watching friends get married"
+      ],
+      "in_their_words": [
+        {"quote": "The truth is, I don't know where to start.", "call_id": "recGKZs9W2uilOrBj"},
+        {"quote": "I just want to know, like, how do I date people? Like, I don't know how to date.", "call_id": "recs3px0F2ml4Yv7v"},
+        {"quote": "I just always feel like girls have always kind of just seen me as like a friend", "call_id": "recvpTnwx7EBHQ2hV"},
+        {"quote": "is it something I am doing wrong because I don't have much experience", "call_id": "recuYUaiJrHqjgDoh"},
+        {"quote": "I have a lot of the right ingredients, I just need to learn how to properly bake the cake", "call_id": "recGE0qSwa0QxwjON"},
+        {"quote": "I do everything right, but… still not working", "call_id": "recpp0AwZg8dp8moV"},
+        {"quote": "why is a 30 year old guy unable to find a partner?", "call_id": "recibugxeXybSQ5Db"},
+        {"quote": "it kind of feels like I'm behind in life", "call_id": "recoc2N8dvhZoCtZ6"},
+        {"quote": "I wanted a female perspective, an unbiased one", "call_id": "recfCGXhoVRpBHdtY"},
+        {"quote": "I just keep going on all these dates and I'm not going anywhere", "call_id": "reck9JVOjrzpNKQQY"}
+      ],
+      "objections": [
+        {"type": "price_budget", "what_it_really_means": "Often a real cash limit, not a value doubt. He may have no income, no savings or no credit, and nobody asked before the pitch.", "quote": "$7,200 is a lot. The money is stretched thin at the moment.", "call_id": "recGKZs9W2uilOrBj"},
+        {"type": "price_budget", "what_it_really_means": "He is doing per-session maths against cheap coaches or therapy because he does not yet see what the three months buys him.", "quote": "at $7,200 for three months, that's over $2,000 a month. And if I only meet with her four times a month, that's what, $400 or $500 a session? So that's a lot.", "call_id": "recvpTnwx7EBHQ2hV"},
+        {"type": "think_about_it", "what_it_really_means": "He has been told yes and then let down before, so he needs time away from pressure to trust his own decision.", "quote": "I don't want to sign or pay anything today. I want to have a little bit of time to think over this first.", "call_id": "recibugxeXybSQ5Db"},
+        {"type": "burned_in_past", "what_it_really_means": "Money is fine; the fear is paying for a second coach who also gives generic advice and no result.", "quote": "I'm okay financially, and I can afford what she asked me, but, like, as I said, my previous… dating coach experience, I'm kind of more cautious.", "call_id": "recpp0AwZg8dp8moV"},
+        {"type": "fear_uncertain", "what_it_really_means": "He wants to meet the person who will coach him before committing to three months with a stranger.", "quote": "I don't not exactly too sure about committing to something for three months without, you know, meeting her for the first time", "call_id": "recvpTnwx7EBHQ2hV"},
+        {"type": "timing", "what_it_really_means": "Life is unstable (layoff, job change, health) and he does not feel he has the ground under him to commit.", "quote": "I think it's going to be tough to pin it down and commit to it right now with a lot of the other uncertainties in my life", "call_id": "recS608c0FD1pE8Dt"}
+      ],
+      "what_they_need_vs_what_we_sell": "He needs basic skills and reps: profile and photos, how to open and keep a conversation going, how to show romantic interest, and steady encouragement while his confidence builds. The program covers that well (Reset, Inner Game, Read and Lead), but at $7,200 it is priced above what many of these men can pay, so the bi-weekly $3,600 tier is the realistic fit and should be the recommendation when money is tight.",
+      "how_to_spot": [
+        "Says he has never had an official girlfriend, or his longest relationship was a couple of months",
+        "Talks about few matches, being left on read, or always being 'just a friend'",
+        "Describes himself as shy, introverted, anxious or an overthinker, often in therapy",
+        "Feels behind: friends married, family asking, 'I'm getting old'",
+        "Lives somewhere small or works long hands-on hours with no women around"
+      ],
+      "how_to_sell": [
+        "Qualify money gently before the pitch; many of these men cannot invest four figures, and finding out after the price wastes the call",
+        "Press the loneliness and the 'behind in life' pain, then future-pace the first real girlfriend, not marriage stats",
+        "Lead with the Honest Read: he wants someone to finally tell him what he is doing wrong, ideally a woman",
+        "Make the Reset concrete: photos, profile, first messages, the move from friend to date",
+        "Recommend the $3,600 bi-weekly tier when budget is limited instead of improvising a $1,000 call",
+        "Never push financing on someone with no income, never pull credit live as leverage, and slow down when he says he feels rushed"
+      ],
+      "what_kills_the_deal": [
+        "Price named before any money question, then the rep finds out he has no job, savings or credit",
+        "Pressure after he asks for time ('I already pulled your credit'), which makes him feel rushed and pressured",
+        "Improvised one-call deposits and discounts that replace the program and anchor him on a cheap trial",
+        "Burned-by-a-past-coach doubt answered with a split payment instead of a belief check"
+      ],
+      "marketing_hooks": [
+        "Never had a girlfriend and don't know where to start? Start here.",
+        "Always the friend, never the date? Here's how women actually see you.",
+        "You do everything 'right' and it still isn't working. Get an honest read from a woman.",
+        "Behind in life at 30? It's a skill, not a verdict.",
+        "From zero matches to a second date: the step-by-step most men never got taught"
+      ],
+      "dq_signals": [
+        "No income, no savings and no credit, or he told the setter he cannot invest",
+        "Wants to be matched or introduced rather than coached",
+        "Externalises everything onto women and rejects feedback",
+        "Asks the rep for personal romantic feedback or crosses professional boundaries",
+        "Mental health is the main issue right now (active depression, crisis remarks) rather than dating skills"
+      ],
+      "best_call_id": "recuYUaiJrHqjgDoh",
+      "worst_call_id": "recs3px0F2ml4Yv7v"
+    },
+    {
+      "id": "rusty_returner",
+      "name": "The Rusty Returner",
+      "tagline": "A divorced or widowed man in his 50s or 60s who was good at this once and now feels lost on the apps.",
+      "playbook_segment": "returner",
+      "call_ids": ["rec5kJn5AwTCE6Zpi", "recAWUbKy15BIepYM", "recQgbOLAOMtxKfce", "recZRZGGxZlRlKX9C", "recfa4kRmMbRD51Iu", "rechyidFd2WOzjmrh", "recjHkwZ3dmDRi3xt", "reck7rwwJfuih7w2c", "recmQeFLrQs5CoN6d", "recmgUAR1CeHWC5Ms", "recrae8WpaHedIgrN", "recy6ykEpQOPtPXGB", "recyX5Qyb5tS208WF"],
+      "who": "An older man, usually divorced (sometimes widowed or grieving), who has been out of the dating world for years or has drifted from one wrong relationship to the next. He is often successful or comfortable (business owner, lawyer, pilot, tech) but some are on pensions, two jobs or fixed incomes. The apps feel like a minefield of fakes, scams and flakes, he gets few replies or one date that goes nowhere, and he worries about seeming too old or creepy. He is on the call because he is lonely, the clock feels real, and he wants a guide for a game whose rules changed.",
+      "profile": {
+        "gender": "mostly men",
+        "age": "41 to 72, most in their mid 50s to 60s",
+        "relationship_history": "Long marriage ended in divorce (or a spouse died), then years of little or no dating, or a string of on-and-off relationships with women who were not a match or wanted money.",
+        "work_and_money": "Split. Some are secure (retired business owners, lawyers, Google, pilots) and the money is not the issue; others are on pensions, fixed incomes or rebuilding after a failed business and are heavily price-anchored.",
+        "kids": "Often grown or teenage kids; a few still raising young children after divorce.",
+        "apps_and_tried": "Match, Tinder, Facebook Dating, eHarmony, Christian Mingle, Hinge. Many have already paid for matchmaking or another coach (including in-person or pickup-style coaches) and feel it did not deliver."
+      },
+      "goals": [
+        "A long-term partner for the next 20 or 30 years, someone who has his back",
+        "Get his confidence and old self back with women",
+        "Know where to meet the right women offline and which apps to use",
+        "Read women's intentions early and spot fakes, scams and gold-diggers",
+        "A better profile, photos and messages that actually get replies",
+        "Companionship: travel, dinners, someone beside him at the end of the day"
+      ],
+      "pains": [
+        "Apps full of fake profiles, bots, scams and women who will not meet",
+        "Few replies or one date that never becomes a second",
+        "Loneliness and the fear of dying alone",
+        "Feels too old, worries about seeming creepy or being written off",
+        "Keeps choosing or attracting the wrong women",
+        "Already paid for matchmaking or coaching that did not work"
+      ],
+      "in_their_words": [
+        {"quote": "I need guide rails. I need to understand what the playing field is and how to navigate it", "call_id": "recmgUAR1CeHWC5Ms"},
+        {"quote": "Tinder, which is a dumpster fire", "call_id": "recmgUAR1CeHWC5Ms"},
+        {"quote": "I lost my mojo, really lost my mojo", "call_id": "recfa4kRmMbRD51Iu"},
+        {"quote": "If you wanna catch fish, you gotta go to the right lake.", "call_id": "recyX5Qyb5tS208WF"},
+        {"quote": "Honest evaluation of what is wrong with me, what makes me unattractive to women.", "call_id": "reck7rwwJfuih7w2c"},
+        {"quote": "If I don't do anything right now, like, I'm gonna end up lonely. I'm gonna die lonely.", "call_id": "reck7rwwJfuih7w2c"},
+        {"quote": "I don't want to wait until I get 90 to try to pursue this.", "call_id": "recrae8WpaHedIgrN"},
+        {"quote": "it's a muscle habit, you know, so muscle is atrophied.", "call_id": "rechyidFd2WOzjmrh"},
+        {"quote": "These things are a drain on your emotional psychology and your financial well-being", "call_id": "recZRZGGxZlRlKX9C"},
+        {"quote": "I think when I get a good physical connection, I'm sold right away", "call_id": "recQgbOLAOMtxKfce"}
+      ],
+      "objections": [
+        {"type": "skepticism_trust", "what_it_really_means": "He is a businessman who has been sold before; he wants to know exactly what he gets and what happens if it does not work.", "quote": "What sort of guarantees do you have on some of this kind of service?", "call_id": "recrae8WpaHedIgrN"},
+        {"type": "burned_in_past", "what_it_really_means": "He already paid a coach or matchmaker and fears an open-ended spend with no end point.", "quote": "I can't be wasting $7,200", "call_id": "recyX5Qyb5tS208WF"},
+        {"type": "has_solution_or_no_value", "what_it_really_means": "His identity is 'I used to be good at this', so paying for help feels like admitting a problem he does not believe he has.", "quote": "Because it's a lot of money. A lot of money to attract women when I didn't have a problem to attract women before.", "call_id": "recfa4kRmMbRD51Iu"},
+        {"type": "skepticism_trust", "what_it_really_means": "He likes Kim but doubts that Zoom coaching works and is comparing in-person options.", "quote": "I'm sold, basically, on her video, I'm not… I'm not sold on delivery, how it's gonna work on the actual process.", "call_id": "reck7rwwJfuih7w2c"},
+        {"type": "timing", "what_it_really_means": "Not a no; a big family expense is close and he wants to start after it.", "quote": "My daughter gets married on next Sunday... So I'm trying not to do a huge outlay right now, this close to the wedding.", "call_id": "recmgUAR1CeHWC5Ms"},
+        {"type": "think_about_it", "what_it_really_means": "A professional rule against same-call decisions; push harder and he digs in.", "quote": "I just don't make decisions like that. Snap decisions.", "call_id": "recyX5Qyb5tS208WF"},
+        {"type": "price_budget", "what_it_really_means": "Real lack of funds he had already flagged before the pitch.", "quote": "I'm not financially in a place to do even that.", "call_id": "recAWUbKy15BIepYM"}
+      ],
+      "what_they_need_vs_what_we_sell": "He needs a modern dating map: which apps and venues fit his age, a profile that gets replies, how to lead the first conversations, and how to screen out scams and women after his money. The program delivers that, but he buys the person and the plan, so he wants clear milestones, a defined end point and proof it is not another matchmaking letdown, not a percentage claim.",
+      "how_to_spot": [
+        "Divorced or widowed, says he has been out of the game for years or since before the apps",
+        "Complains about fake profiles, bots, scams or women who will only text",
+        "Mentions his age directly ('I'm 65', 'long in the tooth', 'don't want to wait till 90')",
+        "Has already paid for matchmaking or another coach",
+        "Talks about his business, home or money early, and asks what it costs before discovery"
+      ],
+      "how_to_sell": [
+        "Press loneliness and time: what the next five years look like alone",
+        "Lead with the Honest Read and the Reset: an outside, female read of how he comes across, then profile, photos and where to meet women his age",
+        "Contrast the process with the matchmaking he already tried, and give him a plan with milestones rather than a success rate",
+        "Recommend one tier, usually the 3-month plan for secure men; the bi-weekly $3,600 tier for men on fixed incomes",
+        "Do not quote an 80% partner rate or any guarantee; promise the process and visible change",
+        "Respect 'I don't make snap decisions': book a firm follow-up with a clear decision date instead of improvising trials"
+      ],
+      "what_kills_the_deal": [
+        "Answering a guarantee question with a success-rate claim, which a sceptical businessman hears as a sales line",
+        "Price stated before the pitch to a man who is clearly anchored on cost",
+        "Improvised trial months and $1,000 first calls that make the full program look negotiable",
+        "No real pain surfaced (just separated, or dating fine), so there is nothing to sell into"
+      ],
+      "marketing_hooks": [
+        "Back on the market after 20 years? The rules changed. Here are the guide rails.",
+        "Tired of fake profiles and bots? Learn where the real women your age are.",
+        "You were good at this once. Get your mojo back.",
+        "If you want to catch fish, go to the right lake.",
+        "An honest read from a woman on why your first dates don't turn into second ones"
+      ],
+      "dq_signals": [
+        "Only weeks out of a separation that is not final and has not started dating",
+        "Confident, dating regularly and cannot name a problem",
+        "Demands a guaranteed outcome or contract changes and turns combative",
+        "Open anger or resentment toward women that he does not want to look at",
+        "Fixed income with no room to invest, or says he can manage about a hundred dollars",
+        "Wants in-person coaching only or is mid-trial with another coach"
+      ],
+      "best_call_id": "recQgbOLAOMtxKfce",
+      "worst_call_id": "recrae8WpaHedIgrN"
+    },
+    {
+      "id": "almost_boyfriend",
+      "name": "The Almost-Boyfriend",
+      "tagline": "A successful man around 30 who gets dates easily but can never make it official.",
+      "playbook_segment": "new",
+      "call_ids": ["recC5UEp94Pe8qvhW", "recHhuHL21q8NAwRy", "recAUjmML6vyYadLa", "recBq8fCyBcNDaZd9", "recFjVn1ogcd1osin", "recoqNB5TkuM0n93z"],
+      "who": "A single professional man in his early to mid 30s (finance, sales, tech, media, a family business) who has no trouble getting dates. His relationships stay undefined for months, end at the three or four month mark, or he picks the wrong woman and gives too much. Career took priority for years, friends are now getting married, and he has started to feel the clock. He books the call because he is self-aware, often in therapy, and wants a practical outside read on why nothing becomes official.",
+      "profile": {
+        "gender": "mostly men",
+        "age": "30 to 36",
+        "relationship_history": "Plenty of dating, a few undefined or short relationships, sometimes one long relationship that ended. Never or rarely in a committed, defined relationship he chose.",
+        "work_and_money": "Salaried professionals or business heirs who can usually invest four figures, though some cap what they will spend on 'help they don't really need'.",
+        "kids": "No kids.",
+        "apps_and_tried": "Mostly Hinge. Tried therapy, books, podcasts, Kim's content; some looked at matchmakers."
+      },
+      "goals": [
+        "Find a wife and start a family",
+        "Move a connection from undefined to an exclusive relationship",
+        "Express feelings and communicate clearly so women know he is serious",
+        "Show up from confidence instead of needing to be liked",
+        "Choose the right partner instead of the next good one"
+      ],
+      "pains": [
+        "Relationships stay undefined or end around three or four months",
+        "Women can't tell if he wants friendship or a relationship",
+        "Validation-seeking and overanalysing when she pulls back",
+        "Years of career focus, now friends are married and he feels left behind",
+        "Over-gives to the wrong women and lets them walk over him"
+      ],
+      "in_their_words": [
+        {"quote": "I gotta, like, find a, find a wife and stop, stop just, like, dating and stuff", "call_id": "recC5UEp94Pe8qvhW"},
+        {"quote": "it was undefined, but, like… defined. At the same time, without actually being defined", "call_id": "recC5UEp94Pe8qvhW"},
+        {"quote": "I need her to like me for me to feel validated", "call_id": "recHhuHL21q8NAwRy"},
+        {"quote": "show up from a place of confidence, rather than from a place of, oh, I need them to like me", "call_id": "recHhuHL21q8NAwRy"},
+        {"quote": "I can't get past this three month, four month stage", "call_id": "recFjVn1ogcd1osin"},
+        {"quote": "I've been doing this for at least eight years, and I have nothing to show for it", "call_id": "recFjVn1ogcd1osin"},
+        {"quote": "I don't want to be, you know, 50 and alone", "call_id": "recAUjmML6vyYadLa"},
+        {"quote": "I've got a broken woman picker", "call_id": "recoqNB5TkuM0n93z"},
+        {"quote": "my work has consumed my life for the last five years", "call_id": "recBq8fCyBcNDaZd9"}
+      ],
+      "objections": [
+        {"type": "timing", "what_it_really_means": "He is not sure coaching applies before he has someone; a quick reframe that the skill is needed now closes it.", "quote": "Would this be more beneficial for me now when I'm trying to find somebody new or would this be more beneficial for me when I found somebody", "call_id": "recC5UEp94Pe8qvhW"},
+        {"type": "price_budget", "what_it_really_means": "He wants to do it and is asking for a lighter tier, not leaving.", "quote": "it's a little bit more than what I was expecting to spend, but... I could find a way to make it work, but I would love if there's some flexibility", "call_id": "recHhuHL21q8NAwRy"},
+        {"type": "skepticism_trust", "what_it_really_means": "An analytical buyer asking for a base rate; answering with pressure loses him.", "quote": "how many of those people would have been in a relationship in six months? How many of those people would have been in a relationship in a year? That's the denominator, right?", "call_id": "recAUjmML6vyYadLa"},
+        {"type": "has_solution_or_no_value", "what_it_really_means": "Pride: a capable man wants to try alone once more before admitting he needs help.", "quote": "I owe it to myself to, like, at least try before I need, you know, I need your expertise.", "call_id": "recBq8fCyBcNDaZd9"},
+        {"type": "price_budget", "what_it_really_means": "He values the help at a few thousand because he does not think his problem is serious enough.", "quote": "the max that I would provide for these services would probably be between $1,700 and $2,000 total", "call_id": "recFjVn1ogcd1osin"},
+        {"type": "has_solution_or_no_value", "what_it_really_means": "He likes the method but thinks the program is too heavy for a problem he sees as small.", "quote": "I do think it's perfect, but I don't necessarily think it's right for my situation.", "call_id": "recoqNB5TkuM0n93z"}
+      ],
+      "what_they_need_vs_what_we_sell": "He needs coaching on the middle of dating: expressing interest, defining the relationship, choosing well and handling uncertainty without chasing validation. The program's Inner Game and Read and Lead pillars fit him exactly, but the script has no segment for him and reps pitch him like a novice; he buys when the pitch is about making it official, not getting dates.",
+      "how_to_spot": [
+        "Says getting dates is not the problem",
+        "Uses words like undefined, situationship, 'friend vibe' or 'three months and it ends'",
+        "Mentions career, friends getting married, turning 30",
+        "Already in therapy and talks about validation, perfectionism or patterns from his parents"
+      ],
+      "how_to_sell": [
+        "Press the repeating pattern and the years it has cost him, in his own numbers",
+        "Make Inner Game and Read and Lead the core: expressing feelings, defining the relationship, choosing well",
+        "Catch the soft 'I think so' and ask what would not work, then let him argue for it himself",
+        "Recommend the 3-month plan; offer the $3,600 bi-weekly tier only if he asks for flexibility",
+        "Avoid pushing a man who says he wants to try alone; agree a short check-in rather than 30 minutes of pressure"
+      ],
+      "what_kills_the_deal": [
+        "Price stated to a man who said early he was not sure he was ready to pay, with no temperature check",
+        "Answering an analytical 'what is the base rate' question with accountability pressure",
+        "Listing every tier when he asks about package sizes, so he reacts to the first number"
+      ],
+      "marketing_hooks": [
+        "Getting dates isn't your problem. Making it official is.",
+        "Stuck at the three-month mark for eight years? There's a pattern, and it's fixable.",
+        "Your friends are getting married. Here's how to stop 'just dating'.",
+        "Stop needing her to like you. Start choosing well.",
+        "If she can't tell whether you want a friendship or a relationship, this is for you"
+      ],
+      "dq_signals": [
+        "Says he does not really struggle and wants one talk, not a program",
+        "Has decided to take months off dating to focus on himself",
+        "Caps the value at a low four-figure number and is not self-seeking (Kim reached out)"
+      ],
+      "best_call_id": "recC5UEp94Pe8qvhW",
+      "worst_call_id": "recFjVn1ogcd1osin"
+    },
+    {
+      "id": "clock_watcher",
+      "name": "The Clock-Watcher",
+      "tagline": "A successful woman in her 30s or 40s who keeps picking unavailable men while the family clock ticks.",
+      "playbook_segment": "achiever",
+      "call_ids": ["recDSlt2076AjpWME", "rec4dTUVpMszdUtjL", "recI2zEIFqyTVILeO", "recWcnUc0ET44X8uP", "recvjWp70BbPaAopl", "recyezyW8KF8ewfKp", "recxGZkQn8F14QKyl", "rectr3caDIshMn6Xa"],
+      "who": "A single professional woman, often a therapist, counsellor or corporate or military professional, from her early 30s to late 40s. She dates, but her relationships stall at two or three months, turn into situationships, or end with an avoidant man disappearing, and she wonders what is wrong with her. Many want a child and feel time running out; several are the last single friend in their group. She is on the call because she has done the therapy and the reading and wants practical, directive dating guidance.",
+      "profile": {
+        "gender": "mostly women",
+        "age": "early 30s to late 40s",
+        "relationship_history": "Never married or married young and divorced; a run of situationships and short relationships, sometimes a multi-year situationship that just ended.",
+        "work_and_money": "Professionals with income (therapists, military, corporate, finance). Most can invest, but some are cash-tight, self-employed or wary of financing interest.",
+        "kids": "Mostly no kids; many want one soon.",
+        "apps_and_tried": "Hinge or Bumble, sometimes off the apps. Lots of therapy, a previous dating coach, content from other dating coaches, singles events and self-set dating challenges."
+      },
+      "goals": [
+        "A committed relationship with both chemistry and safety",
+        "Marriage and a child, soon",
+        "Stop choosing unavailable or avoidant men out of urgency",
+        "Read men's intentions early and trust her own judgment",
+        "Feel chosen and worthy instead of discarded",
+        "Practical guidance on the 'sport' of dating, not more theory"
+      ],
+      "pains": [
+        "Relationships stall at two or three months or men disappear",
+        "Long situationships with men who will not commit",
+        "The biological clock and peers with partners and kids",
+        "Fear that something is wrong with her or that she is unlovable",
+        "Anxious attachment and overanalysing early texting",
+        "Lonely evenings and weekends despite a full calendar"
+      ],
+      "in_their_words": [
+        {"quote": "I just feel like something is off and I don't know how to fix it", "call_id": "recDSlt2076AjpWME"},
+        {"quote": "I literally feel like I've done everything", "call_id": "recDSlt2076AjpWME"},
+        {"quote": "when you do therapy, you just go in and talk about things, but you don't really get a lot of guidance", "call_id": "recDSlt2076AjpWME"},
+        {"quote": "It's not like I have a ton of time left to sit and be single if I want a family", "call_id": "recWcnUc0ET44X8uP"},
+        {"quote": "the actual, like, like sport of dating, not just like the. Theory and behind it", "call_id": "recWcnUc0ET44X8uP"},
+        {"quote": "I'm the last single friend out of my girl group and it sucks.", "call_id": "recyezyW8KF8ewfKp"},
+        {"quote": "What's with all these avoidant men who say they want a relationship and then disappear?", "call_id": "recyezyW8KF8ewfKp"},
+        {"quote": "it just feels like it never gets past that, like initial stage", "call_id": "recI2zEIFqyTVILeO"},
+        {"quote": "I'm done. Begging someone to want to love me", "call_id": "rec4dTUVpMszdUtjL"},
+        {"quote": "I fill my calendar, I think, subconsciously, because I don't want to be alone", "call_id": "recvjWp70BbPaAopl"}
+      ],
+      "objections": [
+        {"type": "think_about_it", "what_it_really_means": "A personal rule, not a hidden objection; she sees the value and needs a firm follow-up, not pressure.", "quote": "it's just like something I've like trained myself to do is like not to make a decision on the spot um so yeah it's just like a rule of mind", "call_id": "recI2zEIFqyTVILeO"},
+        {"type": "skepticism_trust", "what_it_really_means": "She has never met Kim and is being asked to trust a stranger with a big number.", "quote": "I don't know anything about her, right? And then I have to trust that this is gonna actually work and help me, and I'm paying $7,000 for this", "call_id": "rec4dTUVpMszdUtjL"},
+        {"type": "has_solution_or_no_value", "what_it_really_means": "She is comparing to therapy and DIY; she needs to hear why a dating expert is different.", "quote": "If this is something I could do on my own, I would absolutely love to do it. If this is something I could do that was local with a therapist", "call_id": "rec4dTUVpMszdUtjL"},
+        {"type": "price_budget", "what_it_really_means": "Cash-flow, not value: she needs smaller payments that fit a single income.", "quote": "Yeah, I would definitely need to split it up. Like, I'm a single person trying to pay bills.", "call_id": "recyezyW8KF8ewfKp"},
+        {"type": "fear_uncertain", "what_it_really_means": "The deeper fear is that she is the problem and nothing will work for her.", "quote": "It's just that doubt of like, will anything work for me?", "call_id": "recWcnUc0ET44X8uP"},
+        {"type": "other", "what_it_really_means": "Private professional who does not want to share in a group; she wants 1:1 only.", "quote": "I'm not super interested in like sharing my experience with others like that. So like group coaching, I don't know if I'd be super interested in that.", "call_id": "recWcnUc0ET44X8uP"},
+        {"type": "timing", "what_it_really_means": "No real urgency yet; she is improving in therapy and wants to wait until she has more energy.", "quote": "Does it make sense To wait until… I can devote more of my, like, energy to it.", "call_id": "recvjWp70BbPaAopl"}
+      ],
+      "what_they_need_vs_what_we_sell": "She needs someone who will tell her directly what she is doing and give her real-time guidance on early texting, first dates and defining the relationship, on top of the self-work she has already done. That is exactly the Honest Read plus Read and Lead, and the program's 1:1 time with Kim is the draw; the group calls are a turn-off for some, and a percentage claim undermines trust with women who are therapists themselves.",
+      "how_to_spot": [
+        "Professional woman, often a therapist or counsellor, who has 'done the work' already",
+        "Talks about avoidant or emotionally unavailable men and a 2-3 month pattern",
+        "Mentions wanting a child, her age, or being the last single friend",
+        "Says therapy gives insight but not guidance"
+      ],
+      "how_to_sell": [
+        "Press the clock and the pattern; ask what another year of the same costs her",
+        "Tie the Honest Read to everything she has tried: therapy explains, Kim directs",
+        "Lean on Read and Lead: early texting, spotting serious men, defining the relationship",
+        "Run the 1 to 10 check and handle what keeps her from a 10 before price",
+        "Recommend one tier (usually 3 months) and hold it; if cash is tight, use the sanctioned $3,600 tier instead of improvised ones",
+        "Do not quote outcome percentages to a therapist; promise the process"
+      ],
+      "what_kills_the_deal": [
+        "Quoting the $14,000 tier with no budget question, then chasing her stated ceiling with discounts",
+        "Pushing a woman who has a 'no same-day decisions' rule",
+        "Financing with high interest offered to someone who already said she will not take on debt"
+      ],
+      "marketing_hooks": [
+        "Therapy told you why. This tells you what to do on Friday night.",
+        "Why do the good ones disappear at month three?",
+        "Last single friend in the group? You're not the problem. Your pattern is.",
+        "Stop choosing unavailable men because the clock is ticking.",
+        "If you can't make it work with a good guy, here's what's actually going on"
+      ],
+      "dq_signals": [
+        "No urgency at all and focused on therapy for now",
+        "Main issue is a belief outside dating (for example that rivals are hacking her phone) or an active mental-health concern",
+        "Cannot keep an hour for the call or wants to do it by phone on the move"
+      ],
+      "best_call_id": "recDSlt2076AjpWME",
+      "worst_call_id": "recWcnUc0ET44X8uP"
+    },
+    {
+      "id": "fresh_start_woman",
+      "name": "The Fresh-Start Woman",
+      "tagline": "A woman in her 50s or 60s, divorced or long single, coming out of a bad situationship and afraid of the apps.",
+      "playbook_segment": "rebuilder",
+      "call_ids": ["rec3AX0Fkb3McFdmj", "rec4PWwpX5E7trAGZ", "recC4gM25DJe88Ryw", "recd2WbFpUUNdfhxj", "recmUvMWP6493ural"],
+      "who": "A woman in her 50s or 60s who is divorced after a long or hard marriage, or never married, and has just come out of a draining situationship or unhealthy relationship. She is off the apps or scared of them after scams, and does not know how to start dating again. Her kids are grown, holidays and couples events feel empty, and she wants a companion to share daily life with, not necessarily a wedding. She books the call because she wants someone to hold her hand through it.",
+      "profile": {
+        "gender": "mostly women",
+        "age": "52 to mid 60s",
+        "relationship_history": "Divorced after a long marriage, sometimes abusive, or never married; recent multi-year situationship or unhealthy relationships since.",
+        "work_and_money": "Working (assistants, caregivers, designers, landlords) and often stretched by medical bills, supporting adult children or past divorce costs. Many expected a price of a few thousand dollars and will not take on debt.",
+        "kids": "Usually adult children, sometimes grandchildren.",
+        "apps_and_tried": "Bumble, Hinge or The League, often deleted after scams or bad experiences; some have never used apps. Tried therapy, Kim's videos, podcasts, family therapy."
+      },
+      "goals": [
+        "A steady companion for walks, travel, holidays and dinners",
+        "A healthy relationship with shared values, sometimes faith",
+        "Stop staying too long and settling for men who string her along",
+        "Confidence and hand-holding to start dating again",
+        "Feel secure in herself instead of chasing"
+      ],
+      "pains": [
+        "Long situationships with men who will not commit",
+        "Scared of apps, scams and catfishing; does not know how to start",
+        "Sad and empty at holidays, weddings and couples events",
+        "Feels the pool of men is shrinking with age",
+        "Self-doubt and over-giving after a hard marriage"
+      ],
+      "in_their_words": [
+        {"quote": "I don't want to waste my fifties being alone", "call_id": "rec3AX0Fkb3McFdmj"},
+        {"quote": "I want somebody to add to my life. It's not going to make my life.", "call_id": "rec3AX0Fkb3McFdmj"},
+        {"quote": "It's the wondering, it's the waiting", "call_id": "rec4PWwpX5E7trAGZ"},
+        {"quote": "I would like someone to hold my hand and go for a walk with", "call_id": "rec4PWwpX5E7trAGZ"},
+        {"quote": "have to kiss a lot of frogs before you meet that prince, but oh my God, the challenge of kissing those frogs, I'm over it", "call_id": "recd2WbFpUUNdfhxj"},
+        {"quote": "I don't want to be like 70 and single", "call_id": "recd2WbFpUUNdfhxj"},
+        {"quote": "help me start up a profile and then throw me to the wolves", "call_id": "recmUvMWP6493ural"},
+        {"quote": "I feel like I need a bit of hand-holding", "call_id": "recmUvMWP6493ural"},
+        {"quote": "I stayed too long", "call_id": "recC4gM25DJe88Ryw"},
+        {"quote": "I'm really not the type of person to be single", "call_id": "recC4gM25DJe88Ryw"}
+      ],
+      "objections": [
+        {"type": "price_budget", "what_it_really_means": "She expected a few thousand dollars and has a ceiling that matches the sanctioned $3,600 tier.", "quote": "No, that's more than I expected, to be honest. I thought it would be about three, three to five.", "call_id": "recd2WbFpUUNdfhxj"},
+        {"type": "price_budget", "what_it_really_means": "Real hardship (medical bills, supporting a child, legal fees); she needs care, not a close.", "quote": "I'm still recovering from, you know, a crazy divorce and supporting my middle daughter who's in nursing school and, you know, recovering from being sick", "call_id": "rec3AX0Fkb3McFdmj"},
+        {"type": "think_about_it", "what_it_really_means": "A faith-based decision and a firm no to more debt; financing pushes make it worse.", "quote": "I can certainly think and pray about this.", "call_id": "recC4gM25DJe88Ryw"},
+        {"type": "skepticism_trust", "what_it_really_means": "Long discovery about why she is still single at her age made her feel judged.", "quote": "I'm kind of feeling a little bit like, I don't know why, but a little bit judged or something because I haven't found the right person at my age.", "call_id": "recC4gM25DJe88Ryw"},
+        {"type": "timing", "what_it_really_means": "Still grieving the situationship; she wants to heal before dating.", "quote": "I'm not ready to set up an online dating profile or go on a date yet, but I think I will be ready at some point.", "call_id": "recmUvMWP6493ural"},
+        {"type": "skepticism_trust", "what_it_really_means": "After repeated chasing by text she felt treated as a sale, not a person.", "quote": "right now I only want to trust people that see me as a person with emotions rather than a lost connection for profit reasons", "call_id": "recd2WbFpUUNdfhxj", "source": "threads/lead_TLEi5J9BnwQuAxgxOQmJlhZzppUFc23GKI9piD4IZGS.json"}
+      ],
+      "what_they_need_vs_what_we_sell": "She needs gentle, step-by-step help: heal the last situationship, set up a safe profile, screen out scammers, and someone to talk to as each date happens. The program covers this, but the $7,200 and $14,000 tiers sit well above what she expected; the sanctioned $3,600 bi-weekly tier fits her budget and was never offered on these calls.",
+      "how_to_spot": [
+        "Woman in her 50s or 60s, divorced or never married, adult kids",
+        "Just out of a long situationship or a man who 'kept her on a string'",
+        "Scared of apps, scams or catfishing, or has never used them",
+        "Talks about holidays, couples events or friends' companionship making her sad",
+        "Mentions money being tight, faith, or not wanting more debt"
+      ],
+      "how_to_sell": [
+        "Keep discovery warm and short on 'why are you still single'; she hears judgment quickly",
+        "Press the empty holidays and the years ahead alone, then future-pace a companion for daily life",
+        "Lead with the Reset (safe profile, screening) and hand-holding through first dates",
+        "Qualify money early and recommend the $3,600 bi-weekly tier when she names a few-thousand ceiling",
+        "Never push financing on someone who has said no to debt, and stop chasing after a clear no"
+      ],
+      "what_kills_the_deal": [
+        "Telling her there is no cheaper option, then improvising discounts that cut the program in half",
+        "Financing and credit-check pushes after she said she will not take on debt",
+        "Quoting $14,000 to a woman who just said money is very tight",
+        "Chasing by text after a decline, leaning on family illness"
+      ],
+      "marketing_hooks": [
+        "Back to dating after divorce? You don't have to kiss every frog.",
+        "Don't waste your fifties alone. Start with one safe step.",
+        "Scared of the apps? We'll set up your profile and walk with you.",
+        "Five years of waiting for him to commit? It's time for someone who adds to your life.",
+        "Holidays shouldn't feel empty. Find your person to share them with."
+      ],
+      "dq_signals": [
+        "Living paycheck to paycheck with medical or legal debt and no savings",
+        "Says she is months away from being ready to date",
+        "Asks if insurance covers it or wants a therapist rather than a coach"
+      ],
+      "best_call_id": null,
+      "worst_call_id": "recd2WbFpUUNdfhxj"
+    },
+    {
+      "id": "one_situation_fixer",
+      "name": "The One-Situation Fixer",
+      "tagline": "Someone who wants a verdict on one person (an ex, a crush, a new partner), not a dating program.",
+      "playbook_segment": "new",
+      "call_ids": ["rec3CDQLtgxnFBuZU", "rec5m3zOG4p3zshwa", "recBs4M5WwMoXRskQ", "recO9YNZRasFWG7iH", "recdjmrdH9buz4W7B", "recouq288EEBxK1Kp", "reczdNC6Wv7LSimwv", "recWQptVD3IVcaLFd"],
+      "who": "Usually a man (from late 20s to mid 50s) whose whole focus is a single person: an ex he wants back, a crush who is hot and cold, a woman still living with her ex-husband, or a new girlfriend he is afraid of scaring off. He overthinks, ruminates and wants someone to decode her signals and tell him what to do. He often says outright that he dates fine otherwise. He books the call wanting clarity on that one situation, and the application usually says so.",
+      "profile": {
+        "gender": "mostly men",
+        "age": "late 20s to mid 50s, most in their 30s",
+        "relationship_history": "Mixed: some had long relationships that just ended, some are in limerence with someone unavailable, one is newly in a relationship after a divorce.",
+        "work_and_money": "Mixed. Some can pay and call the price fair; others have a few hundred dollars and want a single session.",
+        "kids": "Mostly no kids; a divorced dad of a young child is the exception.",
+        "apps_and_tried": "Little app focus. Tried therapy or counselling, YouTube no-contact content, books, friends and family advice."
+      },
+      "goals": [
+        "Decide whether to reach out, pursue, wait or move on",
+        "Get the ex back or make this one relationship work",
+        "Decode her signals and stop overthinking every text",
+        "Get a woman's perspective on this specific situation",
+        "Get closure and move on if it is over"
+      ],
+      "pains": [
+        "Rumination and overthinking that take over work and sleep",
+        "Mixed signals, slow replies or silence from one person",
+        "Fear of seeming desperate or pushy",
+        "Heartbreak from a recent breakup",
+        "Not trusting his own judgment"
+      ],
+      "in_their_words": [
+        {"quote": "I don't want to come across as begging, desperate, pleading", "call_id": "rec3CDQLtgxnFBuZU"},
+        {"quote": "I just want these thoughts to really stop", "call_id": "rec3CDQLtgxnFBuZU"},
+        {"quote": "just a little bit of clarity", "call_id": "rec5m3zOG4p3zshwa"},
+        {"quote": "pre-rejecting myself", "call_id": "recBs4M5WwMoXRskQ"},
+        {"quote": "I overthink it and ruin it", "call_id": "recO9YNZRasFWG7iH"},
+        {"quote": "Should I reply now? Should I wait an hour?", "call_id": "recdjmrdH9buz4W7B"},
+        {"quote": "I can teach you how to fly your plane, but I can't even teach myself", "call_id": "recouq288EEBxK1Kp"},
+        {"quote": "It's like walking in the darkness and you need a flashlight", "call_id": "reczdNC6Wv7LSimwv"},
+        {"quote": "I want someone to help me, you know, to find a solution for the problem.", "call_id": "reczdNC6Wv7LSimwv"},
+        {"quote": "Change a no to a yes", "call_id": "recWQptVD3IVcaLFd"}
+      ],
+      "objections": [
+        {"type": "has_solution_or_no_value", "what_it_really_means": "He already knows the answer (move on) and does not want to pay to hear it.", "quote": "I don't want to potentially spend money to be told something that I kind of have a gut feeling of", "call_id": "rec3CDQLtgxnFBuZU"},
+        {"type": "other", "what_it_really_means": "He wants one session on one person, not a three-month program.", "quote": "Can it be, like, a one-on-one session, like, in the sense, like, one session at a time? We try a session, and then if it works out", "call_id": "recBs4M5WwMoXRskQ"},
+        {"type": "fear_uncertain", "what_it_really_means": "He would rather keep hoping than hear that she is not interested.", "quote": "I just fear that I'm gonna be hearing a lot of things that'll be hard.", "call_id": "recBs4M5WwMoXRskQ"},
+        {"type": "price_budget", "what_it_really_means": "Even a single paid session is out of reach.", "quote": "Yeah, I don't have a thousand bucks for an hour.", "call_id": "rec5m3zOG4p3zshwa"},
+        {"type": "other", "what_it_really_means": "He is shopping several coaches for a short, specific job.", "quote": "there's another couple of coaches I'm speaking to, to be really honest, so it's just kind of weighing up which one to… to go with.", "call_id": "recdjmrdH9buz4W7B"},
+        {"type": "fear_uncertain", "what_it_really_means": "She has not met Kim and wants a trial before trusting her with something so personal.", "quote": "I didn't expect that it would be that much, but I also don't know how much it's going to be beneficial for me. So I would like to at least have a trial", "call_id": "reczdNC6Wv7LSimwv"}
+      ],
+      "what_they_need_vs_what_we_sell": "They want a quick, specific answer about one person, which the program does not sell and coaching cannot honestly promise (especially getting an ex back). Reps end up improvising one-off sessions to fit the ask; the only sellable version is reframing the call around the pattern behind the situation (overthinking, communication, choosing unavailable people) and the next relationship.",
+      "how_to_spot": [
+        "Application names one person or one breakup ('getting her back', 'mixed signals', 'a woman I've had a crush on')",
+        "Talks about one woman for most of the first five minutes",
+        "Says he gets dates fine or is not looking for general dating help",
+        "Uses words like clarity, signals, decode, reach out, closure"
+      ],
+      "how_to_sell": [
+        "Set the frame early: Kim does not get exes back; she fixes the pattern so the next relationship works",
+        "Find the repeating pattern behind this one situation (overthinking, unavailable choices, communication) and press its cost",
+        "Lead with Inner Game and Read and Lead rather than the Reset",
+        "If the pattern is not there, release him kindly instead of selling an improvised single session"
+      ],
+      "what_kills_the_deal": [
+        "He decides during the call to move on, and then sees no reason to pay",
+        "Off-sheet one-session and four-session prices that confirm he only needs a quick answer",
+        "Pitching a program before anyone checks he wants more than an answer about one person"
+      ],
+      "marketing_hooks": [
+        "Stuck overthinking one person? The problem is usually the pattern, not the person.",
+        "Stop decoding her texts. Learn what you're actually looking at.",
+        "Still thinking about your ex? Make sure the next one is different.",
+        "Should I reply now or wait an hour? Get out of the anxious loop."
+      ],
+      "dq_signals": [
+        "Wants help getting a specific ex or crush back and nothing else",
+        "Has a few hundred dollars and wants one call",
+        "Pursuing someone who has clearly said no",
+        "Already in a new relationship and only wants short help navigating it"
+      ],
+      "best_call_id": null,
+      "worst_call_id": "rec3CDQLtgxnFBuZU"
+    }
+  ],
+  "universal_objections": [
+    {"type": "price_budget", "insight": "The most common objection on calls and in texts. Most often it lands because money was never asked about before the pitch, so the price exposes a budget wall that discovery could have found in minutes.", "quote": "I just, I can't afford it right now is really what it comes down to.", "call_id": "reck9JVOjrzpNKQQY"},
+    {"type": "think_about_it", "insight": "Many buyers across avatars have a personal rule against same-call decisions. Long pushes after this turn warm leads cold; a belief check and a firm next step work better.", "quote": "I feel like I need time to process that. I'm not like, I'm not balking at, I am balking, but just processing.", "call_id": "recAUjmML6vyYadLa"},
+    {"type": "skepticism_trust", "insight": "Prospects ask for guarantees or proof. Reps answer with partner-rate claims the playbook forbids; the honest answer is the process and visible change.", "quote": "am I willing to pay that amount of money to hopefully get, you know, this end result, like if it was guaranteed, then I would do it.", "call_id": "recFjVn1ogcd1osin"},
+    {"type": "fear_uncertain", "insight": "A frequent ask is to meet Kim or pay for one session before committing. There is no sanctioned answer, so reps invent $1,000 calls and deposits that become the product.", "quote": "is there a way where you do like you pay for the first session and just see like get the feel for it first before you commit to the $7,000 or it might be?", "call_id": "recQgbOLAOMtxKfce"},
+    {"type": "has_solution_or_no_value", "insight": "Therapy (often covered by insurance or work benefits) is the main alternative, especially for women. The pitch needs a clear line between insight and directive dating guidance.", "quote": "Getting a therapist is a cheaper option at this point", "call_id": null, "source": "threads/lead_n7EP7ua5TmRRwhzHsnHIQMA9CwnbCgqXlTBuArULNzX.json"},
+    {"type": "timing", "insight": "Some prospects decide to step back from dating to work on themselves; pushing time scarcity rarely moves them.", "quote": "I've kind of decided that the time and effort I've spent dating these women and pointing towards them, I'm going to put towards myself again.", "call_id": "recoqNB5TkuM0n93z"}
+  ],
+  "who_buys": "Buyers name a repeating pattern in their own words, have the money or credit to act on the call, and decide alone: professional women around 40 with an unavailable-men or long situationship pattern, men around 30 with good careers whose relationships never become official, a wealthy older divorced man, and younger novices who came warm from Kim's content. They hit a high score on the temperature check before price and their only objection is which tier or how to pay. Non-buyers mostly fall into three groups: people who cannot invest four figures (no income, fixed income, debt, or a few hundred dollars), people who want a single session or a verdict on one person rather than a program, and older sceptics who were burned by a past coach or matchmaker and ask for guarantees. Across all groups the calls that were lost usually had price stated before money was qualified, and then improvised discounts, deposits and financing pushes.",
+  "icp_gap": "The closing doc describes four segments split evenly by gender, with the successful woman as the achiever and an older divorced woman as the rebuilder. In practice the ad funnel targets men and its applicants skew 55 and over, so most sales calls are with men, many of them older returners on mixed incomes or late-starting novices with little money. A large share of calls fall outside the four segments: men around 30 who date easily but cannot make it official, and people who only want help with one specific person. The people who actually buy are professional women in their late 30s and 40s and men in their 30s with careers, plus the occasional wealthy older man; older women and one-situation callers rarely buy. The sanctioned $3,600 bi-weekly tier matches what many novices and older women can pay, yet it is seldom offered and reps invent cheaper options instead."
+}

@@ -213,3 +213,5 @@ select,input[type=search]{font:inherit;font-size:13.5px;padding:7px 10px;border-
 .win .big{font-size:26px;font-weight:800;color:var(--good)}
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:760px){.cols2{grid-template-columns:1fr}}
 .list li{margin:0 0 8px}
+.gate{display:grid;grid-template-columns:110px 1fr 200px;gap:12px;align-items:center;margin:8px 0}
+@media(max-width:640px){.gate{grid-template-columns:80px 1fr}.gate span{grid-column:1/-1}}
