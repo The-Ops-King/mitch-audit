@@ -106,7 +106,8 @@ Keep = works now. Fix = change something that exists. Build = make something new
 | What's needed | Today | Verdict | Card |
 |---|---|---|---|
 | Call outcome recorded (EOC) | Airtable form plus a 79-step Zap (same as Kimberly Rae's) | Fix | 5 |
-| Fathom recording on the lead | In the EOC (39 of 39). Close has no Fathom field | Build | 1, 13 |
+| Fathom recording on the lead | Only 11 of 39 EOCs have a recording link, all Zoom, none Fathom. Close has no Fathom field | Build | 1, 13 |
+| Call review and feedback | Done by hand (Sid) | Build | 26 |
 | Follow-up task from the follow-up date | No | Fix | 5 |
 | Follow-up message after a no-close | A Zap exists but is off, and it holds the exposed API key | Remove (card 8). Rebuild later if Mitch wants it | 8 |
 
@@ -213,6 +214,7 @@ New and edited Zaps use this format: `BVW | [trigger] > [main result]`. Keep the
 | 23 | Instant response to new applicants | Finish and turn on "New Opt In / Application" |
 | 24 | Speed-to-lead and sales tracking | First-contact time, ad spend, rep scorecards |
 | 25 | Re-engagement (optional) | Finish and turn on the three re-engagement workflows |
+| 26 | AI call review and feedback | Every recorded call scored against Mitch's rubric, feedback to the closer, flags for Sid |
 
 Every card has the same parts: System, Trigger, Outcome, Do this first, Steps, Done when, Keep in mind.
 
@@ -697,6 +699,45 @@ Every card has the same parts: System, Trigger, Outcome, Do this first, Steps, D
 
 **Done when:** A TEST lead with no contact for 15 days receives Re-engagement 1.
 
+## 26. AI call review and feedback
+
+**System:** Zapier, Anthropic (Claude) through Zapier's app connection, Airtable, Close, Slack.
+
+**Trigger:** Fathom "New Recording" for sales calls (the same trigger as card 13).
+
+**Outcome:** Every recorded sales call is scored against Mitch's rubric. The closer gets feedback in Slack within minutes, the review is saved in Airtable and Close, and Sid only reviews the calls that get flagged instead of watching every call.
+
+**Do this first:** Card 13. All closers record with Fathom (see "Keep in mind").
+
+**Steps:**
+
+1. Airtable: new table "Call Reviews" with fields: Date, Lead Email, Rep, Call Type, Overall Score (number 1 to 10), Section Scores (long text), Strengths (long text), Fixes (long text), Objections Raised (long text), Objections Handled Well (Yes/No), Script Adherence % (number), Recording Link (URL), Flag for Review (checkbox).
+2. Airtable: new table "Review Rubric", one row per item: Section, What good looks like, Weight (1 to 3), Active (checkbox). Start with the sections of the Master Closing Doc: frame and confidentiality, isolate the problem, background and segment read, current situation, doubt question, why now and cost, desired situation, tie-down, transition, the 4 pillars, temperature check, next steps before price, investment (one recommended tier, then silence), objection pacing. Mitch and Sid change the rubric here, with no Zap edits.
+3. Zapier: connect the Anthropic app (Zapier asks for the API key once and stores it in the connection). Never paste the key into a Code step or a text field.
+4. New Zap `BVW | Fathom recording > AI call review`:
+   1. Trigger: Fathom "New Recording". Filter: sales calls only.
+   2. Fathom: get the transcript for the recording.
+   3. Airtable "Find Records" in "Review Rubric" where Active is checked.
+   4. Anthropic "Send Message" with the prompt below. Ask for JSON only.
+   5. Code by Zapier or Formatter: read the JSON fields.
+   6. Airtable "Create Record" in "Call Reviews".
+   7. Close "Find Lead" by the guest's email, then "Create Note" with the score, strengths and fixes.
+   8. Slack: DM the closer with the score, 3 strengths and 3 fixes.
+   9. Filter: if Overall Score is 6 or less, or Objections Handled Well = No, set Flag for Review and post in the EOC channel (C0BFTKQPWFN), tagging Sid.
+5. Prompt for step 4.4 (Leah pastes it and maps the fields):
+
+> You review recorded sales calls for Barak Van Wyk Coaching. Score the call against this rubric: [rubric rows]. Transcript: [transcript]. Return only JSON with these keys: overall_score (1 to 10), section_scores (list of section, score, one-line evidence quote), strengths (3 items), fixes (3 items, each with the exact moment and what to say instead), objections_raised (list), objections_handled_well (true or false), script_adherence_percent (number), flag_for_review (true or false). Be specific and quote the transcript. Do not invent anything that is not in the transcript.
+
+6. Optional, phase 2: setter calls. Close records most setter calls. Add a transcription step (a Zapier transcription app) on Close "New Call" with a recording, then run the same review with a setter rubric built from the setting scripts.
+
+**Done when:** A TEST recorded call creates a "Call Reviews" row, a Close note and a Slack DM to the closer within 10 minutes. Changing a rubric row in Airtable changes the next review without touching the Zap.
+
+**Keep in mind:**
+
+- Only calls recorded in Fathom can be reviewed. Today many closer calls have no recording, or a Zoom link instead of Fathom. Ask Mitch to make Fathom recording required on every call.
+- The Master Closing Doc already tells prospects the call is recorded.
+- Each review costs a few cents in Anthropic usage.
+
 ---
 
 # Part 4: messages and texting rules
@@ -867,6 +908,7 @@ Use the same glossary, change log, SOP list and first-week checks as the Kimberl
 | 23 Instant response to new applicants | | | |
 | 24 Speed-to-lead and sales tracking | | | |
 | 25 Re-engagement (optional) | | | |
+| 26 AI call review and feedback | | | |
 
 ---
 
@@ -909,6 +951,7 @@ Use the same glossary, change log, SOP list and first-week checks as the Kimberl
 10. Fix the smart lists, especially "Gold Rush" (card 6).
 11. Fix rep names and scorecards (cards 2, 24).
 12. Failed payment alert, refund records and weekly numbers (cards 15, 16, 19).
+13. AI review of every recorded call against Mitch's rubric, with feedback to the closer and flags for Sid (card 26).
 
 ### Suggested, not required
 
@@ -943,7 +986,7 @@ Use the same glossary, change log, SOP list and first-week checks as the Kimberl
 | Medium | 5 payments not linked to a customer product. 2 September Fanbasis payments missing from their month | Airtable data | 7, 14 |
 | Medium | Phone from setter bookings is all Calendly answers joined together | Setter Booking Zap phone mapping | 4 |
 | Medium | 31 of 89 leads have no phone | Close data | 4 |
-| Medium | No Fathom field in Close. Recordings only in the EOC (39 of 39) | Close fields | 1, 13 |
+| High | Most calls aren't recorded in Fathom, so they can't be reviewed or summarized. No Fathom field in Close | 11 of 39 EOCs have a recording link, all Zoom | 1, 13, 26 |
 | Medium | Call dates converted UTC to UTC, so evening calls can show the next day | Date steps in booking and EOC Zaps | 4 |
 | Medium | Paid flag formula looks for "Paid Ad". No paid source exists yet | Lead Base formula | 2 |
 | Low | Stripe Zap off and not connected. EOD Reminder off | Zap list | 8 |
