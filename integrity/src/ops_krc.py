@@ -283,6 +283,7 @@ eoc_out = {
     "lost_reasons": [str(e.get("Lost Reason")).strip()[:240] for e in E2 if e.get("Lost Reason")],
     "dq_count": sum(1 for e in E2 if e.get("Call Outcome") == "Disqualified"),
     "dq_without_reason": sum(1 for e in E2 if e.get("Call Outcome") == "Disqualified" and not e.get("DQ Reason")),
+    "full_closes": [{"contract": e.get("Contract Value"), "cash": e.get("Cash Collected"), "product": e.get("Product Purchased")} for e in E2 if CLOSED(e)],
     "cash_collected": round(sum(e.get("Cash Collected") or 0 for e in E2)), "contract_value": round(sum(e.get("Contract Value") or 0 for e in E2)),
 }
 
@@ -558,3 +559,74 @@ for lid in apps:
     lr[lid] = r
 json.dump(lr, open(os.path.join(ROOT, f"data/{OFFER}/raw/lead_rows.json"), "w"))
 print("lead rows", len(lr))
+
+# ---------------------------------------------------------------- setter time audit (what Close can see) + weekly scorecard
+lead_src = {l["id"]: src(l) for l in leads}
+lead_outcome = {}
+for l in leads:
+    E = eoc_by_lead.get(l["id"], [])
+    lead_outcome[l["id"]] = {"booked": bool(inv_by_lead.get(l["id"])) or bool(E), "showed": any(HELD(e) for e in E), "closed": any(CLOSED(e) for e in E), "cash": paid_by_lead[l["id"]]}
+acts = []
+for c in calls:
+    t = P(c["date_created"]).astimezone(ET)
+    acts.append({"user": rep(c.get("user_name")), "kind": "call", "dir": c.get("direction"), "dur": c.get("duration") or 0, "t": t, "lead": c.get("lead_id")})
+for m in sms:
+    t = P(m["date_created"]).astimezone(ET)
+    acts.append({"user": rep(m.get("user_name")), "kind": "sms", "dir": m.get("direction"), "dur": 0, "t": t, "lead": m.get("lead_id")})
+SEC_PER_SMS, SEC_PER_DIAL = 60, 30   # stated assumptions for time not captured as talk time
+time_out = {"assumptions": {"minutes_per_text_sent": SEC_PER_SMS / 60, "seconds_per_unanswered_dial": SEC_PER_DIAL}, "users": []}
+for u in sorted({a["user"] for a in acts if a["dir"] == "outbound"}):
+    A = [a for a in acts if a["user"] == u and a["dir"] == "outbound"]
+    if len(A) < 30:
+        continue
+    days = C.defaultdict(list)
+    for a in A:
+        days[a["t"].date()].append(a["t"])
+    spans = [(max(v) - min(v)).total_seconds() / 3600 for v in days.values() if len(v) > 1]
+    starts = [min(v).hour + min(v).minute / 60 for v in days.values()]
+    ends = [max(v).hour + max(v).minute / 60 for v in days.values()]
+    talk = sum(a["dur"] for a in A if a["kind"] == "call") / 60
+    est = talk + sum(1 for a in A if a["kind"] == "sms") * SEC_PER_SMS / 60 + sum(1 for a in A if a["kind"] == "call" and a["dur"] < 10) * SEC_PER_DIAL / 60
+    by_src = []
+    for s in sorted({lead_src.get(a["lead"], "Unknown") for a in A}):
+        As = [a for a in A if lead_src.get(a["lead"], "Unknown") == s]
+        ls = {a["lead"] for a in As if a["lead"]}
+        o = [lead_outcome[x] for x in ls if x in lead_outcome]
+        mins_ = sum(a["dur"] for a in As if a["kind"] == "call") / 60 + sum(1 for a in As if a["kind"] == "sms") * SEC_PER_SMS / 60 + sum(1 for a in As if a["kind"] == "call" and a["dur"] < 10) * SEC_PER_DIAL / 60
+        by_src.append({"key": s, "touches": len(As), "leads": len(ls), "est_minutes": round(mins_), "booked": sum(x["booked"] for x in o), "showed": sum(x["showed"] for x in o),
+                       "closed": sum(x["closed"] for x in o), "cash": round(sum(x["cash"] for x in o))})
+    heat_ = [[sum(1 for a in A if a["t"].weekday() == d and a["t"].hour == h) for h in range(24)] for d in range(7)]
+    by_month = []
+    for mo in sorted({a["t"].strftime("%Y-%m") for a in A}):
+        Am = [a for a in A if a["t"].strftime("%Y-%m") == mo]
+        by_month.append({"key": mo, "days": len({a["t"].date() for a in Am}), "dials": sum(1 for a in Am if a["kind"] == "call"), "texts": sum(1 for a in Am if a["kind"] == "sms"),
+                         "talk_min": round(sum(a["dur"] for a in Am if a["kind"] == "call") / 60)})
+    e = [r for r in eod if rep(r.get("Setter Name")) == u]
+    eodsum = {k: sum((r.get(k) or 0) for r in e) for k in ["New Inbound IG Leads", "Follow Ups / Re-Engagements", "Follow Up / Re-Engagement Replies", "Meetings Asked", "Calendar Calls Booked", "Live Calls Booked", "Outbound Dials", "Talk Time (Minutes)"]}
+    time_out["users"].append({"key": u, "days_active": len(days), "median_span_hrs": med(spans), "median_start": med(starts), "median_end": med(ends),
+                              "dials": sum(1 for a in A if a["kind"] == "call"), "texts": sum(1 for a in A if a["kind"] == "sms"), "talk_min": round(talk),
+                              "est_hours": round(est / 60, 1), "est_hours_per_day": round(est / 60 / max(1, len(days)), 1), "by_source": by_src, "heat": heat_,
+                              "by_month": by_month, "eod": {"reports": len(e), **eodsum}})
+
+def wk(d):
+    return (d - timedelta(days=d.weekday())).strftime("%Y-%m-%d")
+weeks = sorted({wk(P(l["date_created"]).astimezone(ET)) for l in leads if l["date_created"] >= SINCE})[-12:]
+sc = []
+for w in weeks:
+    R = [r for r in rows if r["week"] == w]
+    t = sorted(r["mins"] for r in R if r["mins"] is not None)
+    Ew = [e for e in eoc if e.get("Date of Call") and wk(datetime.fromisoformat(e["Date of Call"])) == w]
+    held = sum(1 for e in Ew if HELD(e)); ns = sum(1 for e in Ew if e.get("Call Outcome") == "No Show")
+    Iw = [i for i in inv if i.get("start") and wk(P(i["start"]).astimezone(ET)) == w]
+    Pw = [p for p in pay if p.get("Date") and wk(datetime.fromisoformat(p["Date"])) == w]
+    inb = [m for m in msgs if m["direction"] == "inbound" and wk(m["t"].astimezone(ET)) == w]
+    sc.append({"week": w, "leads": len(R), "in5_pct": pct(sum(1 for x in t if x <= 5), len(R)), "median_first_touch": med(t),
+               "never_contacted_pct": pct(sum(1 for r in R if r["mins"] is None), len(R)), "booked": sum(r["booked"] for r in R),
+               "calls_held": held, "show_rate": pct(held, held + ns), "full_closes": sum(1 for e in Ew if CLOSED(e)),
+               "deposits": sum(1 for e in Ew if e.get("Payment Type") == "Deposit"), "cash": round(sum(p.get("Amount") or 0 for p in Pw)),
+               "team_cancels": sum(1 for i in Iw if i["status"] == "canceled" and i.get("canceled_by") == "host" and not i.get("rescheduled")),
+               "eoc_with_recording_pct": pct(sum(1 for e in Ew if re.search(r"fathom|zoom|drive", str(e.get("Fathom Share Link") or ""))), len(Ew)),
+               "eoc_reports": len(Ew), "lead_texts_in": len(inb)})
+ops_extra = {"setter_time": time_out, "scorecard": sc}
+json.dump(ops_extra, open(os.path.join(ROOT, f"data/{OFFER}/raw/ops_extra.json"), "w"), default=str)
+print("setter time users", [(u["key"], u["est_hours"], u["days_active"]) for u in time_out["users"]], "weeks", len(sc))

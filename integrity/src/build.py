@@ -712,6 +712,8 @@ def main():
         call_meta = json.load(open(cm))
     ops_p = f"{D}/raw/ops.json"
     ops = deep(json.load(open(ops_p))) if os.path.exists(ops_p) else None
+    if ops and os.path.exists(f"{D}/raw/ops_extra.json"):
+        ops["extra"] = deep(json.load(open(f"{D}/raw/ops_extra.json")))
 
     closer = build_closer(calls, playbook)          # sets _won/_score/rep on calls
     closer["deep"] = closer_deep(calls, playbook, coaching)
@@ -738,8 +740,17 @@ def main():
     closer["trends"] = BD.trends(sales, sanctioned)
     wins = BD.easiest_wins(sales, closer["objection_pages"], ops)
     av = BD.avatar_rollup(deep(json.load(open(f"{D}/avatars.json"))) if os.path.exists(f"{D}/avatars.json") else None, sales, app["rows"] if app else [], scrub)
+    ck_text = {ck["id"]: ck["text"] for ph in playbook["phases"] for ck in ph["checks"]}
+    ck_text.update({ck["id"]: ck["text"] for ph in pb_setter["phases"] for ck in ph["checks"]})
+    ph_text = {ph["id"]: ph["name"] for ph in playbook["phases"] + pb_setter["phases"]}
+    ck_label = lambda a: ck_text.get(str(a)) or ph_text.get(str(a)) or ph_text.get(str(a)[:3]) or ph_text.get(str(a)[:2]) or str(a)
+    real_triage = [c for c in scalls if c.get("type") == "setter_call"]
+    action = {"money": BD.money_model(ops, sales, closer["objection_pages"], threads) if ops else None,
+              "sticking": BD.coaching_sticking(sales, coaching, real_triage),
+              "packs": BD.coaching_packs(closer["reps_deep"], sales, coaching, real_triage, [], scrub, ck_label),
+              "patches": deep(json.load(open(f"{D}/script_patches.json"))) if os.path.exists(f"{D}/script_patches.json") else None}
     out = {
-        "applicants": app, "avatars": av, "wins": wins,
+        "applicants": app, "avatars": av, "wins": wins, "action": action,
         "meta": {"offer": OFFER, "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "min_n": MIN_N},
         "funnel": build_funnel(), "ops": ops,
         "closer": closer, "texting": texting, "triage": triage, "triage_progress": tprog,

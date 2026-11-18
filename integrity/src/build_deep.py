@@ -235,3 +235,144 @@ def avatar_rollup(av, sales, app_rows, scrub):
                       "age_bands": C.Counter(call_app[c["call_id"]].get("age_band") for c in cs if c["call_id"] in call_app and call_app[c["call_id"]].get("age_band")).most_common(4),
                       "promise_calls": sum(1 for c in cs if (c.get("offer") or {}).get("outcome_promise_quote"))}
     return av
+
+
+# ---------------------------------------------------------------- money on the table
+def money_model(ops, sales, obj_pages, threads):
+    if not ops:
+        return None
+    E = ops["eoc"]
+    L = ops["leads"]; o = L["overall"]
+    full = E.get("full_closes") or []
+    contract = [float(r["contract"]) for r in full if r.get("contract")]
+    cash = [float(r["cash"]) for r in full if r.get("cash") is not None]
+    aov = round(sum(contract) / len(contract)) if contract else None
+    cash_per = round(sum(cash) / len(cash)) if cash else None
+    show = o["showed"] / max(1, o["booked"]); close = o["closed"] / max(1, o["showed"])
+    levers = []
+    def add(name, owner, effort, assumption, extra_book=None, extra_close=None, call_ids=None, lead_note=None):
+        if extra_close is None and extra_book is not None:
+            extra_close = extra_book * show * close
+        levers.append({"lever": name, "owner": owner, "effort": effort, "assumption": assumption, "extra_bookings": None if extra_book is None else round(extra_book, 1),
+                       "extra_closes": round(extra_close or 0, 1), "contract_value": round((extra_close or 0) * (aov or 0)), "cash_at_close": round((extra_close or 0) * (cash_per or 0)),
+                       "call_ids": call_ids or [], "note": lead_note})
+    never = o["leads"] - o["contacted"]
+    cb = next((b for b in L["speed_buckets"] if b["key"] == "Never"), {"booked": 0})
+    book_contacted = (o["booked"] - cb["booked"]) / max(1, o["contacted"])
+    add("Contact every new lead within the hour", "Leah", "Low: instant text + alert + smart view", f"The {never} leads nobody contacted book at the rate contacted leads do ({round(100 * book_contacted)}%), then show and close at today's rates.", never * book_contacted)
+    dist = {str(x["key"]): x["leads"] for x in L["touches_7d"]["dist"]}
+    # follow-up depth: leads with 1-2 touches vs 3-7
+    rows_t = L.get("touch_book") or None
+    if ops.get("sms"):
+        un = ops["sms"]["unanswered_leads"]
+        eng = [t for t in threads if t.get("lead_engaged")]
+        rate = sum(1 for t in eng if (t.get("outcome") or {}).get("booked")) / max(1, len(eng))
+        add("Answer every lead who texts back", "Leah + setters", "Low: 30-minute unanswered-reply alert", f"Half of the {un} leads left without a reply would book at the rate engaged text leads do ({round(100 * rate)}%).", un * 0.5 * rate)
+    for w in obj_pages[:3]:
+        lost = [c for c in sales if not c["_won"]]
+        un = [c for c in lost if any((o_.get("type") or "other") == w["type"] and not o_.get("resolved") for o_ in c.get("objections") or [])]
+        res = [c for c in sales if any((o_.get("type") or "other") == w["type"] and o_.get("resolved") for o_ in c.get("objections") or [])]
+        r = sum(c["_won"] for c in res) / len(res) if res else 0
+        if r and len(res) >= 2:
+            add(f"Handle the {w['type'].replace('_', ' ')} objection better", "Sid", "Medium: script fix + training + AI review", f"Half of {len(un)} lost calls with it unresolved close at the rate calls close when it is resolved ({round(100 * r)}%, {len(res)} calls, small sample). Sample of recorded calls only.", None, len(un) * 0.5 * r, [c["call_id"] for c in un])
+    cal = ops.get("calendly") or {}
+    dcb = next((p for p in cal.get("by_path", []) if p["key"].startswith("Direct, ads")), None)
+    sb = next((p for p in cal.get("by_path", []) if p["key"] == "Setter booked"), None)
+    if dcb and sb and sb.get("show_pct"):
+        add("Route ad bookings through a quick setter call", "Mitch + Leah", "Medium: booking flow change", f"Half of the {dcb['host_cancel']} ad bookings the team cancelled become real calls and show at the setter-booked rate ({sb['show_pct']}%), then close at today's rate.", None, dcb["host_cancel"] * 0.5 * sb["show_pct"] / 100 * close)
+    return {"aov_contract": aov, "cash_per_close": cash_per, "show_rate": round(100 * show), "close_rate_of_shows": round(100 * close), "full_closes": len(full),
+            "since": ops["leads"]["since"], "levers": sorted(levers, key=lambda x: -x["contract_value"]),
+            "total_contract": sum(x["contract_value"] for x in levers), "total_cash": sum(x["cash_at_close"] for x in levers)}
+
+
+# ---------------------------------------------------------------- is coaching sticking: same behaviours, month by month, per rep
+def coaching_sticking(sales, coaching, triage_calls):
+    def m(c):
+        return (c.get("date") or "")[:7]
+    def has_flag(c, cat):
+        return any(f.get("category") == cat for f in c.get("flags") or [])
+    def chk(c, pid, cid):
+        return ((((c.get("adherence") or {}).get("phases") or {}).get(pid) or {}).get("checks") or {}).get(cid)
+    metrics = [("money_before_pitch", "Asked about money before the pitch", lambda c: (coaching.get(c["call_id"]) or {}).get("money_qualified_before_pitch") if c["call_id"] in coaching else None, 1),
+               ("price_before_temp", "Said the price before the temperature check", lambda c: (c.get("offer") or {}).get("price_before_temperature_check") if (c.get("offer") or {}).get("presented") else None, -1),
+               ("promise", "Made an outcome promise", lambda c: bool((c.get("offer") or {}).get("outcome_promise_quote")), -1),
+               ("off_sheet", "Quoted a price that isn't on the sheet", lambda c: has_flag(c, "pricing_deviation") if (c.get("offer") or {}).get("presented") else None, -1),
+               ("disclosure", "Missed the recording disclosure", lambda c: (chk(c, "C1", "C1b") in ("miss", None)) if chk(c, "C1", "C1b") is not None else None, -1),
+               ("obj_resolved", "Objections resolved", None, 1)]
+    out = []
+    for r in sorted({c["rep"] for c in sales}):
+        rc = [c for c in sales if c["rep"] == r]
+        months = sorted({m(c) for c in rc if m(c)})
+        if len(rc) < 6:
+            continue
+        rows = []
+        for key, label, f, good in metrics:
+            vals = []
+            for mo in months:
+                cs = [c for c in rc if m(c) == mo]
+                if key == "obj_resolved":
+                    ob = [o for c in cs for o in c.get("objections") or []]
+                    vals.append({"month": mo, "n": len(ob), "pct": pct(sum(1 for o in ob if o.get("resolved")), len(ob))})
+                    continue
+                v = [f(c) for c in cs]; v = [x for x in v if x is not None]
+                vals.append({"month": mo, "n": len(v), "pct": pct(sum(1 for x in v if x), len(v))})
+            pts = [x["pct"] for x in vals if x["pct"] is not None and x["n"] >= 2]
+            trend = None if len(pts) < 2 else ("better" if (pts[-1] - pts[0]) * good > 5 else "worse" if (pts[-1] - pts[0]) * good < -5 else "flat")
+            rows.append({"key": key, "label": label, "good_direction": good, "months": vals, "trend": trend})
+        out.append({"rep": r, "calls": len(rc), "months": months, "rows": rows})
+    # setters: triage calls by month
+    set_rows = []
+    for s in sorted({c.get("setter") for c in triage_calls if c.get("setter")}):
+        sc = [c for c in triage_calls if c.get("setter") == s]
+        months = sorted({(c.get("date") or "")[:7] for c in sc})
+        def per(fn):
+            res = []
+            for mo in months:
+                cs = [c for c in sc if (c.get("date") or "").startswith(mo)]
+                v = [fn(c) for c in cs]; v = [x for x in v if x is not None]
+                res.append({"month": mo, "n": len(v), "pct": pct(sum(1 for x in v if x), len(v))})
+            return res
+        set_rows.append({"rep": s, "calls": len(sc), "months": months, "rows": [
+            {"key": "price_out", "label": "Price said outside the script range", "good_direction": -1, "months": per(lambda c: (c.get("price_mentioned") or {}).get("within_script_range") is False if (c.get("price_mentioned") or {}).get("said") else None)},
+            {"key": "means", "label": "Money gate solid", "good_direction": 1, "months": per(lambda c: ((c.get("gates") or {}).get("means") or {}).get("verdict") == "solid")},
+            {"key": "invite", "label": "Invite accepted live (booked calls)", "good_direction": 1, "months": per(lambda c: (c.get("tie_downs") or {}).get("invite_accepted_live") if c.get("result") in ("booked_calendar", "live_transferred") else None)}]})
+    return {"closers": out, "setters": set_rows}
+
+
+# ---------------------------------------------------------------- one-page coaching packs
+def coaching_packs(reps_deep, sales, coaching, triage_calls, threads_flags, scrub, ck_label):
+    packs = []
+    for r in reps_deep:
+        rc = [c for c in sales if c["rep"] == r["rep"]]
+        ex = []
+        for c in sorted(rc, key=lambda c: c.get("date") or "", reverse=True):
+            for it in (coaching.get(c["call_id"]) or {}).get("coaching") or []:
+                if it.get("priority") == "high" and len(ex) < 6:
+                    ex.append({"area": it.get("area"), "label": ck_label(it.get("area")), "issue": scrub(it.get("issue") or ""), "better": scrub(it.get("better") or ""), "call_id": c["call_id"]})
+        areas = {}
+        for e in ex:
+            areas.setdefault(e["area"], e)
+        recent = sorted(rc, key=lambda c: c.get("date") or "", reverse=True)[:1]
+        packs.append({"rep": r["rep"], "role": "Closer", "calls": r["calls"], "won": r["won"], "avg_score": r["avg_score"],
+                      "focus": [{"area": m["area"], "label": m["label"], "n": m["n"]} for m in r["top_mistakes"][:3]],
+                      "fixes": list(areas.values())[:3], "keep_doing": r["exemplary"][:2],
+                      "listen": [x for x in [{"call_id": r["best_call"], "why": "Best score: what good sounds like"}, {"call_id": r["worst_call"], "why": "Lowest score: hear the misses"},
+                                             *[{"call_id": c["call_id"], "why": "Most recent call"} for c in recent]] if x["call_id"]],
+                      "numbers": {k: r.get(k) for k in ("close_pct", "obj_resolved_pct", "money_before_pitch_pct", "promise_pct", "off_sheet_pct", "high_flags")}})
+    for s in sorted({c.get("setter") for c in triage_calls if c.get("setter")}):
+        sc = [c for c in triage_calls if c.get("setter") == s]
+        th = C.Counter(it.get("area") for c in sc for it in c.get("coaching") or [])
+        fixes = []
+        for a, n in th.most_common(3):
+            it = next((it for c in sc for it in c.get("coaching") or [] if it.get("area") == a), None)
+            c0 = next((c for c in sc for it2 in c.get("coaching") or [] if it2 is it), None)
+            if it:
+                fixes.append({"area": a, "label": ck_label(a), "issue": scrub(it.get("issue") or ""), "better": scrub(it.get("better") or ""), "call_id": c0["call_id"] if c0 else None, "n": n})
+        ex = [{"quote": scrub(e.get("quote") or ""), "why": scrub(e.get("why") or ""), "area": e.get("area"), "call_id": c["call_id"]} for c in sc for e in c.get("exemplary") or []][:2]
+        ranked = sorted([c for c in sc if c.get("_score") is not None], key=lambda c: c["_score"])
+        tf = [f for f in threads_flags if f.get("rep") == s]
+        packs.append({"rep": s, "role": "Setter", "calls": len(sc), "won": None, "avg_score": round(sum(c["_score"] for c in ranked) / len(ranked)) if ranked else None,
+                      "focus": [{"area": f["area"], "label": f["label"], "n": f["n"]} for f in fixes], "fixes": fixes, "keep_doing": ex, "kind": "triage",
+                      "listen": [x for x in [{"call_id": ranked[-1]["call_id"], "why": "Best score"} if ranked else None, {"call_id": ranked[0]["call_id"], "why": "Lowest score"} if ranked else None] if x],
+                      "numbers": {"booked": sum(1 for c in sc if c.get("result") in ("booked_calendar", "live_transferred")), "text_flags": len(tf)}})
+    return packs
