@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Dating Offer Audit</title>
+<style>
+:root{
+  color-scheme:light;
+  --page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;
+  --grid:#e1e0d9;--base:#c3c2b7;--ring:rgba(11,11,11,.10);
+  --s1:#2a78d6;--s2:#eb6834;--s1soft:#cde2fb;
+  --good:#0ca30c;--warn:#fab219;--serious:#ec835a;--crit:#d03b3b;--goodtext:#006300;
+  --chip:#f0efec;
+}
+@media (prefers-color-scheme:dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme:dark;
+    --page:#0d0d0d;--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--muted:#898781;
+    --grid:#2c2c2a;--base:#383835;--ring:rgba(255,255,255,.10);
+    --s1:#3987e5;--s2:#d95926;--s1soft:#184f95;--goodtext:#0ca30c;--chip:#2c2c2a;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#0d0d0d;--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--muted:#898781;
+  --grid:#2c2c2a;--base:#383835;--ring:rgba(255,255,255,.10);
+  --s1:#3987e5;--s2:#d95926;--s1soft:#184f95;--goodtext:#0ca30c;--chip:#2c2c2a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--s1)}
+header{padding:20px 16px 0;max-width:1180px;margin:0 auto}
+h1{font-size:22px;margin:0 0 2px;font-weight:650}
+.sub{color:var(--ink2);margin:0 0 14px;font-size:14px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--grid);overflow-x:auto;scrollbar-width:none}
+.tabs button{all:unset;cursor:pointer;padding:9px 14px;border-radius:8px 8px 0 0;color:var(--ink2);white-space:nowrap;font-weight:550}
+.tabs button[aria-selected="true"]{color:var(--ink);background:var(--surface);box-shadow:inset 0 -2px 0 var(--s1)}
+.tabs button .soon{font-size:11px;color:var(--muted);margin-left:6px;font-weight:400}
+nav.sec{position:sticky;top:0;z-index:5;background:var(--page);border-bottom:1px solid var(--grid)}
+nav.sec .in{max-width:1180px;margin:0 auto;padding:0 16px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav.sec button{all:unset;cursor:pointer;padding:10px 10px;font-size:13.5px;color:var(--ink2);white-space:nowrap}
+nav.sec button[aria-current="true"]{color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
+main{max-width:1180px;margin:0 auto;padding:18px 16px 60px}
+h2{font-size:18px;margin:28px 0 4px;font-weight:650}
+h2:first-child{margin-top:4px}
+h3{font-size:15px;margin:0 0 8px;font-weight:620}
+p.lead{color:var(--ink2);margin:0 0 14px;max-width:780px}
+.card{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:16px;margin:0 0 14px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))}
+.tile{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:14px 16px}
+.tile .v{font-size:30px;font-weight:650;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .l{color:var(--ink2);font-size:13px;margin-top:4px}
+.tile .x{color:var(--muted);font-size:12px;margin-top:2px}
+.note{font-size:13px;color:var(--ink2)}
+.muted{color:var(--muted)}
+.strip{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.strip span{background:var(--chip);border-radius:999px;padding:4px 10px;font-size:12.5px;color:var(--ink2)}
+.strip span b{color:var(--ink);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+th{text-align:left;font-weight:600;color:var(--ink2);border-bottom:1px solid var(--base);padding:6px 8px;white-space:nowrap}
+td{border-bottom:1px solid var(--grid);padding:7px 8px;vertical-align:top}
+td.n,th.n{text-align:right}
+.tw{overflow-x:auto}
+.drill{all:unset;cursor:pointer;color:var(--s1);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--s1) 35%,transparent);text-underline-offset:2px}
+.drill:hover{text-decoration-color:var(--s1)}
+/* bars */
+.bars{display:grid;grid-template-columns:minmax(110px,max-content) 1fr max-content;gap:6px 10px;align-items:center;font-size:13.5px}
+.bars .lbl{color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:260px}
+.bars .track{position:relative;height:14px}
+.bars .fill{position:absolute;left:0;top:1px;height:12px;border-radius:0 4px 4px 0;background:var(--s1);min-width:2px}
+.bars .fill.b{background:var(--s2);top:8px;height:6px}
+.bars .fill.a{top:0;height:6px}
+.bars .val{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.bars .row{display:contents}
+.bars .row:hover .lbl{color:var(--ink)}
+.legend{display:flex;gap:14px;font-size:12.5px;color:var(--ink2);margin:0 0 10px;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+/* funnel */
+.funnel{display:grid;gap:6px}
+.funnel .st{display:grid;grid-template-columns:120px 1fr 120px;align-items:center;gap:10px;font-size:14px}
+.funnel .bar{height:26px;background:var(--s1);border-radius:0 4px 4px 0;min-width:2px}
+.funnel .st:nth-child(n+2) .bar{opacity:.85}
+.funnel .num{font-variant-numeric:tabular-nums}
+.funnel .num small{color:var(--muted)}
+/* severity */
+.sev{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;white-space:nowrap}
+.sev i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.sev.critical i{background:var(--crit)}.sev.high i{background:var(--serious)}.sev.medium i{background:var(--warn)}.sev.low i{background:var(--base)}
+/* findings */
+.find{display:grid;grid-template-columns:28px 1fr;gap:4px 12px;padding:14px 0;border-top:1px solid var(--grid)}
+.find:first-of-type{border-top:0}
+.find .k{font-weight:650;color:var(--muted);font-variant-numeric:tabular-nums}
+.find h3{margin:0 0 4px}
+.find .p{margin:0 0 6px}
+.find .f{margin:0;color:var(--ink2);font-size:14px}
+.owner{display:inline-block;font-size:11.5px;font-weight:600;border-radius:999px;padding:1px 8px;margin-right:6px;background:var(--chip);color:var(--ink2)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+select,input[type=search]{font:inherit;font-size:13.5px;padding:6px 8px;border-radius:8px;border:1px solid var(--base);background:var(--surface);color:var(--ink)}
+.pill{display:inline-flex;gap:6px;align-items:center;background:var(--s1soft);color:var(--ink);border-radius:999px;padding:3px 6px 3px 10px;font-size:13px}
+.pill button{all:unset;cursor:pointer;padding:0 6px;font-weight:700}
+.won{color:var(--goodtext);font-weight:600}
+.pending{padding:40px 16px;text-align:center;color:var(--ink2)}
+#tip{position:fixed;pointer-events:none;z-index:20;background:var(--ink);color:var(--surface);font-size:12.5px;padding:6px 9px;border-radius:6px;max-width:280px;opacity:0;transition:opacity .08s}
+.score{font-variant-numeric:tabular-nums;font-weight:600}
+details summary{cursor:pointer;color:var(--ink2);font-size:13.5px}
+.theme{position:absolute;top:18px;right:16px}
+header{position:relative}
+.theme button{all:unset;cursor:pointer;font-size:12.5px;color:var(--ink2);border:1px solid var(--base);border-radius:999px;padding:3px 10px}
+@media (max-width:600px){
+  .funnel .st{grid-template-columns:84px 1fr 96px;font-size:13px}
+  .bars{grid-template-columns:minmax(90px,40%) 1fr max-content}
+  .tile .v{font-size:26px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="theme"><button id="themeBtn" type="button">Theme</button></div>
+  <h1>Dating offer audit</h1>
+  <p class="sub">End to end: lead, text, setter call, closer call. Built from CRM records, call recordings and text threads.</p>
+  <div class="tabs" role="tablist" id="offerTabs"></div>
+</header>
+<nav class="sec" aria-label="Sections"><div class="in" id="secNav"></div></nav>
+<main id="main"></main>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const OFFERS = [
+  { id: "krc", name: "Kimberly Rae", data: "data/krc.json" },
+  { id: "bvw", name: "Barak Van Wyk", data: null },
+  { id: "offer3", name: "Offer 3", data: null },
+];
+const SECTIONS = [
+  ["overview", "Overview"], ["funnel", "Funnel"], ["texting", "Texting"], ["setter", "Setter calls"],
+  ["closer", "Closer calls"], ["patterns", "Patterns"], ["offer", "Objections & pricing"],
+  ["buyers", "Buyers"], ["flags", "Integrity flags"], ["reps", "Reps"], ["calls", "Calls"],
+];
+const cache = {};
+let state = { offer: "krc", sec: "overview", drill: null };
+
+/* ---------- helpers ---------- */
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmt = n => n == null ? "n/a" : Number(n).toLocaleString("en-US");
+const money = n => "$" + fmt(Math.round(n));
+const pct = (a, b) => b ? Math.round(100 * a / b) : 0;
+const human = k => String(k ?? "").replace(/_/g, " ").replace(/^\w/, c => c.toUpperCase());
+const sevBadge = s => `<span class="sev ${esc(s)}"><i aria-hidden="true"></i>${esc(human(s))}</span>`;
+let drillReg = [];
+function drillLink(text, ids, label) {
+  if (!ids || !ids.length) return esc(text);
+  drillReg.push({ ids, label });
+  return `<button class="drill" data-drill="${drillReg.length - 1}" title="Show these calls">${esc(text)}</button>`;
+}
+function bars(rows, opts = {}) {
+  // rows: {label, value, max?, text?, tip?, b?, btext?}
+  const max = opts.max ?? Math.max(1, ...rows.map(r => Math.max(r.value, r.b ?? 0)));
+  return `<div class="bars">${rows.map(r => {
+    const w = 100 * r.value / max, wb = r.b != null ? 100 * r.b / max : null;
+    return `<div class="row" data-tip="${esc(r.tip ?? "")}"><div class="lbl" title="${esc(r.label)}">${esc(r.label)}</div>
+      <div class="track">${wb != null ? `<div class="fill a" style="width:${w}%"></div><div class="fill b" style="width:${wb}%"></div>` : `<div class="fill" style="width:${w}%"></div>`}</div>
+      <div class="val">${r.html ?? esc(r.text ?? fmt(r.value))}</div></div>`;
+  }).join("")}</div>`;
+}
+const niceDate = s => new Date(s + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+const tile = (v, l, x = "") => `<div class="tile"><div class="v">${v}</div><div class="l">${l}</div>${x ? `<div class="x">${x}</div>` : ""}</div>`;
+
+/* ---------- copy: findings per offer (problem / fix / owner) ---------- */
+function findingsKRC(d) {
+  const f = d.funnel.overall, c = d.closer, t = d.texting, cal = d.funnel.calendly;
+  const dcb = cal["Direct booking (DCB)"] || {};
+  const price = c.objections.find(o => o.type === "price_budget") || {};
+  const fin = c.question_lift.find(q => q.key === "financial_capacity") || {};
+  const c11 = c.phases.find(p => p.id === "C11") || {};
+  const cat = k => (c.flag_categories.find(x => x.category === k) || {});
+  const tcat = k => ((t.flag_categories.find(x => x[0] === k) || [])[1] || 0);
+  const well = cat("wellbeing_risk"), comp = cat("compliance");
+  const top = (a, n) => a.slice().sort((x, y) => y.calls - x.calls).slice(0, n);
+  const offSheet = top(c.offer.prices_quoted.filter(p => !p.sanctioned), 2);
+  return [
+    { h: "Speed to lead is slow and leaky",
+      p: `Since ${niceDate(d.funnel.since)}, ${fmt(f.leads)} new leads came in. ${fmt(f.leads - f.contacted)} (${pct(f.leads - f.contacted, f.leads)}%) never got a call or text. Median time to first touch was ${fmt(f.median_minutes)} minutes, and ${fmt(f.contacted_5min)} leads were reached inside 5 minutes.`,
+      fix: "Instant Slack alert and a Close task on every new lead, plus a smart view of untouched leads older than 15 minutes. These are in the automation plan.", own: ["Leah"] },
+    { h: "Most direct bookings get cancelled by the team, with no reason recorded",
+      p: `${fmt(dcb.canceled_by_host)} of ${fmt(dcb.bookings)} direct Calendly bookings were cancelled by the host side. The lead cancelled ${fmt(dcb.canceled_by_lead)}. Some of these are probably triage disqualifications, but nothing records why, so nobody can tell a bad lead from a scheduling problem.`,
+      fix: "Make a cancel reason required and write it to the lead in Close. Mitch decides whether host-side triage cancels are the intended process.", own: ["Leah", "Mitch"] },
+    { h: "Closers make up prices",
+      p: `The offer has 3 prices. Across ${fmt(c.offer.calls_pitched)} pitched calls, reps quoted ${fmt(c.offer.distinct_prices)} different prices, and ${fmt(c.offer.calls_with_off_sheet_price)} calls had at least one price that isn't on the sheet. The most common were ${offSheet.map(p => drillLink(money(p.price_usd) + " on " + p.calls + " calls", p.call_ids, "Calls quoting " + money(p.price_usd))).join(" and ")}.`,
+      fix: "One price sheet. Any other price needs Mitch's sign-off before it's said on a call. The AI call review flags off-sheet prices automatically.", own: ["Mitch", "Sid", "Leah"] },
+    { h: "Reps promise relationship outcomes",
+      p: `${fmt(c.offer.outcome_promises)} of ${fmt(c.offer.calls_pitched)} pitched calls included a promise or strong implication that the prospect will find a partner. Example: "${esc((c.offer.outcome_promise_examples[0] || "").replace(/[\s,.;:]+$/, ""))}." The closing script forbids this, and it creates refund and chargeback risk.`,
+      fix: "Ban success-rate claims that can't be backed up. Give reps one approved proof line. The AI call review flags any promise.", own: ["Mitch", "Sid", "Leah"] },
+    { h: "Money comes up too late",
+      p: `The step that sets up the investment before the price (C11) was run on ${fmt(c11.adherence_pct)}% of calls. Price objections showed up ${fmt(price.n)} times, ${fmt(price.when?.after_price)} of them after the price was said, and ${fmt(price.resolved_pct)}% were resolved. A question about what the prospect can invest appeared in ${fmt(fin.won_pct)}% of won calls and ${fmt(fin.not_won_pct)}% of the rest. That's 6 won calls, so treat it as a strong hint, not proof.`,
+      fix: "Train the money question and the next-steps frame before the pitch. Score both in the AI call review.", own: ["Sid"] },
+    { h: "Texts go unanswered and some setters push past a no",
+      p: `${fmt(t.summary.threads - t.summary.lead_replied)} of ${fmt(t.summary.threads)} text threads never got a reply from the lead. Where leads did reply, the business was the one that went quiet on ${fmt(t.summary.business_went_silent)} threads. There are ${fmt(tcat("missed_lead"))} missed-lead flags (a lead asked something and nobody answered) and ${fmt(tcat("conduct"))} conduct flags, mostly setters pushing after the lead said no. Setters also broke the price rule by text ${fmt(tcat("pricing_deviation"))} times, quoting exact prices or ranges above the approved anchor.`,
+      fix: "Close smart view: lead replied, no answer after 2 hours. Opt-out and stop-after-no rules for setters. Price stays a range by text.", own: ["Leah", "Sid"] },
+    { h: "No protocol when a prospect discloses a crisis",
+      p: `${fmt(well.calls)} closer calls and ${fmt(tcat("wellbeing_risk"))} text threads have a prospect disclosing self-harm, abuse or severe distress while the rep kept selling or nobody followed up. One thread has a disclosed overdose that got a one-line reply, and the lead's next message is still unanswered.`,
+      fix: "Written crisis protocol: stop selling, give a crisis line, tell a manager the same day. Keyword alert on inbound texts.", own: ["Mitch", "Leah"] },
+    { h: "Compliance gaps on recorded calls",
+      p: `${fmt(comp.calls)} of ${fmt(c.summary.calls)} calls have a compliance flag, mostly no recording disclosure. On one call a rep had the prospect read his Social Security number aloud while recording.`,
+      fix: "Disclosure line at the start of every call. Never collect ID numbers on a call; financing applications go through the lender's own link.", own: ["Sid", "Mitch"] },
+    { h: "The CRM can't be fully trusted yet",
+      p: `${fmt(d.funnel.recording_coverage_all_eocs.none)} of ${fmt(d.funnel.eoc_total)} End-of-Call reports have no recording link. On ${fmt(c.data_mismatches)} calls the outcome the rep logged doesn't match what happened on the recording.`,
+      fix: "Recording link required on the EOC form. The AI call review compares the logged outcome with the transcript and flags mismatches.", own: ["Leah"] },
+  ];
+}
+
+/* ---------- sections ---------- */
+const R = {};
+R.overview = d => {
+  const f = d.funnel.overall, c = d.closer, t = d.texting, cov = d.funnel.recording_coverage_all_eocs;
+  const items = findingsKRC(d);
+  return `
+  <div class="strip">
+    <span><b>${fmt(f.leads)}</b> leads since ${esc(d.funnel.since)}</span>
+    <span><b>${fmt(t.summary.threads)}</b> text threads</span>
+    <span><b>${fmt(c.summary.calls)}</b> closer recordings analysed of ${fmt(d.funnel.eoc_total)} EOCs</span>
+    <span>Setter calls: <b>transcribing</b></span>
+    <span>ManyChat DMs: <b>waiting on access</b></span>
+  </div>
+  <div class="grid g4">
+    ${tile(fmt(f.leads), "New leads since " + esc(d.funnel.since))}
+    ${tile(pct(f.contacted_5min, f.leads) + "%", "Reached inside 5 minutes", fmt(f.contacted_5min) + " leads")}
+    ${tile(fmt(f.booked) + " → " + fmt(f.showed), "Booked → showed", pct(f.showed, f.booked) + "% show rate")}
+    ${tile(fmt(f.closed), "Closed deals", money(f.cash) + " cash collected")}
+  </div>
+  <h2>What we found and what to do</h2>
+  <p class="lead">Each item lists the problem, the fix and who owns it. Leah builds the automated fixes. Mitch and Sid handle training and decisions. Underlined numbers open the calls behind them.</p>
+  <div class="card">${items.map((x, i) => `<div class="find"><div class="k">${i + 1}</div><div>
+    <h3>${esc(x.h)}</h3><p class="p">${x.p}</p>
+    <p class="f">${x.own.map(o => `<span class="owner">${esc(o)}</span>`).join("")}${esc(x.fix)}</p></div></div>`).join("")}</div>
+  <h2>How to read this</h2>
+  <div class="card note">
+    <p style="margin-top:0">Outcomes come from the CRM (Close, Calendly and the closers' End-of-Call reports), not from guessing what happened on a call. A deposit is not counted as a closed deal.</p>
+    <p>Patterns say a thing <em>appeared in</em> won or lost calls. They don't prove it caused the result. Anything based on fewer than ${d.meta.min_n} calls is hidden or marked.</p>
+    <p>The ${fmt(c.summary.calls)} closer recordings are the ones we could open: ${fmt(cov.fathom)} on Fathom (June to August, reps who have since left) and ${fmt(cov.zoom)} on Zoom (September to November). ${fmt(cov.calendly)} Calendly-hosted recordings need a logged-in export. ${fmt(cov.drive)} Google Drive files are being transcribed.</p>
+    <p style="margin-bottom:0">Prospects are shown as initials. Emails, phone numbers and ID numbers are removed. No transcripts are published.</p>
+  </div>`;
+};
+
+R.funnel = d => {
+  const F = d.funnel, f = F.overall;
+  const stages = [["Leads", f.leads], ["Contacted", f.contacted], ["Booked", f.booked], ["Showed", f.showed], ["Closed", f.closed]];
+  const src = Object.entries(F.by_source).sort((a, b) => b[1].leads - a[1].leads);
+  const mon = Object.entries(F.by_month);
+  const cal = Object.entries(F.calendly);
+  const eoc = Object.entries(F.eoc_outcomes_since).sort((a, b) => b[1] - a[1]);
+  const row = (k, v) => `<tr><td>${esc(k)}</td><td class="n">${fmt(v.leads)}</td><td class="n">${pct(v.contacted, v.leads)}%</td><td class="n">${pct(v.contacted_5min, v.leads)}%</td><td class="n">${v.median_minutes == null ? "n/a" : fmt(v.median_minutes) + " min"}</td><td class="n">${fmt(v.booked)}</td><td class="n">${fmt(v.showed)}</td><td class="n">${fmt(v.closed)}</td><td class="n">${money(v.cash)}</td></tr>`;
+  const head = first => `<thead><tr><th>${first}</th><th class="n">Leads</th><th class="n">Contacted</th><th class="n">In 5 min</th><th class="n">Median first touch</th><th class="n">Booked</th><th class="n">Showed</th><th class="n">Closed</th><th class="n">Cash</th></tr></thead>`;
+  return `
+  <h2>Lead to cash since ${esc(F.since)}</h2>
+  <p class="lead">Every lead created in Close since ${esc(F.since)}, matched by email to Calendly bookings, End-of-Call reports and payments.</p>
+  <div class="card"><div class="funnel">${stages.map(([k, v], i) => `<div class="st" data-tip="${esc(k)}: ${fmt(v)} (${pct(v, f.leads)}% of leads${i ? ", " + pct(v, stages[i - 1][1]) + "% of previous step" : ""})"><div>${k}</div><div><div class="bar" style="width:${Math.max(.4, 100 * v / f.leads)}%"></div></div><div class="num">${fmt(v)} <small>${i ? pct(v, stages[i - 1][1]) + "% of prev" : ""}</small></div></div>`).join("")}</div></div>
+  <div class="grid g4">
+    ${tile(fmt(f.median_minutes) + " min", "Median time to first call or text")}
+    ${tile(pct(f.contacted_5min, f.leads) + "%", "Reached inside 5 minutes")}
+    ${tile(pct(f.contacted_60min, f.leads) + "%", "Reached inside 1 hour")}
+    ${tile(fmt(f.leads - f.contacted), "Leads never contacted", pct(f.leads - f.contacted, f.leads) + "% of all leads")}
+  </div>
+  <h2>By lead source</h2>
+  <div class="card tw"><table>${head("Source")}<tbody>${src.map(([k, v]) => row(k, v)).join("")}</tbody></table>
+  <p class="note" style="margin-bottom:0">Source is the Close "Opt Source" field. Kajabi freebie opt-ins are grouped.</p></div>
+  <h2>By month</h2>
+  <div class="card tw"><table>${head("Month")}<tbody>${mon.map(([k, v]) => row(k, v)).join("")}</tbody></table>
+  <p class="note" style="margin-bottom:0">The current month is still open, so its booked, showed and closed counts will rise.</p></div>
+  <div class="grid g2">
+    <div class="card"><h3>Calendly bookings by path</h3><div class="tw"><table><thead><tr><th>Event</th><th class="n">Bookings</th><th class="n">Host cancelled</th><th class="n">Lead cancelled</th><th class="n">Rescheduled</th></tr></thead>
+    <tbody>${cal.map(([k, v]) => `<tr><td>${esc(k)}</td><td class="n">${fmt(v.bookings)}</td><td class="n">${fmt(v.canceled_by_host)}</td><td class="n">${fmt(v.canceled_by_lead)}</td><td class="n">${fmt(v.rescheduled)}</td></tr>`).join("")}</tbody></table></div>
+    <p class="note" style="margin-bottom:0">"Host cancelled" means someone on the team cancelled it. Calendly holds no reason for these.</p></div>
+    <div class="card"><h3>End-of-Call outcomes since ${esc(F.since)}</h3>${bars(eoc.map(([k, v]) => ({ label: k, value: v, tip: `${k}: ${v} reports` })))}<p class="note" style="margin-bottom:0">These count every report dated since then, including leads created earlier, and "Closed" here includes deposits. The funnel above only counts full payments from new leads.</p></div>
+  </div>`;
+};
+
+R.texting = d => {
+  const t = d.texting, s = t.summary;
+  const order = ["no_reply", "replied", "conversation", "qualified", "call_offered", "booked", "showed", "closed"];
+  const st = order.map(k => ({ label: human(k), value: t.stages[k] || 0, tip: `${human(k)}: ${t.stages[k] || 0} threads ended here` }));
+  const drop = Object.entries(t.drop_off_after).sort((a, b) => b[1] - a[1]).map(([k, v]) => ({ label: human(k), value: v, tip: `Lead went quiet after ${human(k).toLowerCase()}: ${v}` }));
+  const fr = Object.entries(t.first_reply_after).sort((a, b) => a[0] - b[0]);
+  const frTotal = fr.reduce((a, [, v]) => a + v, 0);
+  return `
+  <h2>Setter texting</h2>
+  <p class="lead">Every SMS thread in Close for this offer, one per lead. Threads where the lead replied were read in full and classified. Booking, show and close come from Calendly, End-of-Call reports and payments, never from what the chat says.</p>
+  <div class="grid g4">
+    ${tile(fmt(s.threads), "Text threads")}
+    ${tile(pct(s.lead_replied, s.threads) + "%", "Lead replied", fmt(s.lead_replied) + " threads")}
+    ${tile(fmt(s.business_went_silent), "Business went quiet", "Lead spoke last and got no answer")}
+    ${tile(fmt(s.price_discussed), "Price discussed by text")}
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3>Furthest stage each thread reached</h3>${bars(st)}</div>
+    <div class="card"><h3>Where the lead went quiet</h3>${bars(drop)}<p class="note" style="margin-bottom:0">The step the business had just taken when the lead stopped replying.</p></div>
+  </div>
+  <div class="card"><h3>Conversation types and what they led to</h3><div class="tw"><table><thead><tr><th>Type</th><th class="n">Threads</th><th class="n">Booked</th><th class="n">Showed</th><th class="n">Closed</th></tr></thead>
+  <tbody>${t.types.map(x => `<tr><td>${esc(human(x.type))}</td><td class="n">${fmt(x.threads)}</td><td class="n">${fmt(x.booked)} <span class="muted">${pct(x.booked, x.threads)}%</span></td><td class="n">${fmt(x.showed)}</td><td class="n">${fmt(x.closed)}</td></tr>`).join("")}</tbody></table></div>
+  <p class="note" style="margin-bottom:0">"No reply" threads still show bookings when the lead booked through another route, like the ad funnel or a call.</p></div>
+  <div class="grid g2">
+    <div class="card"><h3>How many texts before the lead replied</h3>${bars(fr.map(([k, v]) => ({ label: k + (k == 1 ? " text" : " texts"), value: v, text: `${v} (${pct(v, frTotal)}%)` })))}</div>
+    <div class="card"><h3>Objections raised by text</h3>${bars(t.objections.map(([k, v]) => ({ label: human(k), value: v })))}</div>
+  </div>
+  <h2>Texting flags</h2>
+  ${flagTable(t.flags.map(f => ({ ...f, where: "Text" })), "tflag")}`;
+};
+
+R.setter = d => d.setter ? setterView(d) : `
+  <h2>Setter calls</h2>
+  <div class="card pending">135 recorded setter calls from Close are being transcribed. This section fills in when they're scored against the setter script (open, frame, discovery, why now, sell the call, money, book, lock the show).</div>
+  <h2>ManyChat DMs</h2>
+  <div class="card pending">Waiting on ManyChat access. Once it's connected, DM conversations get the same treatment as the texts: type, where they drop off and how many book.</div>`;
+function setterView(d) { return `<h2>Setter calls</h2><div class="card">${esc(JSON.stringify(d.setter.summary))}</div>`; }
+
+R.closer = d => {
+  const c = d.closer, s = c.summary;
+  return `
+  <h2>Closer calls against the Master Closing Doc</h2>
+  <p class="lead">Each recording was scored step by step against the closing script. Hit means clearly done, partial means attempted or a weaker version. Scores are weighted by the script's own priorities.</p>
+  <div class="grid g4">
+    ${tile(fmt(s.calls), "Calls analysed", `${s.by_source.fathom || 0} Fathom, ${s.by_source.zoom || 0} Zoom`)}
+    ${tile(drillLink(fmt(s.won), c.calls.filter(x => x.won).map(x => x.call_id), "Won calls"), "Won", s.close_pct + "% of analysed calls")}
+    ${tile(fmt(s.avg_score), "Average script score", `Won ${s.won_score}, not won ${s.not_won_score}`)}
+    ${tile(fmt(s.high_or_critical_flags), "High or critical flags", fmt(s.flags) + " flags in total")}
+  </div>
+  <div class="card" style="margin-top:14px"><h3>Script adherence by step</h3>
+  ${bars(c.phases.map(p => ({ label: `${p.id} ${p.name}`, value: p.adherence_pct, text: p.adherence_pct + "%", tip: `${p.name}: ${p.hit} hit, ${p.partial} partial, ${p.miss} miss, ${p.na} not applicable. Weight ${p.weight}.` })), { max: 100 })}
+  <p class="note" style="margin-bottom:0">Adherence counts a hit as 1 and a partial as a half, over calls where the step applied.</p></div>
+  <div class="card"><h3>Steps reps skip most</h3><div class="tw"><table><thead><tr><th>Check</th><th>Step</th><th class="n">Run</th><th class="n">Hit</th><th class="n">Partial</th><th class="n">Miss</th></tr></thead>
+  <tbody>${c.least_run.map(r => `<tr><td>${esc(r.id)} ${esc(r.text)}</td><td>${esc(r.phase)}</td><td class="n">${r.run_pct}%</td><td class="n">${r.hit}</td><td class="n">${r.partial}</td><td class="n">${r.miss}</td></tr>`).join("")}</tbody></table></div></div>
+  <div class="card"><h3>Four pillars: how prospects reacted</h3><div class="tw"><table><thead><tr><th>Pillar</th><th class="n">Enthusiastic</th><th class="n">Accepted</th><th class="n">Clarifying</th><th class="n">Confused</th><th class="n">Objected</th><th class="n">Not presented</th></tr></thead>
+  <tbody>${Object.entries(c.pillars).map(([k, v]) => `<tr><td>${esc(human(k))}</td>${["enthusiastic", "accepted", "clarifying", "confused", "objected", "not_presented"].map(x => `<td class="n">${fmt(v[x] || 0)}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>`;
+};
+
+R.patterns = d => {
+  const c = d.closer, ok = c.question_lift.filter(q => q.sufficient), thin = c.question_lift.filter(q => !q.sufficient);
+  const won = c.summary.won;
+  return `
+  <h2>Questions in won calls vs the rest</h2>
+  <p class="lead">How often each discovery question appeared in won calls compared with calls that didn't close. Only ${fmt(won)} calls were won, so one call moves the won column by ${Math.round(100 / Math.max(1, won))} points. Use this to pick what to coach, not as proof.</p>
+  <div class="card">
+    <div class="legend"><span><i style="background:var(--s1)"></i>Won calls</span><span><i style="background:var(--s2)"></i>Not won</span></div>
+    ${bars(ok.map(q => ({ label: human(q.key), value: q.won_pct, b: q.not_won_pct, html: `${drillLink(q.won_pct + "% vs " + q.not_won_pct + "%", q.call_ids, "Calls where the rep asked: " + human(q.key))}`, tip: `${human(q.key)}: asked on ${q.n} calls. Won ${q.won_pct}%, not won ${q.not_won_pct}%.` })), { max: 100 })}
+    <p class="note" style="margin-bottom:0">Questions asked on fewer than ${d.meta.min_n} calls are left out: ${thin.map(q => esc(human(q.key))).join(", ") || "none"}.</p>
+  </div>
+  <h2>Score and outcome</h2>
+  <div class="card"><p style="margin:0">Won calls averaged <span class="score">${c.summary.won_score}</span> on the script and other calls <span class="score">${c.summary.not_won_score}</span>. The gap is small. Following the script more closely appeared in won calls, but script score alone doesn't separate wins from losses here. What does stand out is the money conversation: see the Objections & pricing tab.</p></div>`;
+};
+
+R.offer = d => {
+  const c = d.closer, o = c.offer;
+  const pq = o.prices_quoted.slice().sort((a, b) => b.calls - a.calls);
+  return `
+  <h2>Objections on closer calls</h2>
+  <p class="lead">Objection types match the categories closers already use in the End-of-Call form. "Resolved" is strict: the prospect visibly moved past it on the call.</p>
+  <div class="card tw"><table><thead><tr><th>Objection</th><th class="n">Times</th><th class="n">Calls</th><th class="n">Before pitch</th><th class="n">After pitch</th><th class="n">After price</th><th class="n">Resolved</th><th>Most used responses</th></tr></thead>
+  <tbody>${c.objections.map(x => `<tr><td>${esc(human(x.type))}</td><td class="n">${fmt(x.n)}</td><td class="n">${drillLink(fmt(x.calls), x.call_ids, "Calls with objection: " + human(x.type))}</td><td class="n">${fmt(x.when.before_pitch || 0)}</td><td class="n">${fmt(x.when.after_pitch || 0)}</td><td class="n">${fmt(x.when.after_price || 0)}</td><td class="n">${x.resolved_pct}%</td><td class="note">${x.top_tactics.slice(0, 3).map(t => esc(human(t[0]))).join(", ")}</td></tr>`).join("")}</tbody></table></div>
+  <h2>Prices quoted vs the price sheet</h2>
+  <p class="lead">Sanctioned offer: ${o.sanctioned.map(s => `${money(s.price_usd)} for ${s.months} months (${esc(s.cadence)})`).join(", ")}.</p>
+  <div class="grid g4">
+    ${tile(fmt(o.distinct_prices), "Different prices quoted", "The sheet has " + o.sanctioned.length)}
+    ${tile(fmt(o.calls_with_off_sheet_price), "Calls with an off-sheet price", "of " + fmt(o.calls_pitched) + " pitched")}
+    ${tile(fmt(o.outcome_promises), "Calls with an outcome promise", "of " + fmt(o.calls_pitched) + " pitched")}
+    ${tile(fmt(o.price_before_temperature_check), "Price said before the temperature check")}
+  </div>
+  <div class="card" style="margin-top:14px">
+    <div class="legend"><span><i style="background:var(--s1)"></i>On the price sheet</span><span><i style="background:var(--s2)"></i>Not on the sheet</span></div>
+    <div class="bars">${pq.map(p => `<div class="row" data-tip="${money(p.price_usd)}: said on ${p.calls} calls${p.sanctioned ? "" : " (not on the sheet)"}"><div class="lbl">${money(p.price_usd)}</div><div class="track"><div class="fill" style="width:${100 * p.calls / pq[0].calls}%;background:var(${p.sanctioned ? "--s1" : "--s2"})"></div></div><div class="val">${drillLink(p.calls + (p.calls === 1 ? " call" : " calls"), p.call_ids, "Calls quoting " + money(p.price_usd))}</div></div>`).join("")}</div>
+  </div>
+  <div class="card"><h3>Outcome promises, in the reps' words</h3><ul style="margin:0;padding-left:18px">${o.outcome_promise_examples.map(q => `<li>"${esc(q)}"</li>`).join("")}</ul></div>
+  <div class="card note">Of ${fmt(o.calls_pitched)} pitched calls, ${fmt(o.one_tier_recommended)} recommended one option, ${fmt(o.all_tiers_dumped)} listed every tier, and ${fmt(o.payment_plan_offered)} offered a payment plan.</div>`;
+};
+
+R.buyers = d => {
+  const c = d.closer;
+  const tbl = (rows, title) => `<div class="card"><h3>${title}</h3><div class="tw"><table><thead><tr><th></th><th class="n">Calls</th><th class="n">Won</th><th class="n">Close rate</th></tr></thead><tbody>${rows.filter(r => r.calls >= 2).map(r => `<tr><td>${esc(human(r.key))}</td><td class="n">${drillLink(fmt(r.calls), r.call_ids, title + ": " + human(r.key))}</td><td class="n">${fmt(r.won)}</td><td class="n">${r.calls >= d.meta.min_n ? r.close_pct + "%" : '<span class="muted">small n</span>'}</td></tr>`).join("")}</tbody></table></div></div>`;
+  return `
+  <h2>Who gets on the calls</h2>
+  <p class="lead">Read from what prospects said on the closer calls. ${fmt(c.genders.man || 0)} men and ${fmt(c.genders.woman || 0)} women in the ${fmt(c.summary.calls)} calls.</p>
+  ${tbl(c.segments, "Segment")}
+  <div class="grid g2">${tbl(c.pains, "Pains they described")}${tbl(c.goals, "What they want")}</div>`;
+};
+
+function flagTable(rows, key) {
+  const cats = [...new Set(rows.map(r => r.category))].sort();
+  const id = "ft_" + key;
+  setTimeout(() => {
+    const el = document.getElementById(id); if (!el) return;
+    const run = () => {
+      const cat = el.querySelector(".fc").value, sev = el.querySelector(".fs").value, q = el.querySelector(".fq").value.toLowerCase();
+      el.querySelectorAll("tbody tr").forEach(tr => {
+        const ok = (!cat || tr.dataset.c === cat) && (!sev || tr.dataset.s === sev) && (!q || tr.textContent.toLowerCase().includes(q));
+        tr.hidden = !ok;
+      });
+    };
+    el.querySelectorAll("select,input").forEach(i => i.addEventListener("input", run));
+  });
+  const order = { critical: 0, high: 1, medium: 2, low: 3 };
+  const sorted = rows.slice().sort((a, b) => (order[a.severity] ?? 9) - (order[b.severity] ?? 9));
+  return `<div class="card" id="${id}"><div class="filters">
+    <select class="fc" aria-label="Category"><option value="">All categories</option>${cats.map(c => `<option value="${esc(c)}">${esc(human(c))}</option>`).join("")}</select>
+    <select class="fs" aria-label="Severity"><option value="">All severities</option>${["critical", "high", "medium", "low"].map(s => `<option value="${s}">${human(s)}</option>`).join("")}</select>
+    <input class="fq" type="search" placeholder="Search" aria-label="Search flags"><span class="note">${fmt(rows.length)} flags</span></div>
+    <div class="tw" style="max-height:560px;overflow-y:auto"><table><thead><tr><th>Severity</th><th>Category</th>${rows[0]?.rep !== undefined ? "<th>Rep</th>" : ""}<th>What happened</th></tr></thead><tbody>
+    ${sorted.map(r => `<tr data-c="${esc(r.category)}" data-s="${esc(r.severity)}"><td>${sevBadge(r.severity)}</td><td>${esc(human(r.category))}</td>${r.rep !== undefined ? `<td>${esc(r.rep)}</td>` : ""}<td>${esc(r.summary)}${r.call_id ? ` <button class="drill" data-call="${esc(r.call_id)}">call</button>` : ""}</td></tr>`).join("")}
+    </tbody></table></div></div>`;
+}
+
+R.flags = d => {
+  const c = d.closer;
+  const sevs = ["critical", "high", "medium", "low"];
+  return `
+  <h2>Integrity flags on closer calls</h2>
+  <p class="lead">Things that create legal, refund or reputation risk, or that break the script's own rules. Critical means harm or legal exposure. High means a real money or trust consequence.</p>
+  <div class="card tw"><table><thead><tr><th>Category</th><th class="n">Flags</th><th class="n">Calls</th>${sevs.map(s => `<th class="n">${sevBadge(s)}</th>`).join("")}</tr></thead>
+  <tbody>${c.flag_categories.map(f => `<tr><td>${esc(human(f.category))}</td><td class="n">${fmt(f.n)}</td><td class="n">${drillLink(fmt(f.calls), f.call_ids, "Calls flagged: " + human(f.category))}</td>${sevs.map(s => `<td class="n">${fmt(f.severity[s] || 0)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+  <h2>The most serious ones</h2>
+  ${flagTable(c.top_flags, "cflag")}`;
+};
+
+R.reps = d => {
+  const c = d.closer;
+  return `
+  <h2>Closers</h2>
+  <p class="lead">Brianna, Elly and Mariah's calls are from June to August, and they have since left. Makena's are from September to November. Compare reps with care: different months, different lead flow, and small numbers.</p>
+  <div class="card tw"><table><thead><tr><th>Rep</th><th class="n">Calls</th><th class="n">Won</th><th class="n">Script score</th><th class="n">Flags</th><th class="n">High or critical</th><th class="n">Outcome promises</th><th class="n">Off-sheet price</th></tr></thead>
+  <tbody>${c.reps.map(r => `<tr><td>${esc(r.rep)}</td><td class="n">${drillLink(fmt(r.calls), r.call_ids, "Calls by " + r.rep)}</td><td class="n">${fmt(r.won)}</td><td class="n">${fmt(r.avg_score)}</td><td class="n">${fmt(r.flags)}</td><td class="n">${fmt(r.high_flags)}</td><td class="n">${fmt(r.outcome_promises)}</td><td class="n">${fmt(r.off_sheet_price_calls)}</td></tr>`).join("")}</tbody></table></div>`;
+};
+
+R.calls = d => {
+  const c = d.closer, dr = state.drill;
+  const set = dr ? new Set(dr.ids) : null;
+  const reps = [...new Set(c.calls.map(x => x.rep))].sort();
+  const rows = c.calls.slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  setTimeout(() => {
+    const el = $("#callTable"); if (!el) return;
+    const run = () => {
+      const rep = $("#cRep").value, out = $("#cOut").value, q = $("#cQ").value.toLowerCase();
+      let n = 0;
+      el.querySelectorAll("tbody tr").forEach(tr => {
+        const ok = (!set || set.has(tr.dataset.id)) && (!rep || tr.dataset.rep === rep) && (!out || tr.dataset.won === out) && (!q || tr.textContent.toLowerCase().includes(q));
+        tr.hidden = !ok; if (ok) n++;
+      });
+      $("#cCount").textContent = n + " calls";
+    };
+    document.querySelectorAll("#cRep,#cOut,#cQ").forEach(i => i.addEventListener("input", run));
+    const clr = $("#cClear"); if (clr) clr.onclick = () => { state.drill = null; render(); };
+    run();
+    if (state.focus) { const tr = el.querySelector(`tr[data-id="${state.focus}"]`); if (tr) { tr.scrollIntoView({ block: "center" }); tr.style.background = "var(--s1soft)"; } state.focus = null; }
+  });
+  return `
+  <h2>Every analysed closer call</h2>
+  <p class="lead">The evidence behind every number. Prospects are shown as initials.</p>
+  <div class="filters">
+    ${dr ? `<span class="pill">${esc(dr.label)} <button id="cClear" aria-label="Clear filter">×</button></span>` : ""}
+    <select id="cRep" aria-label="Rep"><option value="">All reps</option>${reps.map(r => `<option>${esc(r)}</option>`).join("")}</select>
+    <select id="cOut" aria-label="Outcome"><option value="">All outcomes</option><option value="1">Won</option><option value="0">Not won</option></select>
+    <input id="cQ" type="search" placeholder="Search notes" aria-label="Search calls"><span class="note" id="cCount"></span>
+  </div>
+  <div class="card tw" id="callTable"><table><thead><tr><th>Date</th><th>Rep</th><th>Prospect</th><th>Segment</th><th>CRM outcome</th><th class="n">Score</th><th class="n">Min</th><th>Flags</th><th>Coaching note</th></tr></thead><tbody>
+  ${rows.map(x => `<tr data-id="${esc(x.call_id)}" data-rep="${esc(x.rep)}" data-won="${x.won ? 1 : 0}"><td style="white-space:nowrap">${esc(x.date)}</td><td>${esc(x.rep)}</td><td>${esc(x.prospect)}</td><td>${esc(human(x.segment))}</td><td>${x.won ? `<span class="won">${esc(x.crm_outcome)}</span>` : esc(x.crm_outcome)}</td><td class="n score">${fmt(x.score)}</td><td class="n">${fmt(x.duration_min)}</td><td class="note">${esc((x.flags || []).map(f => typeof f === "string" ? human(f) : human(f.category)).join(", "))}</td><td class="note" style="min-width:260px">${esc(x.coach_note)}</td></tr>`).join("")}
+  </tbody></table></div>`;
+};
+
+/* ---------- shell ---------- */
+async function load(o) {
+  if (!o.data) return null;
+  if (!cache[o.id]) cache[o.id] = fetch(o.data, { cache: "no-store" }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  return cache[o.id];
+}
+function renderTabs() {
+  $("#offerTabs").innerHTML = OFFERS.map(o => `<button role="tab" aria-selected="${o.id === state.offer}" data-o="${o.id}">${esc(o.name)}${o.data ? "" : '<span class="soon">next</span>'}</button>`).join("");
+  $("#secNav").innerHTML = SECTIONS.map(([k, v]) => `<button data-s="${k}" aria-current="${k === state.sec}">${v}</button>`).join("");
+}
+async function render() {
+  renderTabs();
+  const o = OFFERS.find(x => x.id === state.offer) || OFFERS[0];
+  const main = $("#main");
+  if (!o.data) { main.innerHTML = `<div class="card pending"><h2 style="margin-top:0">${esc(o.name)}</h2>This offer's audit is next. Same sections, same method.</div>`; return; }
+  let d;
+  try { d = await load(o); } catch (e) { main.innerHTML = `<div class="card pending">Couldn't load the data (${esc(e.message)}).</div>`; return; }
+  drillReg = [];
+  main.innerHTML = (R[state.sec] || R.overview)(d) + `<p class="note muted" style="margin-top:30px">Data pulled ${esc(d.meta.generated_at.slice(0, 10))}.</p>`;
+}
+function go(patch, push = true) {
+  state = { ...state, ...patch };
+  const h = `#${state.offer}/${state.sec}`;
+  if (push && location.hash !== h) history.pushState(null, "", h);
+  render(); window.scrollTo({ top: 0 });
+}
+function fromHash() {
+  const [o, s] = location.hash.slice(1).split("/");
+  state.offer = OFFERS.some(x => x.id === o) ? o : "krc";
+  state.sec = SECTIONS.some(x => x[0] === s) ? s : "overview";
+}
+document.addEventListener("click", e => {
+  const t = e.target.closest("button"); if (!t) return;
+  if (t.dataset.o) go({ offer: t.dataset.o, sec: "overview", drill: null });
+  else if (t.dataset.s) go({ sec: t.dataset.s, drill: t.dataset.s === "calls" ? state.drill : null });
+  else if (t.dataset.drill != null) { const r = drillReg[+t.dataset.drill]; go({ sec: "calls", drill: r }); }
+  else if (t.dataset.call) { state.focus = t.dataset.call; go({ sec: "calls", drill: null }); }
+});
+window.addEventListener("popstate", () => { fromHash(); render(); });
+/* tooltip */
+const tip = $("#tip");
+document.addEventListener("pointermove", e => {
+  const r = e.target.closest("[data-tip]");
+  if (!r || !r.dataset.tip) { tip.style.opacity = 0; return; }
+  tip.textContent = r.dataset.tip; tip.style.opacity = 1;
+  const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8), y = e.clientY + 16;
+  tip.style.left = x + "px"; tip.style.top = (y + tip.offsetHeight > innerHeight ? e.clientY - tip.offsetHeight - 10 : y) + "px";
+});
+/* theme */
+try { const th = localStorage.getItem("theme"); if (th) document.documentElement.dataset.theme = th; } catch (_) {}
+$("#themeBtn").onclick = () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const nx = cur === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = nx;
+  try { localStorage.setItem("theme", nx); } catch (_) {}
+};
+fromHash(); render();
+</script>
+</body>
+</html>
