@@ -1,7 +1,7 @@
 /* Routing, nav, event delegation, panels. */
 function renderNav() {
   $("#offerTabs").innerHTML = OFFERS.map(o => `<button role="tab" aria-selected="${o.id === state.offer}" data-o="${o.id}">${esc(o.name)}${o.data ? "" : '<span class="soon">next</span>'}</button>`).join("");
-  $("#secNav").innerHTML = SECTIONS.map((s, i) => `<button data-s="${s.id}" aria-current="${s.id === state.sec}"><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(s.name)}</button>`).join("");
+  $("#secNav").innerHTML = SECTIONS.map((s, i) => `<button data-s="${s.id}" aria-current="${s.id === state.sec}"><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(s.name)}${s.subs ? `<span class="cnt">${s.subs.length}</span>` : ""}</button>`).join("");
   const S = SECTIONS.find(s => s.id === state.sec);
   $("#subNav").innerHTML = S && S.subs ? S.subs.map(([k, v]) => `<button data-sub="${k}" aria-current="${k === state.sub}">${esc(v)}</button>`).join("") : "";
 }

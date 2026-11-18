@@ -200,3 +200,16 @@ select,input[type=search]{font:inherit;font-size:13.5px;padding:7px 10px;border-
 .chip{white-space:normal;overflow-wrap:anywhere;max-width:100%}
 .card{overflow-wrap:anywhere}
 .kv dd{min-width:0;overflow-wrap:anywhere}
+/* more visible sub-tabs */
+.subnav{position:sticky;top:47px;z-index:19;background:#eef3fb;border-bottom:1px solid #d6e2f3}
+.subnav .wrap{align-items:center;gap:4px;padding-top:4px;padding-bottom:4px}
+.subnav .wrap::before{content:"In this section";font:600 10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-right:8px;white-space:nowrap}
+.subnav button{background:var(--panel);border:1px solid #d6e2f3;font-weight:550;color:var(--ink);padding:7px 12px;margin:4px 0}
+.subnav button:hover{border-color:var(--accent)}
+.subnav button[aria-current="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.secnav button .cnt{font:600 10px var(--mono);background:var(--bg);border-radius:999px;padding:1px 6px;margin-left:6px;color:var(--muted)}
+.wins{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.win{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;border-top:3px solid var(--good-fill)}
+.win .big{font-size:26px;font-weight:800;color:var(--good)}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:760px){.cols2{grid-template-columns:1fr}}
+.list li{margin:0 0 8px}

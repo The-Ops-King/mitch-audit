@@ -5,6 +5,8 @@ Pure aggregation: no model calls. Everything public is pseudonymised here.
 Usage: python3 src/build.py krc
 """
 import json, glob, os, re, sys, collections as C
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import build_deep as BD
 from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -719,7 +721,23 @@ def main():
     tprog = {"candidates": len(call_meta), "transcribed": sum(1 for m in call_meta.values() if m.get("transcribed")),
              "scored": sum(1 for c in scalls if c.get("type") == "setter_call"), "by_user": dict(C.Counter(m["user_name"] for m in call_meta.values())),
              "minutes": round(sum(m["duration_min"] for m in call_meta.values()))}
+    sales = [c for c in calls if c.get("type") == "sales"]
+    J = lambda n: json.load(open(f"{D}/raw/{n}")) if os.path.exists(f"{D}/raw/{n}") else {}
+    lead_rows, apps, cats = J("lead_rows.json"), J("applications.json"), J("app_categories.json")
+    triage_by_lead = C.defaultdict(list)
+    for k, m in call_meta.items():
+        if m.get("lead_id") and any(sc.get("call_id") == k and sc.get("type") == "setter_call" for sc in scalls):
+            triage_by_lead[m["lead_id"]].append(k)
+    app = BD.applicants(lead_rows, apps, cats, sales, {t["lead_id"] for t in threads}, triage_by_lead) if lead_rows else None
+    sanctioned = {t["price_usd"] for t in playbook["sanctioned_offer"]}
+    closer["objection_pages"] = BD.objection_pages(sales, coaching, threads, scrub, None)
+    closer["reps_deep"] = BD.reps_deep(sales, coaching, playbook, sanctioned, scrub)
+    closer["review"] = BD.calls_to_review(sales, coaching, scrub)
+    closer["trends"] = BD.trends(sales, sanctioned)
+    wins = BD.easiest_wins(sales, closer["objection_pages"], ops)
+    av = BD.avatar_rollup(deep(json.load(open(f"{D}/avatars.json"))) if os.path.exists(f"{D}/avatars.json") else None, sales, app["rows"] if app else [], scrub)
     out = {
+        "applicants": app, "avatars": av, "wins": wins,
         "meta": {"offer": OFFER, "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "min_n": MIN_N},
         "funnel": build_funnel(), "ops": ops,
         "closer": closer, "texting": texting, "triage": triage, "triage_progress": tprog,
@@ -731,7 +749,18 @@ def main():
         "privacy": {"scheme": "prospects shown as initials; emails, phone numbers and ID numbers removed; no transcripts published"},
     }
     os.makedirs(f"{ROOT}/web/data", exist_ok=True)
-    files = {f"{OFFER}.json": out, f"{OFFER}_calls.json": closer_library(calls, coaching), f"{OFFER}_threads.json": tlib, f"{OFFER}_triage.json": slib}
+    clib = closer_library(calls, coaching)
+    if app:
+        for r in app["rows"]:
+            for cid in r["call_ids"]:
+                if cid in clib:
+                    clib[cid]["application"] = {k: r.get(k) for k in ("age_band", "since_relationship", "hours", "matchmaking", "invest", "heard", "region", "work_cat", "challenge_cats", "money_signal", "form")}
+    if av:
+        for a in av.get("avatars", []):
+            for cid in a.get("call_ids", []):
+                if cid in clib:
+                    clib[cid]["avatar"] = a.get("name")
+    files = {f"{OFFER}.json": out, f"{OFFER}_calls.json": clib, f"{OFFER}_threads.json": tlib, f"{OFFER}_triage.json": slib}
     for name, obj in files.items():
         blob = json.dumps(obj, default=str)
         assert not EMAIL.search(blob), f"email leaked in {name}"

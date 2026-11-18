@@ -116,10 +116,7 @@ def speed_bucket(m):
             return k
 
 
-rows = []
-for l in leads:
-    if l["date_created"] < SINCE:
-        continue
+def lead_row(l):
     created = P(l["date_created"])
     A = acts_by_lead.get(l["id"], [])
     outs = [a for a in A if (a[2].get("direction") == "outbound") and a[1] >= created - timedelta(minutes=1)]
@@ -135,7 +132,7 @@ for l in leads:
     E = eoc_by_lead.get(l["id"], [])
     first_book = min((P(i["created"]) for i in I if i.get("created")), default=None)
     loc = created.astimezone(ET)
-    rows.append({
+    return ({
         "id": l["id"], "source": src(l), "applied": applied(l), "status": l.get("status_label") or "Unknown",
         "month": loc.strftime("%Y-%m"), "week": (loc - timedelta(days=loc.weekday())).strftime("%Y-%m-%d"),
         "hour": loc.hour, "dow": loc.strftime("%a"),
@@ -150,6 +147,8 @@ for l in leads:
         "days_to_book": round((first_book - created).total_seconds() / 86400, 1) if first_book else None,
         "age_days": (NOW - created).days,
     })
+
+rows = [lead_row(l) for l in leads if l["date_created"] >= SINCE]
 
 N = len(rows)
 
@@ -481,3 +480,80 @@ meta = {c["id"]: {"lead_id": c.get("lead_id"), "user_name": rep(c.get("user_name
                   "transcribed": os.path.exists(f"{X}/krc_setter/text/{c['id']}.txt")} for c in cand}
 json.dump(meta, open(os.path.join(ROOT, "data/krc/raw/setter_call_meta.json"), "w"))
 print("triage candidates", len(meta), "transcribed", sum(m["transcribed"] for m in meta.values()))
+
+# ---------------------------------------------------------------- application answers (posted to Close as notes)
+notes = jl(f"{X}/krc_msgs/notes.json")
+
+
+def parse_typeform(t):
+    d = {}
+    for p in re.split(r"^###\s*", t, flags=re.M)[1:]:
+        lines = [l.strip() for l in p.strip().split("\n") if l.strip()]
+        if len(lines) < 2:
+            continue
+        q, a = lines[0], lines[-1]
+        if q.startswith("This is *not*"):
+            q = "matchmaking"
+            d["form_gender_target"] = "men" if "right woman" in p else "women" if "right man" in p else None
+        d[q] = a
+    return {"form": "ad_application", "age_band": d.get("How old are you?"), "since_relationship": d.get("How long has it been since your last serious relationship?"),
+            "challenge": d.get("What is the #1 challenge you have right now when it comes to dating?"), "work": d.get("What do you do for work?"),
+            "hours": d.get("How many hours per week do you work?"), "matchmaking": d.get("matchmaking"), "form_gender_target": d.get("form_gender_target")}
+
+
+def parse_calendly(t):
+    g = lambda q: (re.search(re.escape(q) + r"[^:\n]*:\s*(.*)", t) or [None, None])[1]
+    inv = (g("Are you able to invest") or "").lower()
+    age = g("How old are you?")
+    try:
+        a = int(re.sub(r"\D", "", age or "")[:2])
+        band = "60+" if a >= 60 else f"{a // 5 * 5}–{a // 5 * 5 + 4}" if a >= 30 else "Under 30"
+    except ValueError:
+        band = None
+    loc = g("Where do you live?") or ""
+    STATES = {"alabama": "AL", "alaska": "AK", "arizona": "AZ", "arkansas": "AR", "california": "CA", "colorado": "CO", "connecticut": "CT", "delaware": "DE", "florida": "FL", "georgia": "GA", "hawaii": "HI", "idaho": "ID", "illinois": "IL", "indiana": "IN", "iowa": "IA", "kansas": "KS", "kentucky": "KY", "louisiana": "LA", "maine": "ME", "maryland": "MD", "massachusetts": "MA", "michigan": "MI", "minnesota": "MN", "mississippi": "MS", "missouri": "MO", "montana": "MT", "nebraska": "NE", "nevada": "NV", "new hampshire": "NH", "new jersey": "NJ", "new mexico": "NM", "new york": "NY", "north carolina": "NC", "north dakota": "ND", "ohio": "OH", "oklahoma": "OK", "oregon": "OR", "pennsylvania": "PA", "rhode island": "RI", "south carolina": "SC", "south dakota": "SD", "tennessee": "TN", "texas": "TX", "utah": "UT", "vermont": "VT", "virginia": "VA", "washington": "WA", "west virginia": "WV", "wisconsin": "WI", "wyoming": "WY"}
+    st_ = next((v for k, v in STATES.items() if k in loc.lower()), None) or (re.search(r"\b([A-Z]{2})\b", loc) or [None, None])[1]
+    if not st_ and re.search(r"canada|ontario|alberta|british columbia|toronto|vancouver|calgary", loc, re.I):
+        st_ = "Canada"
+    if not st_ and re.search(r"uk|england|london|australia|ireland|germany|netherlands", loc, re.I):
+        st_ = "Outside US/Canada"
+    return {"form": "booking_questions", "age_band": band, "work": g("What do you do for work?"), "challenge": g("What are your top dating challenges"),
+            "goals": g("What would you like to get out of coaching"), "invest": "yes" if inv.startswith("yes") else "no" if inv.startswith("no") else None,
+            "heard": (g("How did you hear") or "").strip().lower() or None, "start": (g("how soon are you willing") or "").strip().lower() or None, "region": st_,
+            "anything_else": g("What else should I know about you?")}
+
+
+apps = {}
+for x in sorted(notes, key=lambda x: x["date_created"]):
+    t = x.get("note") or ""
+    if "### How old are you?" in t:
+        rec = parse_typeform(t)
+    elif "Where do you live?" in t and "Are you able to invest" in t:
+        rec = parse_calendly(t)
+    else:
+        continue
+    rec["date"] = x["date_created"][:10]
+    a = apps.setdefault(x["lead_id"], {})
+    for k, v in rec.items():                      # keep both forms' answers, first non-empty wins
+        if v and not a.get(k):
+            a[k] = v
+    a.setdefault("forms", set()).add(rec["form"])
+for a in apps.values():
+    a["forms"] = sorted(a["forms"])
+json.dump(apps, open(os.path.join(ROOT, "data/krc/raw/applications.json"), "w"), indent=0)
+print("applications", len(apps), C.Counter(f for a in apps.values() for f in a["forms"]))
+
+# ---------------------------------------------------------------- per-lead rows for applicants (joined with outcomes)
+DQ = lambda lid: any(e.get("Call Outcome") == "Disqualified" for e in eoc_by_lead.get(lid, []))
+lr = {}
+for lid in apps:
+    l = lead_by_id.get(lid)
+    if not l:
+        continue
+    r = lead_row(l)
+    I = inv_by_lead.get(lid, [])
+    r.update({"dq": DQ(lid), "team_cancelled": any(i["status"] == "canceled" and i.get("canceled_by") == "host" and not i.get("rescheduled") for i in I),
+              "emails": sorted(em(l))})
+    lr[lid] = r
+json.dump(lr, open(os.path.join(ROOT, "data/krc/raw/lead_rows.json"), "w"))
+print("lead rows", len(lr))
