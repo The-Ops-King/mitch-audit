@@ -726,7 +726,7 @@ def main():
         texting["extra"] = textra
     triage, slib = build_triage(scalls, pb_setter, raw_threads, call_meta)
     tprog = {"candidates": len(call_meta), "transcribed": sum(1 for m in call_meta.values() if m.get("transcribed")),
-             "scored": sum(1 for c in scalls if c.get("type") == "setter_call"), "by_user": dict(C.Counter(m["user_name"] for m in call_meta.values())),
+             "scored": sum(1 for c in scalls if c.get("type") == "setter_call"), "reviewed": len(scalls), "by_user": dict(C.Counter(m["user_name"] for m in call_meta.values())),
              "minutes": round(sum(m["duration_min"] for m in call_meta.values()))}
     sales = [c for c in calls if c.get("type") == "sales"]
     J = lambda n: json.load(open(f"{D}/raw/{n}")) if os.path.exists(f"{D}/raw/{n}") else {}
