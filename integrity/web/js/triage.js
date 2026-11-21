@@ -1,7 +1,7 @@
 /* Triage (setter) calls */
 SECTIONS.push({
   id: "triage", name: "Triage calls",
-  subs: [["summary", "Summary"], ["script", "Script & gates"], ["show", "Booking & show protection"], ["coaching", "Coaching"], ["flags", "Flags"], ["library", "Call library"]],
+  subs: [["summary", "Summary"], ["script", "Script & gates"], ["show", "Booking & show protection"], ["predicts", "What predicts a sale"], ["coaching", "Coaching"], ["flags", "Flags"], ["library", "Call library"]],
   render: (d, sub) => d.triage ? TRIAGE[sub](d) : triagePending(d),
 });
 const SPH = d => Object.fromEntries(d.playbook_setter.phases.map(p => [p.id, p]));
@@ -15,6 +15,27 @@ function triagePending(d) {
 }
 
 const TRIAGE = {
+  predicts(d) {
+    const S = d.setter_link;
+    if (!S || S.calls_linked < 20) return callout("Not enough linked calls", "Fewer than 20 triage calls could be followed to a sales-call outcome for this offer, so no comparison is shown.", "warn");
+    const p = (a, b) => b ? Math.round(100 * a / b) + "%" : "–";
+    const T = S.totals;
+    const rowsF = (S.by_factor || []).map(r => ({ ...r, show_rate: p(r.showed, r.reached_sales_call), deal_rate: p(r.new_deal, r.n), dq_rate: p(r.dq, r.reached_sales_call) }));
+    const m = (S.by_factor || []).filter(r => r.factor.startsWith("Money"));
+    const ask = m.find(r => r.group.startsWith("Asked")) || {}, no = m.find(r => r.group.startsWith("Weak")) || {};
+    const pr = (S.by_factor || []).filter(r => r.factor.startsWith("Price"));
+    const over = pr.find(r => r.group.startsWith("Above")) || {}, none = pr.find(r => r.group.startsWith("No price")) || {};
+    const tie = S.bookings_by_tiedown || [];
+    const inviteYes = tie.find(r => r.factor.startsWith("Calendar") && r.group === "Yes");
+    return section("What predicts a sale", `Each scored triage call from before ${niceDate(S.cutoff)} (${fmt(S.calls_linked)} calls), followed through the closers' reports up to ${niceDate(S.eoc_through)}. ${fmt(T.reached_sales_call)} reached a sales call, ${fmt(T.showed)} showed and ${fmt(T.new_deal)} became new deals.`,
+      `<div class="grid g3">${callout("The money question is the strongest signal", `When the setter asked about money and got an answer, ${fmt(ask.new_deal)} of ${fmt(ask.n)} leads (${p(ask.new_deal, ask.n)}) became a deal. When it was weak or skipped: ${fmt(no.new_deal)} of ${fmt(no.n)} (${p(no.new_deal, no.n)}). Leads who can pay are also more willing to talk about it, so part of this is who the lead is. Either way, the answer tells the closer who to prioritise and how to frame the price.`, "good")}
+        ${callout("Quoting above the range didn't visibly cost deals", `Calls where the setter said a price above the script range: ${fmt(over.new_deal)} of ${fmt(over.n)} became deals. No price said: ${fmt(none.new_deal)} of ${fmt(none.n)}. The price drift is still a compliance and expectation problem, but this data doesn't show it losing sales.`, "info")}
+        ${callout("Show protection can't be measured yet", inviteYes ? `Invite accepted live: ${fmt(inviteYes.showed)} of ${fmt(inviteYes.reached_sales_call)} showed.` : `On ${fmt(T.booked_on_call)} calls that booked a time, the calendar invite was never accepted live and no lead gave a clear show commitment, so there's nothing to compare. The setter-booked show rate is already high; the tie-downs are cheap insurance, not the main lever.`, "warn")}</div>
+      <div class="card mt">${table([{ l: "Behaviour", k: "factor" }, { l: "Group", k: "group" }, { l: "Calls", k: "n", n: 1 }, { l: "Reached a sales call", k: "reached_sales_call", n: 1 },
+        { l: "Showed (of those)", n: 1, f: r => r.show_rate }, { l: "DQ'd on the call", n: 1, f: r => r.dq_rate }, { l: "Became a new deal", n: 1, f: r => `${fmt(r.new_deal)} · ${r.deal_rate}` }], rowsF)}
+        <p class="cap">Small numbers: one or two deals moves a percentage a lot. Read the direction, not the decimals. Calls after ${niceDate(S.cutoff)} are left out because those leads haven't had time to reach a sales call.</p></div>
+      ${callout("What to do with it", "Sid: the money question becomes a hard gate on every triage call (\"If this is a fit, are you in a position to invest in yourself right now?\"), and the answer goes in a Close field the closer reads before the call. The AI triage review already scores this gate on every recorded call.", "")}`, "Triage");
+  },
   summary(d) {
     const T = d.triage, s = T.summary, v = T.verify;
     return section("Triage calls at a glance", `${fmt(s.setter_calls)} real triage conversations scored against the setter script, out of ${fmt(s.recorded_2min)} recorded calls over 2 minutes. Bookings are checked against Calendly and the closer's report.`,

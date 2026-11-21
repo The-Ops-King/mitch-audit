@@ -15,7 +15,7 @@ async function render() {
   const S = SECTIONS.find(s => s.id === state.sec) || SECTIONS[0];
   if (S.subs && !S.subs.some(x => x[0] === state.sub)) state.sub = S.subs[0][0];
   try {
-    main.innerHTML = await S.render(d, state.sub) + `<p class="foot">Data pulled ${esc(niceDate(d.meta.generated_at))}. Prospects shown as initials. Times in US Eastern.</p>`;
+    main.innerHTML = await S.render(d, state.sub) + `<p class="foot">Data as of ${esc(niceDate(d.meta.data_as_of || d.meta.generated_at))}. Prospects shown as initials (first name and last initial in Recoverable money). Times in US Eastern.</p>`;
   } catch (e) { console.error(e); main.innerHTML = `<div class="card pending">This section failed to render: ${esc(e.message)}</div>`; }
   renderNav();
 }
