@@ -2,6 +2,8 @@
 """Full-population funnel for KRC from Close, Calendly, Airtable exports.
 Usage: python3 src/funnel_krc.py <export_dir>  -> data/krc/raw/funnel.json"""
 import json, sys, os, collections as C, datetime as D
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from closes import mark_new_closes, is_new_close
 OFFER = __import__("os").environ.get("OFFER", "krc")
 X = sys.argv[1]
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f"data/{OFFER}/raw/funnel.json")
@@ -29,7 +31,8 @@ for e in eoc: eoc_by[str(e.get("Lead Email", "")).lower().strip()].append(e)
 paid_by = C.Counter()
 for p in pay: paid_by[str(p.get("Email", "")).lower().strip()] += p.get("Amount", 0) or 0
 HELD = lambda e: e.get("Call Outcome") not in ("No Show", "Cancelled", "Reschedule", None)
-CLOSED = lambda e: e.get("Call Outcome") == "Closed" and e.get("Payment Type") not in ("Deposit", "Instalment Paid")
+mark_new_closes(eoc)
+CLOSED = is_new_close
 rows = []
 for l in rec:
     E = em(l); f = first.get(l["id"])

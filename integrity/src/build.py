@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OFFER = sys.argv[1] if len(sys.argv) > 1 else "krc"
 D = f"{ROOT}/data/{OFFER}"
+NEW_CLOSES = {tuple(x) for x in json.load(open(f"{D}/raw/new_closes.json"))} if os.path.exists(f"{D}/raw/new_closes.json") else set()
 MIN_N = 5  # lift below this sample is shown greyed as insufficient
 
 REP_ALIASES = {"Ellie Porter": "Elly Porter", "Mariah Malvezzi": "Mariah Casagrande-Malvezzi", "Jeremy Makena": "Makena Waterhouse", "Sidonie Chechin": "Sidonie C"}
@@ -106,9 +107,7 @@ def crm_outcome(c):
 
 def closer_won(c):
     crm = c.get("_crm") or {}
-    if crm.get("Call Outcome") == "Closed" and crm.get("Payment Type") not in ("Deposit", "Instalment Paid"):
-        return True
-    return False
+    return (str(crm.get("Lead Email") or "").lower().strip(), str(crm.get("Date of Call") or "")) in NEW_CLOSES
 
 
 def build_closer(calls, playbook):
@@ -318,7 +317,7 @@ def raw_outcome(r):
     booked = bool(r.get("calendly")) or bool(eoc)
     showed = any(e.get("outcome") not in ("No Show", "Cancelled", "Reschedule", None) for e in eoc)
     # a deposit is not a closed deal, so payments alone never count as a close
-    closed = any(e.get("outcome") == "Closed" and e.get("payment_type") not in ("Deposit", "Instalment Paid") for e in eoc)
+    closed = any(e.get("new_close") if "new_close" in e else (e.get("outcome") == "Closed" and e.get("payment_type") not in ("Deposit", "Instalment Paid")) for e in eoc)
     return {"booked": booked, "showed": showed, "closed": closed}
 
 

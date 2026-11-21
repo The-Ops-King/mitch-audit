@@ -9,7 +9,7 @@ const ACTION = {
   money(d) {
     const M = d.action && d.action.money;
     if (!M) return card("", "Not enough data yet.");
-    return section("Money on the table", `What each fix is worth, in dollars, using this offer's own numbers since ${niceDate(M.since)}: an average paid-in-full deal of ${money(M.aov_contract)} (${money(M.cash_per_close)} collected at close), a ${M.show_rate}% show rate and ${M.close_rate_of_shows}% of shows closing in full.`,
+    return section("Money on the table", `What each fix is worth, in dollars, using this offer's own numbers since ${niceDate(M.since)}: an average new deal of ${money(M.aov_contract)} (${money(M.cash_per_close)} collected at close), a ${M.show_rate}% show rate and ${M.close_rate_of_shows}% of shows closing in full.`,
       `<div class="grid g4">${tile(money(M.total_contract), "Contract value across these fixes", "", "good")}${tile(money(M.total_cash), "Cash at close", "", "good")}${tile(fmt(sum(M.levers, l => l.extra_closes)), "Extra closed deals")}${tile(fmt(M.full_closes), "Full closes this period today", "the baseline")}</div>
       <div class="card mt">${table([{ l: "Fix", f: r => `<b>${esc(r.lever)}</b><div class="small muted">${esc(r.assumption)}</div>`, s: r => r.lever },
         { l: "Owner", f: r => `<span class="owner">${esc(r.owner)}</span>` }, { l: "Effort", f: r => `<span class="small">${esc(r.effort)}</span>` },
@@ -78,7 +78,7 @@ const ACTION = {
     const rows = [
       ["leads", "New leads", null, x => fmt(x)], ["in5_pct", "Reached inside 5 minutes", "60%+", x => x == null ? "–" : x + "%"], ["median_first_touch", "Median time to first touch", "Under 15 min", mins],
       ["never_contacted_pct", "Never contacted (so far)", "Under 5%", x => x == null ? "–" : x + "%"], ["booked", "Leads who booked", null, fmt], ["calls_held", "Sales calls held", null, fmt],
-      ["show_rate", "Show rate (held ÷ held + no-show)", "70%+", x => x == null ? "–" : x + "%"], ["full_closes", "Deals paid in full", null, fmt], ["deposits", "Deposits (not closes)", null, fmt],
+      ["show_rate", "Show rate (held ÷ held + no-show)", "70%+", x => x == null ? "–" : x + "%"], ["full_closes", "New deals (paid in full or 1st plan payment)", null, fmt], ["deposits", "Deposits (not closes)", null, fmt],
       ["cash", "Cash collected", null, money], ["team_cancels", "Calls cancelled by the team", "With a reason, every time", fmt], ["eoc_with_recording_pct", "EOC reports with a recording link", "100%", x => x == null ? "–" : x + "%"]];
     return section("The Monday scorecard", "The numbers worth looking at every Monday, with definitions that can't be gamed: a deposit is not a close, a team cancellation is not a no-show, and contact time comes from Close, not the end-of-day form. Last 12 weeks, newest on the right. Leah can automate this into Slack every Monday.",
       `<div class="card tw"><table><thead><tr><th>Measure</th><th>Target</th>${W.map(w => `<th class="n">${esc(w.week.slice(5))}</th>`).join("")}</tr></thead><tbody>

@@ -8,6 +8,8 @@ Usage: python3 -I src/ops_krc.py <export_dir>
 Times are bucketed in US Eastern (America/New_York).
 """
 import json, os, re, sys, statistics as st, collections as C
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from closes import mark_new_closes, is_new_close
 OFFER = __import__("os").environ.get("OFFER", "krc")
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -93,7 +95,8 @@ for p in pay:
         paid_by_lead[lid] += p.get("Amount") or 0
 
 HELD = lambda e: e.get("Call Outcome") not in ("No Show", "Cancelled", "Reschedule", None)
-CLOSED = lambda e: e.get("Call Outcome") == "Closed" and e.get("Payment Type") not in ("Deposit", "Instalment Paid")
+mark_new_closes(eoc)
+CLOSED = is_new_close
 
 
 def src(l):
@@ -473,6 +476,8 @@ for p in pay:
     names.update(w.strip(".,()'\"") for w in str(p.get("Name") or "").split())
 names = sorted(n for n in names if len(n) >= 3 and n[:1].isalpha())
 json.dump(names, open(os.path.join(ROOT, f"data/{OFFER}/raw/names.json"), "w"))
+json.dump(sorted([str(e.get("Lead Email") or "").lower().strip(), str(e.get("Date of Call") or "")] for e in eoc if is_new_close(e)),
+          open(os.path.join(ROOT, f"data/{OFFER}/raw/new_closes.json"), "w"))
 print("name tokens", len(names))
 
 # ---------------------------------------------------------------- triage call candidates (metadata only)
