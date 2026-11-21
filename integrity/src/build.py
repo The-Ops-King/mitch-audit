@@ -767,6 +767,7 @@ def main():
     out = {
         "applicants": app, "avatars": av, "wins": wins, "action": action,
         "recover": recover,
+        "speed_cap": (json.load(open(f"{D}/raw/speed_cap.json")) if os.path.exists(f"{D}/raw/speed_cap.json") else None),
         "setter_link": ({k: v for k, v in json.load(open(f"{D}/raw/setter_link.json")).items() if k != "rows"} if os.path.exists(f"{D}/raw/setter_link.json") else None),
         "meta": {"offer": OFFER, "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "data_as_of": (ops or {}).get("generated"), "min_n": MIN_N},
         "funnel": build_funnel(), "ops": ops,

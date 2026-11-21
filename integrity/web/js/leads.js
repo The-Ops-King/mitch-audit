@@ -1,7 +1,7 @@
 /* Leads: volume, speed to lead, follow-up, booking, outcomes, money, reporting accuracy */
 SECTIONS.push({
   id: "leads", name: "Leads",
-  subs: [["volume", "Volume & sources"], ["speed", "Speed to lead"], ["followup", "Follow-up"], ["booking", "Booking & shows"], ["outcomes", "Call outcomes"], ["money", "Money"], ["reporting", "Reporting accuracy"]],
+  subs: [["volume", "Volume & sources"], ["speed", "Speed to lead"], ["dollars", "Speed & capacity in $"], ["followup", "Follow-up"], ["booking", "Booking & shows"], ["outcomes", "Call outcomes"], ["money", "Money"], ["reporting", "Reporting accuracy"]],
   render: (d, sub) => LEADS[sub](d),
 });
 const srcCols = first => [
@@ -24,6 +24,31 @@ const LEADS = {
     + section("Where leads sit in Close right now", "Lead status today for every lead created since September 1.",
       `<div class="grid g2">${card("", bars(L.by_status.map(s => ({ label: s.key, value: s.leads, text: `${s.leads} (${pct(s.leads, o.leads)}%)` }))))}
       ${callout(`${fmt((L.by_status.find(s => s.key === "New Lead") || {}).leads)} leads are still "New Lead"`, "That's the default status. Most of them were never worked past the first touch, so Close can't tell anyone which leads are dead, cold, or waiting on a callback.", "warn")}</div>`, "Leads");
+  },
+
+  dollars(d) {
+    const SC = d.speed_cap;
+    if (!SC) return callout("Not built yet", "", "warn");
+    const S = SC.speed, Cp = SC.capacity, p = (a, b) => b ? Math.round(100 * a / b) + "%" : "–";
+    const bk = S.buckets.map(b => ({ ...b, deal: p(b.closed, b.leads) }));
+    const first = bk[0] || {}, late = bk.find(b => b.key === "4–24 hrs") || {};
+    let html = `<div class="grid g4">${tile(fmt(S.never.leads), "Leads never called or texted in Close", `${p(S.never.booked, S.never.leads)} of them booked`, "bad")}
+        ${tile(p(S.contacted.booked, S.contacted.leads), "Booking rate once a lead is contacted at all", `${fmt(S.contacted.new_deals)} new deals from ${fmt(S.contacted.leads)} leads`)}
+        ${tile(money(S.lift_value), "Value if never-contacted leads converted like the rest", `about ${money(S.lift_value_per_month)} a month · ${S.lift_deals} deals`, "warn")}
+        ${tile(money(S.aov), "Average new deal", "contract value")}</div>
+      <div class="grid g2 mt">${callout("Contact matters more than speed", isKRC() ? `Leads reached inside 5 minutes booked ${first.booked_pct}% of the time; leads reached 4 to 24 hours later booked ${late.booked_pct}%. Speed alone isn't moving bookings. Leads nobody contacted booked ${p(S.never.booked, S.never.leads)}. The money is in reaching every lead, not in shaving minutes.` : `Leads with no call or text in Close still booked ${p(S.never.booked, S.never.leads)} of the time and ${fmt(S.never.new_deals)} became deals, because many book themselves or are worked in DMs that Close can't see. The risk here is visibility as much as lost leads.`, "info")}
+        ${callout("How the value is worked out", `Never-contacted leads (${fmt(S.never.leads)}) times the gap between the new-deal rate of contacted leads (${p(S.contacted.new_deals, S.contacted.leads)}) and theirs (${p(S.never.new_deals, S.never.leads)}), times the average new deal. Over ${S.weeks} weeks. Some of these leads were worked in DMs that Close doesn't record, so treat it as an upper bound.`, "")}</div>
+      <div class="card mt">${table([{ l: "First contact", k: "key" }, { l: "Leads", k: "leads", n: 1 }, { l: "Booked", n: 1, f: r => r.booked_pct == null ? "–" : r.booked_pct + "%" }, { l: "Showed", k: "showed", n: 1 }, { l: "New deals", k: "closed", n: 1 }, { l: "Deal rate", n: 1, f: r => r.deal }], bk)}</div>`;
+    if (Cp) {
+      const h = Cp.hosts[0] || {};
+      html += `<div class="grid g4 mt">${tile(h.avg_per_week ?? "–", "Sales calls held per week, " + (h.host || ""), `busiest week ${h.max_week}, busiest day ${h.max_day}`)}
+          ${tile(fmt(Cp.host_cancelled) + " of " + fmt(Cp.direct_bookings), "Direct bookings the team cancelled", "", "bad")}${tile(fmt(Cp.cancelled_without_recorded_call), "Cancelled with no recorded setter call", "nobody spoke to them first", "bad")}
+          ${tile(fmt(Cp.cancelled_then_bought), "Cancelled by the team, bought anyway", "", "warn")}</div>
+        <div class="grid g2 mt">${callout("Capacity isn't the problem", `The closer is holding about ${h.avg_per_week} sales calls a week and never more than ${h.max_day} in a day. The team isn't cancelling ad bookings because the calendar is full. They're cancelling them to screen. Only ${fmt(Cp.cancel_with_reason)} cancellations have a reason recorded.`, "info")}
+          ${callout("Fix", "Mitch: write the rule for cancelling a direct booking (who can, when, and what counts as a DQ). Leah: Calendly requires a cancel reason, and the cancel Zap writes it to Close. A setter calls before any cancellation, and the call is recorded.", "")}</div>
+        <div class="card mt"><h3>Where cancelled direct bookings are now (Close status)</h3>${table([{ l: "Status", f: r => esc(r[0]) }, { l: "Leads", n: 1, f: r => r[1] }], Cp.cancel_status_now)}</div>`;
+    }
+    return section("Speed and capacity in dollars", "What reaching every lead is worth, and whether the closer's calendar is the bottleneck.", html, "Leads");
   },
 
   speed(d) {
