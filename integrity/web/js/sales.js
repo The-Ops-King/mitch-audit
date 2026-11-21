@@ -15,7 +15,7 @@ const SALES = {
     return section("Sales calls at a glance", `${fmt(s.calls)} recorded closer calls scored step by step against ${esc(d.playbook.name)}. Outcomes come from the closer's own End-of-Call report, checked against what actually happened on the recording.`,
       `<div class="grid g6">
         ${tile(fmt(s.calls), "Calls analysed", `${fmt(s.by_source.fathom || 0)} Fathom · ${fmt(s.by_source.zoom || 0)} Zoom · ${fmt(s.by_source.drive || 0)} Drive`, "info")}
-        ${tile(drill(fmt(s.won), wonIds, "Won calls"), "Closed in full", `${s.close_pct}% of analysed calls`, "good")}
+        ${tile(drill(fmt(s.won), wonIds, "Won calls"), "New deals", `${s.close_pct}% of analysed calls`, "good")}
         ${tile(fmt(s.avg_score), "Average script score", `Won ${s.won_score} · not won ${s.not_won_score}`)}
         ${tile(fmt(o.calls_with_off_sheet_price), "Calls with an off-sheet price", `of ${o.calls_pitched} pitched`, "bad")}
         ${tile(fmt(o.outcome_promises), "Calls with an outcome promise", `of ${o.calls_pitched} pitched`, "bad")}
@@ -53,7 +53,7 @@ const SALES = {
     const c = d.closer, D = c.deep;
     const pred = D.checks.filter(x => x.applicable >= 8 && x.won_pct != null && x.not_won_pct != null).map(x => ({ ...x, gap: x.won_pct - x.not_won_pct })).sort((a, b) => b.gap - a.gap);
     const ok = c.question_lift.filter(q => q.sufficient);
-    return callout(`Only ${c.summary.won} calls closed in full`, `Every comparison on this page sets ${c.summary.won} won calls against ${c.summary.calls - c.summary.won} that didn't close. One call moves a won percentage by ${Math.round(100 / Math.max(1, c.summary.won))} points. Read these as places to look, not proof of cause. Things "appeared in" won calls; nothing here says they caused the win.`, "warn")
+    return callout(`Only ${c.summary.won} calls became new deals`, `Every comparison on this page sets ${c.summary.won} won calls against ${c.summary.calls - c.summary.won} that didn't close. One call moves a won percentage by ${Math.round(100 / Math.max(1, c.summary.won))} points. Read these as places to look, not proof of cause. Things "appeared in" won calls; nothing here says they caused the win.`, "warn")
     + section("Step by step: won vs not won", "Adherence on each script step in won calls compared with calls that didn't close.",
       card("", legend([["var(--s1)", "Won"], ["var(--s2)", "Not won"]]) + bars(D.phase_gap.map(p => ({ label: `${p.id} ${p.name}`, value: p.won || 0, b: p.not_won || 0, text: `${p.won ?? "–"} vs ${p.not_won ?? "–"} (${p.gap > 0 ? "+" : ""}${p.gap})`, tip: `${p.name}: won ${p.won}%, not won ${p.not_won}%` })), { max: 100 })), "Won vs not won")
     + section("Checks that separate wins from the rest", "Checks run far more often in won calls sit at the top. Checks run more in lost calls sit at the bottom.",

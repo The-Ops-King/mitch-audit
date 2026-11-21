@@ -1,7 +1,7 @@
 /* Action plan: money on the table, script fixes, setter time, is coaching sticking, coaching packs, Monday scorecard */
 SECTIONS.splice(1, 0, {
   id: "action", name: "Action plan",
-  subs: [["money", "Money on the table"], ["scripts", "Script fixes"], ["time", "Setter time"], ["sticking", "Is coaching sticking"], ["packs", "Coaching packs"], ["scorecard", "Monday scorecard"]],
+  subs: [["watch", "Issues to watch"], ["money", "Money on the table"], ["scripts", "Script fixes"], ["time", "Setter time"], ["sticking", "Is coaching sticking"], ["packs", "Coaching packs"], ["scorecard", "Monday scorecard"]],
   render: (d, sub) => ACTION[sub](d),
 });
 
@@ -9,7 +9,7 @@ const ACTION = {
   money(d) {
     const M = d.action && d.action.money;
     if (!M) return card("", "Not enough data yet.");
-    return section("Money on the table", `What each fix is worth, in dollars, using this offer's own numbers since ${niceDate(M.since)}: an average new deal of ${money(M.aov_contract)} (${money(M.cash_per_close)} collected at close), a ${M.show_rate}% show rate and ${M.close_rate_of_shows}% of shows closing in full.`,
+    return section("Money on the table", `What each fix is worth, in dollars, using this offer's own numbers since ${niceDate(M.since)}: an average new deal of ${money(M.aov_contract)} (${money(M.cash_per_close)} collected at close), a ${M.show_rate}% show rate and ${M.close_rate_of_shows}% of shows becoming a new deal.`,
       `<div class="grid g4">${tile(money(M.total_contract), "Contract value across these fixes", "", "good")}${tile(money(M.total_cash), "Cash at close", "", "good")}${tile(fmt(sum(M.levers, l => l.extra_closes)), "Extra closed deals")}${tile(fmt(M.full_closes), "Full closes this period today", "the baseline")}</div>
       <div class="card mt">${table([{ l: "Fix", f: r => `<b>${esc(r.lever)}</b><div class="small muted">${esc(r.assumption)}</div>`, s: r => r.lever },
         { l: "Owner", f: r => `<span class="owner">${esc(r.owner)}</span>` }, { l: "Effort", f: r => `<span class="small">${esc(r.effort)}</span>` },
@@ -66,7 +66,7 @@ const ACTION = {
     const P = d.action && d.action.packs || [];
     return section("One-page coaching packs", "One page per rep for Sid's 1:1s: what to focus on, the exact words to use instead, what to keep doing, and three calls to listen to together. Print or share as is.",
       `<div class="grid g2">${P.map(p => `<div class="card" style="break-inside:avoid"><div class="kicker">${esc(p.role)} coaching pack</div><h3 style="font-size:20px">${esc(p.rep)}</h3>
-        <p class="small muted" style="margin:-4px 0 10px">${fmt(p.calls)} calls scored${p.won != null ? ` · ${p.won} closed in full` : ""}${p.avg_score != null ? ` · average script score ${p.avg_score}` : ""}</p>
+        <p class="small muted" style="margin:-4px 0 10px">${fmt(p.calls)} calls scored${p.won != null ? ` · ${p.won} new deals` : ""}${p.avg_score != null ? ` · average script score ${p.avg_score}` : ""}</p>
         <h4>Focus on these three</h4><ol style="margin:0 0 6px;padding-left:18px">${p.focus.map(f => `<li><b>${esc(f.area)}</b> ${esc(f.label)} <span class="muted small">(${f.n} calls)</span></li>`).join("")}</ol>
         <h4>Say this instead</h4>${p.fixes.map(x => `<div style="margin:0 0 10px"><p class="issue small">${esc(x.issue)}</p>${better(x.better)}${x.call_id ? `<div class="small">${p.kind === "triage" ? openTriage(x.call_id, "open call") : openCall(x.call_id, "open call")}</div>` : ""}</div>`).join("")}
         ${p.keep_doing.length ? `<h4>Keep doing</h4>${p.keep_doing.map(x => quote(x.quote, esc(x.why || ""))).join("")}` : ""}

@@ -102,7 +102,7 @@ SALES.objdeep = d => {
 /* ---------- reps head-to-head (replaces Reps tab) ---------- */
 SALES.reps = d => {
   const R = d.closer.reps_deep;
-  const M = [["calls", "Calls scored", 0], ["won", "Closed in full", 1], ["close_pct", "Close rate %", 1], ["cash", "Cash on closed calls", 1, money], ["avg_score", "Avg script score", 1], ["avg_minutes", "Avg call length (min)", 0],
+  const M = [["calls", "Calls scored", 0], ["won", "New deals", 1], ["close_pct", "Close rate %", 1], ["cash", "Cash on closed calls", 1, money], ["avg_score", "Avg script score", 1], ["avg_minutes", "Avg call length (min)", 0],
     ["obj_resolved_pct", "Objections resolved %", 1], ["handled_well_pct", "Objections handled well %", 1], ["money_before_pitch_pct", "Money qualified before pitch %", 1], ["price_before_temp_pct", "Price before temperature check %", -1],
     ["promise_pct", "Calls with an outcome promise %", -1], ["off_sheet_pct", "Pitched calls with an off-sheet price %", -1], ["flags_per_call", "Flags per call", -1], ["high_flags", "High or critical flags", -1], ["disclosure_miss_pct", "Calls with a compliance flag %", -1]];
   const best = (k, dir) => { if (!dir) return null; const v = R.map(r => r[k]).filter(x => x != null); return dir > 0 ? Math.max(...v) : Math.min(...v); };
