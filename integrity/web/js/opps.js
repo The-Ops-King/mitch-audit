@@ -1,7 +1,7 @@
 /* Opportunities: stuck deals, no-show recovery, coverage, lead score, commission, compliance, pre-call content, marketing brief, AI review rubric */
 SECTIONS.splice(2, 0, {
   id: "opps", name: "Opportunities",
-  subs: [["stuck", "Deals stuck after the call"], ["recovery", "No-shows & cancels"], ["coverage", "Coverage gaps"], ["score", "Lead priority score"], ["commission", "Commission check"],
+  subs: [["recover", "Recoverable money"], ["stuck", "Deals stuck after the call"], ["recovery", "No-shows & cancels"], ["coverage", "Coverage gaps"], ["score", "Lead priority score"], ["commission", "Commission check"],
          ["compliance", "Compliance register"], ["precall", "Pre-call content"], ["marketing", "Marketing brief"], ["rubric", "AI review rubric"]],
   render: (d, sub) => OPPS[sub](d),
 });
@@ -9,6 +9,33 @@ const X = d => (d.ops && d.ops.extra) || {};
 const yes = b => b ? chip("Yes", "good") : chip("No", "bad");
 
 const OPPS = {
+  recover(d) {
+    const R = d.recover;
+    if (!R) return callout("Not built yet", "Recoverable money needs the latest build.", "warn");
+    const B = R.balances || [], L = R.call_list || [], ch = R.chance_by_outcome || {};
+    const om = ch["Offer Made"] || {}, ns = ch["No Show"] || {}, cn = ch["Cancelled"] || {};
+    const late = B.filter(b => b.late), owed = B.filter(b => b.balance > 0);
+    const rate = c => c && c.n ? `${fmt(c.later_new_deal)} of ${fmt(c.n)}` : "–";
+    const top = L.slice(0, 25);
+    return section("Recoverable money", `Money already owed on deals sold, and the people most worth a call this week. Data as of ${niceDate(R.as_of)}. Names show as first name and last initial; open the lead in Close for contact details.`,
+      `<div class="grid g6">${tile(money(R.balance_total), "Still owed on payment plans", `${fmt(owed.length)} clients`, owed.length ? "warn" : "")}${tile(money(R.late_total), "Owed, nothing logged in 35+ days", `${fmt(late.length)} clients`, late.length ? "bad" : "")}
+        ${tile(fmt(R.plans_with_dates) + " of " + fmt(B.length), "Plans with due dates on the report", "the rest have no schedule anywhere", "bad")}${tile(R.instalment_records_rows == null ? "–" : fmt(R.instalment_records_rows), "Rows in Airtable Instalment Records", "the table meant to track this", "info")}
+        ${tile(fmt(L.length), "People worth a call", "pitched or no-showed, never bought, not DQ'd")}${tile(money(R.open_offer_value), "Offers still open", "contract value at stake")}</div>
+      <div class="card mt"><h3>Balances still owed</h3>${B.length ? table([{ l: "Client", k: "name" }, { l: "Sold", f: r => esc(niceDate(r.sold)), s: r => r.sold }, { l: "Closer", k: "closer" },
+        { l: "Contract", n: 1, f: r => money(r.contract), s: r => r.contract }, { l: "Collected", n: 1, f: r => money(r.collected), s: r => r.collected }, { l: "Balance", n: 1, f: r => r.balance ? `<b>${money(r.balance)}</b>` : chip("paid", "good"), s: r => r.balance },
+        { l: "Last money logged", f: r => esc(niceDate(r.last_payment)) + (r.late ? " " + chip(r.days_since_payment + "d ago", "bad") : ""), s: r => r.days_since_payment },
+        { l: "Due dates recorded", f: r => r.dated_schedule ? chip("Yes", "good") : chip("No", "bad") }, { l: "Close status", f: r => esc(r.lead_status || "–") }], B, { sort: 5 }) : "<p class='small'>No payment-plan deals found.</p>"}
+        <p class="cap">Balance = contract value on the End-of-Call report minus the cash collected on the day and every later payment in Payment Records. A balance with no payment logged in 35 days is either late or was paid somewhere that isn't logged. Check the processor before chasing the client.</p></div>
+      <div class="grid g3 mt">${callout("Follow-up almost never converts today", `Of past calls that ended this way, how many later became a new deal: Offer Made ${rate(om)}, No Show ${rate(ns)}, Cancelled ${rate(cn)}. The list below is worth something only if the follow-up process changes.`, "bad")}
+        ${callout("Why the schedule matters", "Most plans have no due dates anywhere. Nobody gets a reminder when a payment is missed, and the Instalment Records table that should drive collections is close to empty.", "warn")}
+        ${callout("Fix", "Leah: the EOC form makes due dates required whenever the contract value is higher than the cash collected, and the EOC Zap creates one Instalment Records row per payment. Mitch: one owner for collections, working the Overdue view every Monday.", "")}</div>
+      <div class="card mt"><h3>Call list, ranked</h3>${table([{ l: "#", k: "rank", n: 1 }, { l: "Prospect", k: "name" }, { l: "Last call", f: r => esc(r.outcome) + " · " + r.days_ago + "d ago", s: r => r.days_ago },
+        { l: "Closer", k: "closer" }, { l: "Last outbound", n: 1, f: r => r.last_touch_days == null ? chip("never", "bad") : r.last_touch_days + "d ago", s: r => r.last_touch_days ?? 999 },
+        { l: "Replied since", f: r => r.replied_since ? chip("Yes", "info") : "–" }, { l: "Value at stake", n: 1, f: r => r.value_at_stake ? money(r.value_at_stake) : "–", s: r => r.value_at_stake },
+        { l: "What stopped them (closer's note)", f: r => `<span class="small">${esc(r.objection)}</span>` }, { l: "Priority", n: 1, k: "points" }], top, { sort: 0, dir: 1 })}
+        <p class="cap">${L.length > 25 ? `Top 25 of ${fmt(L.length)}. ` : ""}Priority points: offer made 40, second call 35, no-show or cancel 20, lost 10; called in the last 14 days +25 (30 days +15, 60 days +5); lead replied since +15; no outbound in 7 days +10; follow-up date passed +10. Excludes anyone who later bought, put down a deposit, held another call, or is marked DQ or client in Close.</p></div>`, "Opportunities");
+  },
+
   stuck(d) {
     const S = (X(d).stuck || []), open = S.filter(s => !s.paid_later), M = d.action && d.action.money;
     const fresh = open.filter(s => s.days_since <= 60), cold = open.filter(s => s.days_since > 60);

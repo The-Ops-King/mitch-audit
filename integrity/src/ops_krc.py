@@ -19,7 +19,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, f"data/{OFFER}/raw/ops.json")
 SINCE = "2026-09-01"
 ET = ZoneInfo("America/New_York")
-NOW = datetime.now(timezone.utc)
+# "Now" is when the exports were taken, not when this script runs, so ages and overdue flags stay true to the data.
+_snap = [os.path.realpath(f"{X}/close/leads.json"), os.path.realpath(f"{X}/close/act_call.json")]
+_snap += [os.path.realpath(f"{X}/airtable/rec_{t['id']}.json") for t in json.load(open(f"{X}/airtable/tables.json"))["tables"] if "EOC Report" in t["name"]]
+NOW = datetime.fromtimestamp(min(os.path.getmtime(f) for f in _snap if os.path.exists(f)), timezone.utc)
 
 
 def P(s):
@@ -711,3 +714,111 @@ comm = {"payments": len(pay), "closer_rate": med([(p.get("Closer Commission") or
 ops_extra.update({"stuck": sorted(stuck, key=lambda r: r["date"], reverse=True), "recovery": recov, "coverage": cov, "commission": comm})
 json.dump(ops_extra, open(os.path.join(ROOT, f"data/{OFFER}/raw/ops_extra.json"), "w"), default=str)
 print("stuck", len(stuck), sum(1 for s in stuck if not s["paid_later"]), "recovery", len(recov), "uncovered leads", cov["leads_in_uncovered"], "/", cov["leads_total"], "deals counted", counted)
+
+# ---------------------------------------------------------------- recoverable money: overdue instalments + ranked call list
+def short_name(n):
+    w = [x for x in str(n or "").replace(",", " ").split() if x[:1].isalpha()]
+    return (w[0].capitalize() + (" " + w[-1][0].upper() + "." if len(w) > 1 else "")) if w else "Unknown"
+GRACE = 3
+sched = []
+for e in eoc:
+    if not CLOSED(e):
+        continue
+    em_ = str(e.get("Lead Email") or "").lower().strip()
+    d0 = e.get("Date of Call") or ""
+    plan = [(n, e.get(f"Date of {n} Instalment"), float(e.get(f"{n} Instalment Amount") or 0)) for n in ("2nd", "3rd", "4th", "5th", "6th")]
+    plan = [p for p in plan if p[1] and p[2]]
+    if not plan:
+        continue
+    pays = sorted((p.get("Date") or "", float(p.get("Amount") or 0)) for p in pay if str(p.get("Email") or "").lower().strip() == em_ and (p.get("Date") or "") > d0)
+    received = sum(a for _, a in pays)
+    due = [p for p in plan if (datetime.fromisoformat(p[1]).date() + timedelta(days=GRACE)) <= NOW.date()]
+    expected = sum(a for _, _, a in due)
+    upcoming = [p for p in plan if p not in due]
+    lid = email_to_lead.get(em_)
+    sched.append({"name": short_name(e.get("Lead Full Name")), "closer": rep(e.get("Closer Name")), "sold": d0, "contract": e.get("Contract Value"),
+                  "cash_at_close": e.get("Cash Collected"), "plan": [{"n": n, "due": d, "amount": a} for n, d, a in plan],
+                  "due_so_far": round(expected), "received_after_close": round(received), "payments_after_close": len(pays),
+                  "short": round(max(0, expected - received)), "next_due": upcoming[0][1] if upcoming else None,
+                  "next_amount": upcoming[0][2] if upcoming else None, "lead_status": (lead_by_id.get(lid) or {}).get("status_label") if lid else None})
+overdue = sorted([s for s in sched if s["short"] > 0], key=lambda s: -s["short"])
+# every new deal sold for more than it collected on the day: balance still owed, from contract value vs all money logged
+balances = []
+for e in eoc:
+    if not CLOSED(e):
+        continue
+    cv, c0 = float(e.get("Contract Value") or 0), float(e.get("Cash Collected") or 0)
+    if cv <= c0 + 1:
+        continue
+    em_ = str(e.get("Lead Email") or "").lower().strip(); d0 = e.get("Date of Call") or ""
+    pays = sorted((p.get("Date") or "", float(p.get("Amount") or 0)) for p in pay if str(p.get("Email") or "").lower().strip() == em_ and (p.get("Date") or "") > d0)
+    later_eoc_cash = sum(float(x.get("Cash Collected") or 0) for x in eoc if str(x.get("Lead Email") or "").lower().strip() == em_ and (x.get("Date of Call") or "") > d0 and x.get("Call Outcome") == "Closed")
+    got = c0 + max(sum(a for _, a in pays), later_eoc_cash)
+    last = max([d0] + [d for d, _ in pays] + [x.get("Date of Call") or "" for x in eoc if str(x.get("Lead Email") or "").lower().strip() == em_ and x.get("Call Outcome") == "Closed"])
+    days_quiet = (NOW.date() - datetime.fromisoformat(last).date()).days if last else None
+    lid = email_to_lead.get(em_)
+    balances.append({"name": short_name(e.get("Lead Full Name")), "closer": rep(e.get("Closer Name")), "sold": d0, "contract": round(cv), "collected": round(got),
+                     "balance": round(max(0, cv - got)), "last_payment": last, "days_since_payment": days_quiet,
+                     "late": bool(days_quiet is not None and days_quiet > 35 and cv - got > 1),
+                     "dated_schedule": any(e.get(f"Date of {n} Instalment") for n in ("2nd", "3rd")),
+                     "lead_status": (lead_by_id.get(lid) or {}).get("status_label") if lid else None})
+balances.sort(key=lambda b: (not b["late"], -b["balance"]))
+inst_tbl = [t for t in tabs if "Instalment Records" in t["name"]]
+inst_rows = len(json.load(open(f"{X}/airtable/rec_{inst_tbl[0]['id']}.json"))) if inst_tbl else None
+
+# empirical chance that a lead in each situation later becomes a new deal (all EOC history, not just since SINCE)
+def later_new_close(e):
+    lid = email_to_lead.get(str(e.get("Lead Email") or "").lower().strip())
+    return bool(lid) and any(CLOSED(x) for x in later_eocs(lid, e.get("Date of Call") or ""))
+def kind(e):
+    o = e.get("Call Outcome")
+    return o + (" (" + str(e.get("Cancellation Type") or e.get("No Show Type") or "") + ")" if o in ("Cancelled", "No Show") and (e.get("Cancellation Type") or e.get("No Show Type")) else "")
+pool = [e for e in eoc if e.get("Call Outcome") in ("Offer Made", "No Pitch - 2 Call Close", "Lost", "No Show", "Cancelled") and (e.get("Date of Call") or "") < (NOW - timedelta(days=21)).date().isoformat()]
+base = C.defaultdict(lambda: [0, 0])
+for e in pool:
+    k = e.get("Call Outcome"); base[k][0] += 1; base[k][1] += later_new_close(e)
+prob = {k: (v[1] / v[0] if v[0] >= 5 else None) for k, v in base.items()}
+new_deals = [e for e in eoc if CLOSED(e)]
+aov = round(st.mean([float(e.get("Contract Value") or e.get("Cash Collected") or 0) for e in new_deals])) if new_deals else 0
+calls_list = []
+for e in eoc:
+    o = e.get("Call Outcome"); d0 = e.get("Date of Call") or ""
+    if o not in ("Offer Made", "No Pitch - 2 Call Close", "Lost", "No Show", "Cancelled") or d0 < SINCE:
+        continue
+    lid = email_to_lead.get(str(e.get("Lead Email") or "").lower().strip())
+    later = later_eocs(lid, d0) if lid else []
+    if any(CLOSED(x) or x.get("Payment Type") == "Deposit" for x in later) or any(x.get("Call Outcome") not in ("No Show", "Cancelled") for x in later):
+        continue                                                       # already rebooked and seen, or already bought
+    if lid and paid_by_lead[lid] > 0:
+        continue
+    st_ = (lead_by_id.get(lid) or {}).get("status_label") if lid else None
+    if st_ and re.search(r"\b(DQ|NGMI|Disqual|Client|Signed|Do Not)\b", st_, re.I):
+        continue
+    t0 = datetime.fromisoformat(d0).replace(tzinfo=ET)
+    A = [a for a in acts_by_lead.get(lid, []) if a[1] > t0] if lid else []
+    last_out = max((a[1] for a in A if a[2].get("direction") == "outbound"), default=None)
+    last_in = max((a[1] for a in A if a[2].get("direction") == "inbound"), default=None)
+    days = (NOW.date() - datetime.fromisoformat(d0).date()).days
+    p = prob.get(o)
+    pts = {"Offer Made": 40, "No Pitch - 2 Call Close": 35, "No Show": 20, "Cancelled": 20, "Lost": 10}[o]
+    pts += 25 if days <= 14 else 15 if days <= 30 else 5 if days <= 60 else 0
+    pts += 15 if last_in else 0
+    pts += 10 if (last_out is None or (NOW - last_out).days >= 7) else 0
+    pts += 10 if (e.get("Follow Up Date") and e["Follow Up Date"] < NOW.date().isoformat()) else 0
+    calls_list.append({"name": short_name(e.get("Lead Full Name")), "outcome": kind(e), "date": d0, "days_ago": days, "closer": rep(e.get("Closer Name")),
+                       "setter": rep(e.get("Setter Name")) if e.get("Setter Name") else None, "lead_status": st_,
+                       "last_touch_days": max(0, (NOW - last_out).days) if last_out else None, "replied_since": bool(last_in),
+                       "followup_date": e.get("Follow Up Date"), "objection": str(e.get("No Close Reason(s) / Objection(s) Faced") or e.get("Cancellation Reason") or e.get("Lost Reason") or e.get("Post Call Notes") or "")[:240],
+                       "offer_value": float(e.get("Contract Value") or 0) or None, "value_at_stake": round(float(e.get("Contract Value") or 0) or aov) if o in ("Offer Made", "No Pitch - 2 Call Close") else 0, "chance": round(p, 3) if p is not None else None,
+                       "expected": round((p or 0) * float(e.get("Contract Value") or aov)), "points": pts})
+calls_list.sort(key=lambda r: (-r["points"], -r["value_at_stake"], r["days_ago"]))
+for i, r in enumerate(calls_list):
+    r["rank"] = i + 1
+recover = {"as_of": NOW.date().isoformat(), "grace_days": GRACE, "overdue": overdue, "balances": balances,
+           "balance_total": sum(b["balance"] for b in balances), "late_total": sum(b["balance"] for b in balances if b["late"]),
+           "plans_with_dates": sum(1 for b in balances if b["dated_schedule"]), "open_offer_value": round(sum(r["value_at_stake"] for r in calls_list)), "schedule": sched, "instalment_records_rows": inst_rows,
+           "overdue_total": sum(s["short"] for s in overdue), "upcoming_30d": round(sum(s["next_amount"] or 0 for s in sched if s["next_due"] and s["next_due"] <= (NOW + timedelta(days=30)).date().isoformat())),
+           "call_list": calls_list, "chance_by_outcome": {k: {"n": v[0], "later_new_deal": v[1], "rate": prob[k]} for k, v in base.items()},
+           "aov": aov, "expected_total": sum(r["expected"] for r in calls_list)}
+json.dump(recover, open(os.path.join(ROOT, f"data/{OFFER}/raw/recover.json"), "w"), default=str)
+print("recover: balances", len(balances), recover["balance_total"], "late", recover["late_total"], "dated", recover["plans_with_dates"], "open offers $", recover["open_offer_value"], "| overdue", len(overdue), recover["overdue_total"], "plans", len(sched), "call list", len(calls_list), "expected", recover["expected_total"], "chance", recover["chance_by_outcome"])

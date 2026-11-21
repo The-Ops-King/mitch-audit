@@ -716,6 +716,14 @@ def main():
     ops = deep(json.load(open(ops_p))) if os.path.exists(ops_p) else None
     if ops and os.path.exists(f"{D}/raw/ops_extra.json"):
         ops["extra"] = deep(json.load(open(f"{D}/raw/ops_extra.json")))
+    # recoverable money: names are already "First L." (agreed with the client); everything else is scrubbed as usual
+    def deep_keep_name(o):
+        if isinstance(o, dict):
+            return {k: (v if k == "name" else deep_keep_name(v)) for k, v in o.items()}
+        if isinstance(o, list):
+            return [deep_keep_name(x) for x in o]
+        return scrub(o)
+    recover = deep_keep_name(json.load(open(f"{D}/raw/recover.json"))) if os.path.exists(f"{D}/raw/recover.json") else None
 
     closer = build_closer(calls, playbook)          # sets _won/_score/rep on calls
     closer["deep"] = closer_deep(calls, playbook, coaching)
@@ -758,7 +766,8 @@ def main():
               "rubric": BD.review_rubric(playbook, pb_setter, playbook.get("name", OFFER))}
     out = {
         "applicants": app, "avatars": av, "wins": wins, "action": action,
-        "meta": {"offer": OFFER, "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "min_n": MIN_N},
+        "recover": recover,
+        "meta": {"offer": OFFER, "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "data_as_of": (ops or {}).get("generated"), "min_n": MIN_N},
         "funnel": build_funnel(), "ops": ops,
         "closer": closer, "texting": texting, "triage": triage, "triage_progress": tprog,
         "playbook": {"name": playbook["name"], "phases": [{"id": p["id"], "name": p["name"], "weight": p["weight"],
@@ -766,7 +775,7 @@ def main():
                      "sanctioned": playbook.get("sanctioned_offer")},
         "playbook_setter": {"phases": [{"id": p["id"], "name": p["name"], "weight": p["weight"],
                                         "checks": [{"id": c["id"], "text": c["text"]} for c in p["checks"]]} for p in pb_setter["phases"]]},
-        "privacy": {"scheme": "prospects shown as initials; emails, phone numbers and ID numbers removed; no transcripts published"},
+        "privacy": {"scheme": "prospects shown as initials, or first name and last initial in the recoverable-money lists; emails, phone numbers and ID numbers removed; no transcripts published"},
     }
     os.makedirs(f"{ROOT}/web/data", exist_ok=True)
     open(f"{ROOT}/web/data/{OFFER}_review_rubric.md", "w").write(action["rubric"]["markdown"])
