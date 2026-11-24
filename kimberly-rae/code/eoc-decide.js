@@ -10,6 +10,10 @@
 //   lead_email, lead_phone, fathom_link, post_call_notes, no_close_reasons,
 //   dq_reason, lost_reason, reschedule_date, cancellation_reason,
 //   date_2, amt_2, date_3, amt_3, date_4, amt_4, date_5, amt_5, date_6, amt_6
+//
+// Payment types it understands: Deposit, Closed - Needs Onboarding, Setter Takedown,
+// Payment Plan - 1st Payment (first payment of a new in-house plan), Instalment Paid
+// (a later payment on a plan that was already sold).
 
 // ---- Config: Close IDs. Update here if a status or stage changes. ----
 const LEAD = {
@@ -72,12 +76,13 @@ switch (outcome) {
     if (payType === 'Deposit') {
       leadStatus = LEAD.DEPOSIT; oppStatus = OPP.DEPOSIT;           // a deposit is not a closed deal
       oppValueCents = cents(inputData.contract_value, 'Contract Value');
-    } else if (payType === 'Closed - Needs Onboarding' || payType === 'Setter Takedown') {
-      leadStatus = onPlan ? LEAD.SIGNED_BALANCE : LEAD.SIGNED_CLOSED;
+    } else if (payType === 'Closed - Needs Onboarding' || payType === 'Setter Takedown' || payType === 'Payment Plan - 1st Payment') {
+      const plan = onPlan || payType === 'Payment Plan - 1st Payment';
+      leadStatus = plan ? LEAD.SIGNED_BALANCE : LEAD.SIGNED_CLOSED;
       oppStatus = OPP.WON; countsAsClosed = 'yes';
       oppWonDate = str(inputData.date_of_call);
       oppValueCents = cents(inputData.contract_value, 'Contract Value'); // deal value = contract, not cash
-      needsOnboarding = payType === 'Closed - Needs Onboarding' ? 'yes' : 'no';
+      needsOnboarding = payType === 'Setter Takedown' ? 'no' : 'yes';
     } else if (payType === 'Instalment Paid') {
       leadStatus = finalInst ? LEAD.SIGNED_CLOSED : LEAD.SIGNED_BALANCE;
       oppStatus = ''; updateOpp = 'no';                              // installments never create or move deals
@@ -98,7 +103,8 @@ const inst = [2, 3, 4, 5, 6]
   .map((n) => ({ n, date: str(inputData[`date_${n}`]), amt: str(inputData[`amt_${n}`]) }))
   .filter((i) => has(i.date) || has(i.amt));
 const planIncomplete = inst.some((i) => !has(i.date) || !has(i.amt));
-if (countsAsClosed === 'yes' && onPlan && (inst.length === 0 || planIncomplete)) {
+const isPlanStart = countsAsClosed === 'yes' && (onPlan || payType === 'Payment Plan - 1st Payment');
+if (isPlanStart && (inst.length === 0 || planIncomplete)) {
   throw new Error('Payment plan selected but installment dates/amounts are missing or incomplete');
 }
 
@@ -121,6 +127,22 @@ if (inst.length) {
 if (has(inputData.fathom_link)) lines.push('', `*Fathom:* ${inputData.fathom_link}`);
 if (has(inputData.post_call_notes)) lines.push('', '*Notes*', str(inputData.post_call_notes));
 
+// ---- Payment record: Fanbasis payments are logged by the Fanbasis Zap, so skip them here ----
+const cashCents = cents(inputData.cash_collected, 'Cash Collected');
+const method = str(inputData.payment_method);
+const recordPayment = outcome === 'Closed' && cashCents !== '' && cashCents > 0 && !/fanbasis/i.test(method) ? 'yes' : 'no';
+const cashText = cashCents === '' ? '' : (cashCents / 100).toFixed(2);
+const paymentSlack = [
+  'A New Payment Has Been Received!', '',
+  `Name: ${str(inputData.lead_full_name)}`, '',
+  `Amount: $${cashText}`, '',
+  `Email: ${str(inputData.lead_email)}`,
+].join('\n');
+
+// Date of call as MM/DD/YYYY for the Google Sheets, with no time zone shift.
+const d = str(inputData.date_of_call).slice(0, 10).split('-');
+const dateUS = d.length === 3 ? `${d[1]}/${d[2]}/${d[0]}` : str(inputData.date_of_call);
+
 output = {
   lead_status_id: leadStatus,
   update_opp: updateOpp,
@@ -132,8 +154,14 @@ output = {
   needs_onboarding: needsOnboarding,
   create_followup_task: createTask,
   followup_due: str(inputData.follow_up_date),
-  cash_collected_cents: cents(inputData.cash_collected, 'Cash Collected'),
-  has_plan: inst.length ? 'yes' : 'no',
+  cash_collected_cents: cashCents,
+  cash_collected: cashText,
+  is_closed_outcome: outcome === 'Closed' ? 'yes' : 'no',
+  record_payment: recordPayment,
+  payment_slack_message: paymentSlack,
+  date_of_call_us: dateUS,
+  is_plan_start: isPlanStart ? 'yes' : 'no',
+  has_plan: isPlanStart && inst.length ? 'yes' : 'no',
   inst_numbers: inst.map((i) => i.n).join(','),
   inst_dates: inst.map((i) => i.date).join(','),
   inst_amounts: inst.map((i) => (has(i.amt) ? String(i.amt).replace(/[$,\s]/g, '') : '')).join(','),
