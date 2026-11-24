@@ -23,7 +23,8 @@ ev_p = f"{X}/calendly/events.json"
 if os.path.exists(ev_p) and json.load(open(ev_p)):
     ev = json.load(open(ev_p)); snap = ops["generated"]
     act = [e for e in ev if e["status"] == "active" and e["start_time"] < snap and "Kickoff" not in e["name"]]
-    host = lambda e: (e.get("event_memberships") or [{}])[0].get("user_name") or "Unknown"
+    ALIAS = {"Jeremy Makena": "Makena Waterhouse"}
+    host = lambda e: ALIAS.get((e.get("event_memberships") or [{}])[0].get("user_name") or "Unknown", (e.get("event_memberships") or [{}])[0].get("user_name") or "Unknown")
     loc = lambda e: DT.datetime.fromisoformat(e["start_time"].replace("Z", "+00:00")).astimezone(ET)
     wk = C.Counter((host(e), loc(e).strftime("%G-W%V")) for e in act); day = C.Counter((host(e), loc(e).date()) for e in act)
     hosts = []
