@@ -27,6 +27,12 @@ const LEAD = {
   SIGNED_BALANCE: 'stat_UEBEBfjgHoWd8zyhgQOG4CpfLJTPZxwHpH3dx7JY2w4',
   SIGNED_CLOSED:  'stat_s71HtAeLV1kWdJUKnhNVmXsPYrek4behA0iUeIr9he3',
 };
+// Close lead status names, written to the EOC row so the Airtable script can copy them to Lead Base.
+const LEAD_LABEL = {
+  [LEAD.NO_SHOW]: 'No show', [LEAD.CANCELED]: 'Canceled', [LEAD.RESCHEDULE]: 'New Opportunity - Reschedule',
+  [LEAD.FOLLOW_UP]: 'Closer Follow Up', [LEAD.DQ]: 'DQ', [LEAD.NGMI]: 'NGMI', [LEAD.DEPOSIT]: 'Deposit Paid',
+  [LEAD.SIGNED_BALANCE]: 'Signed Up - Balance Owed', [LEAD.SIGNED_CLOSED]: 'Signed Up - Closed',
+};
 // Opportunity stages. No Show, Canceled and Reschedule keep the deal at the
 // booked stage; the lead status carries those outcomes and triggers the drips.
 const OPP = {
@@ -145,6 +151,9 @@ const dateUS = d.length === 3 ? `${d[1]}/${d[2]}/${d[0]}` : str(inputData.date_o
 
 output = {
   lead_status_id: leadStatus,
+  lead_status_label: LEAD_LABEL[leadStatus] || '',
+  record_payment_bool: recordPayment === 'yes',
+  plan_start_bool: isPlanStart && inst.length > 0,
   update_opp: updateOpp,
   opp_status_id: oppStatus,
   opp_value_cents: oppValueCents,
